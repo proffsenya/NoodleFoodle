@@ -1,9 +1,8 @@
-import { NavLink, Link } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 
 export default function Header(){
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
-        <div className="container flex items-center justify-between px-4 py-4 mx-auto">
+    <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-40 py-4 mx-auto bg-white shadow-sm">
           <div className="flex items-center">
             <span className="text-xl font-bold">NoodleFoodle</span>
           </div>
@@ -16,7 +15,6 @@ export default function Header(){
               Заказать
             </button>
           </nav>
-        </div>
       </header>
   )
 }

@@ -72,7 +72,7 @@ function Contact_container() {
                       />
                     ))}
                   </div>
-                  <span className="ml-2">4.5 out of 5</span>
+                  <span className="ml-2">4 out of 5</span>
                 </div>
                 <p className="italic text-gray-600">"Best ramen in the city! The broth is incredibly rich and flavorful."</p>
                 <p className="italic text-gray-600">"Amazing service and authentic taste. Will definitely come back!"</p>
