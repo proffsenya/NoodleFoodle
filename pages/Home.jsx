@@ -74,19 +74,19 @@ function FeaturesSection() {
 
 function PopularDishesConst({ProdObj}){
   return (
-    <div className="overflow-hidden bg-white rounded-lg shadow-md">
-      <img src={ProdObj.image} alt={ProdObj.name} className="object-cover w-full h-48"/>
-      <div className="p-4">
-        <h3 className="mb-2 text-xl font-semibold">{ProdObj.name}</h3>
-        <p className="mb-4 text-gray-600">{ProdObj.description}</p>
-        <div className="flex items-center justify-between">
-          <span className="text-xl font-bold">{ProdObj.price}</span>
-          <button className="px-4 py-2 text-white bg-black rounded-md hover:bg-gray-800">
-            Заказать
-          </button>
+    <div className="flex flex-col h-full overflow-hidden bg-white rounded-lg shadow-md">
+            <img src={ProdObj.image} alt={ProdObj.name} className="object-cover w-full h-48" />
+            <div className="flex flex-col flex-grow p-4">
+                <h3 className="mb-2 text-xl font-semibold">{ProdObj.name}</h3>
+                <p className="flex-grow text-gray-600">{ProdObj.description}</p>
+                <div className="flex items-center justify-between pt-4 mt-auto">
+                    <span className="text-xl font-bold">{ProdObj.price}</span>
+                    <button className="px-4 py-2 text-white bg-black rounded-md hover:bg-gray-800">
+                    Заказать
+                    </button>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
   )
 }
   

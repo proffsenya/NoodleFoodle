@@ -16,18 +16,21 @@ export default function Contact(){
 
 function Contact_container() {
   const [rating, setRating] = useState(0);
-  const [feedback, setFeedback] = useState({
+  let [feedback, setFeedback] = useState({
     name: '',
     email: '',
     message: '',
+    rating: '',
     improvement: ''
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Feedback submitted:', feedback);
-    // Here you would typically send the feedback to your server
-    alert('Thank you for your feedback!');
+    console.log('Feedback submitted:');
+    feedback.rating = rating;
+
+    feedback_p.unshift(feedback);
+    alert('Спасибо за вашу обратную связь!');
   };
 
   return (
@@ -35,33 +38,33 @@ function Contact_container() {
       {/* Restaurant Info Section */}
       <section className="py-16 bg-gray-50">
         <div className="container px-4 mx-auto">
-          <h1 className="mb-12 text-4xl font-bold text-center">Visit NoodleHouse</h1>
+          <h1 className="mb-12 text-4xl font-bold text-center">Посетить NoodleFoodle</h1>
           
           <div className="grid gap-8 mb-12 md:grid-cols-2">
             <div className="p-6 bg-white rounded-lg shadow-md">
-              <h2 className="mb-4 text-2xl font-semibold">Restaurant Information</h2>
+              <h2 className="mb-4 text-2xl font-semibold">Информация</h2>
               <div className="space-y-4">
                 <div className="flex items-center">
                 <FeatherIcon icon = "map-pin"/>
-                  <p>123 Noodle Street, San Francisco, CA 94110</p>
+                  <p className='ml-2'>Проспект Вернадского 78, Москва, Россия</p>
                 </div>
                 <div className="flex items-center">
                 <FeatherIcon icon = "clock"/>
-                  <p>Mon-Sun: 11:00 AM - 10:00 PM</p>
+                  <p className='ml-2'>Пн-Вск: 10:00 - 22:00</p>
                 </div>
                 <div className="flex items-center">
                   <FeatherIcon icon = "phone"/>
-                  <p>(555) 123-4567</p>
+                  <p className='ml-2'>8(800) 555-3535</p>
                 </div>
                 <div className="flex items-center">
                 <FeatherIcon icon = "mail"/>
-                  <p>info@noodlehouse.com</p>
+                  <p className='ml-2'>info@noodlefoodle.com</p>
                 </div>
               </div>
             </div>
             
             <div className="p-6 bg-white rounded-lg shadow-md">
-              <h2 className="mb-4 text-2xl font-semibold">Customer Reviews</h2>
+              <h2 className="mb-4 text-2xl font-semibold">Отзывы клиентов</h2>
               <div className="space-y-4">
                 <div className="flex items-center mb-2">
                   <div className="flex text-yellow-400">
@@ -72,10 +75,10 @@ function Contact_container() {
                       />
                     ))}
                   </div>
-                  <span className="ml-2">4 out of 5</span>
+                  <span className="ml-2">4 из 5</span>
                 </div>
-                <p className="italic text-gray-600">"Best ramen in the city! The broth is incredibly rich and flavorful."</p>
-                <p className="italic text-gray-600">"Amazing service and authentic taste. Will definitely come back!"</p>
+                <p className="italic text-gray-600">"Лучший рамен в городе! Бульон получается невероятно сытным и ароматным."</p>
+                <p className="italic text-gray-600">"Восхитительное обслуживание и аутентичный вкус. Обязательно вернусь!"</p>
               </div>
             </div>
           </div>
@@ -98,11 +101,11 @@ function Contact_container() {
       {/* Feedback Form Section */}
       <section className="py-16 bg-white">
         <div className="container max-w-4xl px-4 mx-auto">
-          <h2 className="mb-12 text-3xl font-bold text-center">Help Us Improve</h2>
+          <h2 className="mb-12 text-3xl font-bold text-center">Помогите нам стать лучше</h2>
           <div className="p-8 rounded-lg shadow-md bg-gray-50">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label className="block mb-2 text-gray-700">Name</label>
+                <label className="block mb-2 text-gray-700">Имя</label>
                 <input
                   type="text"
                   className="w-full px-4 py-2 border rounded-md"
@@ -112,33 +115,33 @@ function Contact_container() {
                 />
               </div>
               <div>
-                <label className="block mb-2 text-gray-700">Email</label>
+                <label className="block mb-2 text-gray-700">Почта</label>
                 <input
                   type="email"
                   className="w-full px-4 py-2 border rounded-md"
                   value={feedback.email}
+                  autofocus = "true"
                   onChange={(e) => setFeedback({...feedback, email: e.target.value})}
                   required
                 />
               </div>
               <div>
-                <label className="block mb-2 text-gray-700">What can we improve?</label>
+                <label className="block mb-2 text-gray-700">Как мы можем стать лучше?</label>
                 <select
                   className="w-full px-4 py-2 border rounded-md"
                   value={feedback.improvement}
                   onChange={(e) => setFeedback({...feedback, improvement: e.target.value})}
-                  required
                 >
-                  <option value="">Select an area</option>
-                  <option value="food">Food Quality</option>
-                  <option value="service">Service</option>
-                  <option value="delivery">Delivery</option>
-                  <option value="atmosphere">Restaurant Atmosphere</option>
-                  <option value="other">Other</option>
+                  <option>Выберите</option>
+                  <option value="food">Качество еды</option>
+                  <option value="service">Обслуживание</option>
+                  <option value="delivery">Доставка</option>
+                  <option value="atmosphere">Атмосфера ресторана</option>
+                  <option value="other">Другое</option>
                 </select>
               </div>
               <div>
-                <label className="block mb-2 text-gray-700">Your Message</label>
+                <label className="block mb-2 text-gray-700">Ваш комментарий</label>
                 <textarea
                   className="w-full h-32 px-4 py-2 border rounded-md"
                   value={feedback.message}
@@ -147,7 +150,7 @@ function Contact_container() {
                 ></textarea>
               </div>
               <div>
-                <label className="block mb-2 text-gray-700">Rate your experience</label>
+                <label className="block mb-2 text-gray-700">Оцените свой опыт</label>
                 <div className="flex space-x-2">
                 {[1, 2, 3, 4, 5].map((star) => (
                     <FeatherIcon icon = "star"
@@ -164,7 +167,7 @@ function Contact_container() {
                 type="submit"
                 className="w-full px-6 py-3 text-white transition-colors bg-black rounded-md hover:bg-gray-800"
               >
-                Submit Feedback
+                Отправить
               </button>
             </form>
           </div>
