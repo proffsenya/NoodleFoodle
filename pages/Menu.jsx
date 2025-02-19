@@ -24,9 +24,6 @@ function Layout() {
                   {dishes.map((item) => (
                       <MenuConst MenuObj = {item} key = {item.name} />
                     ))}
-                    {dishes.map((item) => (
-                      <MenuConst MenuObj = {item} key = {item.name} />
-                    ))}
                     </div>
                 </div>
             </section>

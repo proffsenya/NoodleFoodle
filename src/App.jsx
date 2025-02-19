@@ -10,11 +10,25 @@ import ShoppingCard from "../pages/ProductDetails";
 
 import "../src/index.css";
 
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+};
+
+
 const router = createBrowserRouter([
-  {path: "/", element: <Home />},
-  {path: "contact", element: <Contact />},
-  {path: "customproduct", element: <CustomProduct/>},
-  {path: "menu", element: <Menu />},
+  {path: "/", element: <><Home /><ScrollToTop /></>},
+  {path: "contact", element: <><Contact /><ScrollToTop /></>},
+  {path: "customproduct", element: <><CustomProduct/><ScrollToTop /></>},
+  {path: "menu", element: <><Menu /><ScrollToTop /></>},
   {path: "shoppingcard", element: <ShoppingCard />},
   {path: "productdetails", element: <ProductDetails />},
   {path: "*", element: <NotFound />},

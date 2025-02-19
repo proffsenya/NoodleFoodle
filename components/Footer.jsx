@@ -11,8 +11,7 @@ export default function Footer(){
               </section>
               <section className="relative items-center text-center flexbox">
                 <h3 className="mb-4 text-xl font-bold">О нас</h3>
-                <p className="text-gray-400">Проспект Вернадского 78</p>
-                <p className="text-gray-400">Россия, Москва</p>
+                <p className="text-gray-400">Проспект Вернадского 78, Москва, Россия</p>
                 <p className="text-gray-400">Телефон: 8(800) 555-35-35</p>
               </section>
             </div>
