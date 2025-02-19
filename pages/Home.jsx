@@ -113,11 +113,12 @@ function ContactSection(){
     <section id="contact" className="px-4 py-16">
         <div className="container max-w-4xl mx-auto">
           <h2 className="mb-12 text-3xl font-bold text-center">О нас</h2>
-          <div className="p-8 bg-white rounded-lg shadow-md">
+          <div className="p-8 bg-white rounded-lg shadow-xl">
             <form className="space-y-6">
               <div>
                 <label className="block mb-2 text-gray-700">Имя</label>
                 <input
+                placeholder="Введите имя"
                   type="text"
                   className="w-full px-4 py-2 border rounded-md"
                 />
@@ -125,13 +126,14 @@ function ContactSection(){
               <div>
                 <label className="block mb-2 text-gray-700">Почта</label>
                 <input
+                placeholder="Введите почту"
                   type="email"
                   className="w-full px-4 py-2 border rounded-md"
                 />
               </div>
               <div>
                 <label className="block mb-2 text-gray-700">Комментарий</label>
-                <textarea className="w-full h-32 px-4 py-2 border rounded-md"></textarea>
+                <textarea className="w-full h-32 px-4 py-2 border rounded-md" placeholder="Введите комментарий"></textarea>
               </div>
               <button className="w-full px-6 py-3 text-white bg-black rounded-md hover:bg-gray-800">
                 Отправить
