@@ -59,11 +59,11 @@ function WhyChoose({ProdObj}) {
   
 function FeaturesSection() {
   return (
-    <section className="px-4 py-16">
+    <section className="items-center justify-between px-4 py-16 text-center">
         <h2 className="mb-12 text-3xl font-bold text-center">
          Почему выбирают NoodleFoodle?
         </h2>
-        <div className="container grid gap-8 mx-auto md:grid-cols-3">
+        <div className="container grid gap-10 mx-auto justify-evenly grid-cols-16">
           {whychoose.map((item) => (
             <WhyChoose ProdObj={item} key = {item.name}/>
           ))}
@@ -92,12 +92,12 @@ function PopularDishesConst({ProdObj}){
   
 function PopularDishes(){
   return (
-    <section id="menu" className="px-4 py-16 bg-gray-50">
+    <section id="menu" className="px-4 py-20 bg-gray-50">
         <div className="container mx-auto">
           <h2 className="mb-12 text-3xl font-bold text-center">
             Популярные блюда
           </h2>
-          <div className="grid gap-8 md:grid-cols-3">
+          <div className="container grid gap-10 mx-auto justify-evenly grid-cols-16">
             {populardishes.map((item) => (
               <PopularDishesConst ProdObj = {item} key = {item.name} />
             ))}

@@ -19,6 +19,14 @@ export const whychoose = [
 export const dishes = 
 [
   {
+    name: "Конструктор блюд",
+    price: "",
+    image: "../img/constructor.png",
+    description: "Это удобный инструмент для создания индивидуальных сочетаний ингредиентов, позволяющий собрать идеальное блюдо по своему вкусу.",
+    weight: "",
+    ingredients: []
+  },
+  {
     name: "Вьетнамский рамен",
     price: "670₽",
     image:

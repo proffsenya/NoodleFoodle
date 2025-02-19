@@ -6,7 +6,13 @@ export default {
     './components/**/*.{js,jsx}'
   ],
   theme: {
-    extend: {},
+    extend: {
+      gridTemplateColumns: {
+        // Простая сетка из 16 столбцов
+        '16': 'repeat(3, 320px)',
+        '17': 'repeat(5, 150px)'
+    },
   },
+},
   plugins: [],
 };
