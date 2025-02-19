@@ -8,7 +8,6 @@ export default function Header(){
           </div>
           <nav className="items-center hidden space-x-6 md:flex">
             <NavLink className="text-gray-700 hover:text-black" to = {"/"} style={({ isActive }) => ({ fontWeight: isActive ? "bold" : "" })}>Главная</NavLink>
-            <NavLink className="text-gray-700 hover:text-black" to = {"/"} style={({ isActive }) => ({ fontWeight: isActive ? "bold" : "" })}>Доставка</NavLink>
             <NavLink className="text-gray-700 hover:text-black" to = {"/menu"} style={({ isActive }) => ({ fontWeight: isActive ? "bold" : "" })}>Меню</NavLink>
             <NavLink className="text-gray-700 hover:text-black" to = {"/contact"} style={({ isActive }) => ({ fontWeight: isActive ? "bold" : "" })}>О нас</NavLink>
             <button className="px-4 py-2 text-white bg-black rounded-md hover:bg-gray-800">

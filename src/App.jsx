@@ -29,9 +29,9 @@ const router = createBrowserRouter([
   {path: "contact", element: <><Contact /><ScrollToTop /></>},
   {path: "customproduct", element: <><CustomProduct/><ScrollToTop /></>},
   {path: "menu", element: <><Menu /><ScrollToTop /></>},
-  {path: "shoppingcard", element: <ShoppingCard />},
-  {path: "productdetails", element: <ProductDetails />},
-  {path: "*", element: <NotFound />},
+  {path: "shoppingcard", element: <><ShoppingCard /><ScrollToTop /></>},
+  {path: "productdetails", element: <><ProductDetails /><ScrollToTop /></>},
+  {path: "*", element: <><NotFound /><ScrollToTop /></>},
 ])
 
 export default function App() {
