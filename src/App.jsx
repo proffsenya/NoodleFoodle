@@ -6,7 +6,7 @@ import Home from "../pages/Home";
 import Menu from "../pages/Menu";
 import NotFound from "../pages/NotFound";
 import ProductDetails from "../pages/ProductDetails";
-import ShoppingCard from "../pages/ProductDetails";
+import ShoppingCart from "../pages/ShoppingCart";
 
 import "../src/index.css";
 
@@ -25,12 +25,12 @@ const ScrollToTop = () => {
 
 
 const router = createBrowserRouter([
-  {path: "/", element: <><Home /><ScrollToTop /></>},
+  {index: true, element: <><Home /><ScrollToTop /></>},
   {path: "contact", element: <><Contact /><ScrollToTop /></>},
   {path: "customproduct", element: <><CustomProduct/><ScrollToTop /></>},
   {path: "menu", element: <><Menu /><ScrollToTop /></>},
-  {path: "shoppingcard", element: <><ShoppingCard /><ScrollToTop /></>},
-  {path: "productdetails", element: <><ProductDetails /><ScrollToTop /></>},
+  {path: "shoppingcart", element: <><ShoppingCart /><ScrollToTop /></>},
+  {path: "productdetails/:productid", element: <><ProductDetails /><ScrollToTop /></>},
   {path: "*", element: <><NotFound /><ScrollToTop /></>},
 ])
 

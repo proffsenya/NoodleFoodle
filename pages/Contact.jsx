@@ -120,7 +120,6 @@ function Contact_container() {
                   type="email"
                   className="w-full px-4 py-2 border rounded-md"
                   value={feedback.email}
-                  autofocus = "true"
                   onChange={(e) => setFeedback({...feedback, email: e.target.value})}
                   required
                 />
