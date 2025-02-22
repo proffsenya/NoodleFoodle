@@ -40,7 +40,33 @@ function Contact_container() {
         <div className="container px-4 mx-auto">
           <h1 className="mb-12 text-4xl font-bold text-center">Посетить NoodleFoodle</h1>
           
-          <div className="grid gap-8 mb-12 md:grid-cols-2">
+          <Upper_Blocks/>
+
+          {/* Map */}
+          <div className="bg-white rounded-lg shadow-md overflow-hidden h-[400px] mb-12">
+            <iframe
+              src="https://yandex.ru/map-widget/v1/-/CBucU6V~8B"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen=""
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+        </div>
+      </section>
+
+      {/* Feedback Form Section */}
+      <Feedback_fromselection />
+      
+    </div>
+  );
+}
+
+function Upper_Blocks(){
+  return (
+    <div className="grid gap-8 mb-12 md:grid-cols-2">
             <div className="p-6 bg-white rounded-lg shadow-md">
               <h2 className="mb-4 text-2xl font-semibold">Информация</h2>
               <div className="space-y-4">
@@ -82,24 +108,12 @@ function Contact_container() {
               </div>
             </div>
           </div>
+  )
+}
 
-          {/* Map */}
-          <div className="bg-white rounded-lg shadow-md overflow-hidden h-[400px] mb-12">
-            <iframe
-              src="https://yandex.ru/map-widget/v1/-/CBucU6V~8B"
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen=""
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
-          </div>
-        </div>
-      </section>
-
-      {/* Feedback Form Section */}
-      <section className="py-16 bg-white">
+function Feedback_fromselection(){
+  return(
+    <section className="py-16 bg-white">
         <div className="container max-w-4xl px-4 mx-auto">
           <h2 className="mb-12 text-3xl font-bold text-center">Помогите нам стать лучше</h2>
           <div className="p-8 rounded-lg shadow-md bg-gray-50">
@@ -172,6 +186,5 @@ function Contact_container() {
           </div>
         </div>
       </section>
-    </div>
-  );
+  )
 }
