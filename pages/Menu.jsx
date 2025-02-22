@@ -20,7 +20,7 @@ function Layout() {
         <section id="menu" className="px-4 py-20 bg-gray-50">
                 <div className="container mx-auto">
                   <h2 className="mt-10 text-3xl font-bold text-center mb-11">
-                    Меню
+                    menu
                   </h2>
                   <div className="grid mx-auto md:gap-10 justify-evenly md:grid-cols-16">
                   {dishes.map((item) => (
