@@ -43,7 +43,7 @@ function MenuConst({MenuObj}){
                 <p className="flex-grow text-gray-600">{MenuObj.description}</p>
                 <div className="flex items-center justify-between pt-4 mt-auto">
                     <span className="text-xl font-bold">{MenuObj.price}</span>
-                    <Link to = {`/productdetails/${MenuObj.id}`}><button className="px-4 py-2 text-white bg-black rounded-md hover:bg-gray-800">
+                    <Link to = {MenuObj.id === 1 ? `/customproduct` : `/productdetails/${MenuObj.id}`}><button className="px-4 py-2 text-white bg-black rounded-md hover:bg-gray-800">
                         Перейти
                     </button></Link>
                 </div>

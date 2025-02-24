@@ -111,3 +111,32 @@ export const populardishes = [
     ingredients: ["кокосовое молоко", "сливки", "лапша", "карри", "бульон том ям", "креветки", "зелень", "проростки бобов"]
   },
 ]
+
+export const ingredientsData = [
+  { name: "Thick Noodles", type: "noodles", price: 3.99, weight: 200 },
+  { name: "Thin Wheat Noodles", type: "noodles", price: 3.99, weight: 200 },
+  { name: "Rice Noodles", type: "noodles", price: 3.99, weight: 200 },
+  { name: "Tonkotsu", type: "broth", price: 4.99, weight: 300 },
+  { name: "Miso", type: "broth", price: 4.99, weight: 300 },
+  { name: "Shoyu", type: "broth", price: 4.99, weight: 300 },
+  { name: "Chashu Pork", type: "topping", price: 3.99, weight: 50 },
+  { name: "Soft-Boiled Egg", type: "topping", price: 1.99, weight: 30 },
+  { name: "Green Onions", type: "topping", price: 0.99, weight: 20 },
+  { name: "Bamboo Shoots", type: "topping", price: 1.99, weight: 40 },
+  { name: "Nori", type: "topping", price: 0.99, weight: 10 },
+  { name: "Spicy Sauce", type: "extra", price: 0.99, weight: 20 },
+  { name: "Garlic Oil", type: "extra", price: 0.99, weight: 20 },
+  { name: "Thick Noodles", type: "noodles", price: 3.99, weight: 200 },
+  { name: "Thin Wheat Noodles", type: "noodles", price: 3.99, weight: 200 },
+  { name: "Rice Noodles", type: "noodles", price: 3.99, weight: 200 },
+  { name: "Tonkotsu", type: "broth", price: 4.99, weight: 300 },
+  { name: "Miso", type: "broth", price: 4.99, weight: 300 },
+  { name: "Shoyu", type: "broth", price: 4.99, weight: 300 },
+  { name: "Chashu Pork", type: "topping", price: 3.99, weight: 50 },
+  { name: "Soft-Boiled Egg", type: "topping", price: 1.99, weight: 30 },
+  { name: "Green Onions", type: "topping", price: 0.99, weight: 20 },
+  { name: "Bamboo Shoots", type: "topping", price: 1.99, weight: 40 },
+  { name: "Nori", type: "topping", price: 0.99, weight: 10 },
+  { name: "Spicy Sauce", type: "extra", price: 0.99, weight: 20 },
+  { name: "Garlic Oil", type: "extra", price: 0.99, weight: 20 }
+];
