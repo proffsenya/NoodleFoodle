@@ -30,3 +30,22 @@ function LeftPanel({ onDrop }) {
     );
   }
 
+  function renderIngredientCategory(title, ingredients, onDrop) {
+    return (
+      <div className="ingredients-category">
+        <h3>{title}</h3>
+        {ingredients.map((ingredient) => (
+          <div
+            key={ingredient.name}
+            className="ingredient-item"
+            draggable
+            onDragStart={(e) => e.dataTransfer.setData("ingredient", JSON.stringify(ingredient))}
+          >
+            <span>{ingredient.name}</span>
+            <div className="ingredient-weight">{ingredient.weight}г</div>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
