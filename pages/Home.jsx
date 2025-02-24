@@ -1,4 +1,5 @@
 import {whychoose, populardishes} from "../data/data";
+import {Link} from "react-router-dom";
 
 
 import Header from "../components/Header";
@@ -81,9 +82,9 @@ function PopularDishesConst({ProdObj}){
                 <p className="flex-grow text-gray-600">{ProdObj.description}</p>
                 <div className="flex items-center justify-between pt-4 mt-auto">
                     <span className="text-xl font-bold">{ProdObj.price}</span>
-                    <button className="px-4 py-2 text-white bg-black rounded-md hover:bg-gray-800">
-                    Перейти
-                    </button>
+                    <Link to = {`/productdetails/${ProdObj.id}`}><button className="px-4 py-2 text-white bg-black rounded-md hover:bg-gray-800">
+                        Перейти
+                    </button></Link>
                 </div>
             </div>
         </div>
@@ -101,7 +102,6 @@ function PopularDishes(){
             {populardishes.map((item) => (
               <PopularDishesConst ProdObj = {item} key = {item.name} />
             ))}
-
             </div>
         </div>
     </section>
