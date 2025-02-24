@@ -49,3 +49,60 @@ function LeftPanel({ onDrop }) {
     );
   }
 
+  function CenterBowl({
+    selectedIngredients,
+    totalPrice,
+    currentWeight,
+    onRemove,
+    onClear,
+    onDropInBowl,
+    weightError,
+    typeError
+  }) {
+    const handleDropInBowl = (e) => {
+      e.preventDefault();
+      const ingredient = JSON.parse(e.dataTransfer.getData("ingredient"));
+      if (currentWeight + ingredient.weight <= MAX_WEIGHT) {
+        onDropInBowl(ingredient);
+      }
+    };
+  
+    return (
+      <div className="bowl-container" onDrop={handleDropInBowl} onDragOver={(e) => e.preventDefault()}>
+        <h2>Создайте свой собственный рамен</h2>
+        <p className="mb-8 text-gray-600">Возьмите и перетащите ингредиенты (Максимально 700г)</p>
+        {typeError && <p className="mb-8 text-red-600 error ">{typeError}</p>}
+        <div className="wooden-bowl" id="bowl-dropzone">
+          <div className="bowl-content">
+            <div className="selected-ingredients">
+              {selectedIngredients.length === 0 ? (
+                <p className="text-gray-500">Перетащите ингредиенты сюда</p>
+              ) : (
+                selectedIngredients.map((ingredient, index) => (
+                  <div key={index} className="ingredient-badge">
+                    <span>{ingredient.name}</span>
+                    <button onClick={() => onRemove(index)}>⛌
+                    </button>
+                  </div>
+                ))
+              )}
+            </div>
+            <div className="weight-indicator">{currentWeight}г / 700г</div>
+          </div>
+        </div>
+        <div className="price-summary">
+          <h3>Ваш рамен</h3>
+          <div className="total-price">
+            <span>Общий вес:</span>
+            <span> {currentWeight}г</span>
+          </div>
+          <div className="total-price">
+            <span>Итого: </span>
+            <span> {totalPrice.toFixed(2)}₽</span>
+          </div>
+          <button className="btn-primary btn-large" onClick={onClear}>Убрать всё</button>
+        </div>
+      </div>
+    );
+  }
+
