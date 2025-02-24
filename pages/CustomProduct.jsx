@@ -1,9 +1,73 @@
+import "../src/index.css";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import { useState } from "react";
+import { ingredientsData } from "../data/data";
+
+const MAX_WEIGHT = 700; // Максимальный вес в граммах
+
+// Все ингредиенты в одном массиве
+
+
 export default function CustomProduct() {
-    return (
-        <div>
-            customproduct
-        </div>
-    )
+  const [selectedIngredients, setSelectedIngredients] = useState([]);
+  const [weightError, setWeightError] = useState("");
+  const [typeError, setTypeError] = useState("");
+  const currentWeight = selectedIngredients.reduce((sum, ing) => sum + ing.weight, 0);
+  const totalPrice = selectedIngredients.reduce((sum, ing) => sum + ing.price, 0);
+
+  const handleDrop = (ingredient) => {
+    // Проверка на максимальный вес
+    if (currentWeight + ingredient.weight > MAX_WEIGHT) {
+      setWeightError("Ошибка: общий вес не может превышать 700г.");
+      return;
+    } else {
+      setWeightError("");
+    }
+
+    if (
+      (ingredient.type === "noodles" || ingredient.type === "broth") &&
+      selectedIngredients.some((ing) => ing.type === ingredient.type)
+    ) {
+      setTypeError("Ошибка: только один тип лапши или бульона может быть добавлен.");
+      return;
+    } else {
+      setTypeError("");
+    }
+
+    setSelectedIngredients([...selectedIngredients, ingredient]);
+  };
+
+  const removeIngredient = (index) => {
+    setSelectedIngredients(selectedIngredients.filter((_, i) => i !== index));
+  };
+
+  const clearBowl = () => {
+    setSelectedIngredients([]);
+    setWeightError("");
+    setTypeError("");
+  };
+
+  return (
+    <section className="ramen-builder">
+      <Header />
+      <div className="ramen-builder-container">
+        <LeftPanel onDrop={handleDrop} />
+        <CenterBowl
+          selectedIngredients={selectedIngredients}
+          totalPrice={totalPrice}
+          currentWeight={currentWeight}
+          onRemove={removeIngredient}
+          onClear={clearBowl}
+          onDropInBowl={handleDrop}
+          weightError={weightError}
+          typeError={typeError}
+        />
+        <RightPanel onDrop={handleDrop} />
+      </div>
+      <Footer />
+    </section>
+  );
 }
 
 function LeftPanel({ onDrop }) {
