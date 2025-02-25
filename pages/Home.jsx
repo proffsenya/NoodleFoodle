@@ -58,20 +58,6 @@ function WhyChoose({ProdObj}) {
   );
 }
   
-function FeaturesSection() {
-  return (
-    <section className="items-center justify-between px-4 py-16 text-center">
-        <h2 className="mb-12 text-3xl font-bold text-center">
-         Почему выбирают NoodleFoodle?
-        </h2>
-        <div className="container grid mx-auto md:gap-10 justify-evenly md:grid-cols-16">
-          {whychoose.map((item) => (
-            <WhyChoose ProdObj={item} key = {item.name}/>
-          ))}
-        </div>
-      </section>
-  )
-}
 
 function PopularDishesConst({ProdObj}){
   return (
@@ -91,19 +77,30 @@ function PopularDishesConst({ProdObj}){
   )
 }
   
-function PopularDishes(){
+function FeaturesSection() {
+  return (
+    <section className="px-4 py-16 text-center">
+      <h2 className="mb-12 text-3xl font-bold">Почему выбирают NoodleFoodle?</h2>
+      <div className="container grid grid-cols-1 mx-auto gap-10 md:grid-cols-3">
+        {whychoose.map((item) => (
+          <WhyChoose ProdObj={item} key={item.name}/>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function PopularDishes() {
   return (
     <section id="menu" className="px-4 py-20 bg-gray-50">
-        <div className="container mx-auto ">
-          <h2 className="mb-12 text-3xl font-bold text-center">
-            Популярные блюда
-          </h2>
-          <div className="container grid gap-10 mx-auto overflow-x-scroll justify-evenly grid-cols-16">
-            {populardishes.map((item) => (
-              <PopularDishesConst ProdObj = {item} key = {item.name} />
-            ))}
-            </div>
+      <div className="container mx-auto">
+        <h2 className="mb-12 text-3xl font-bold text-center">Популярные блюда</h2>
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
+          {populardishes.map((item) => (
+            <PopularDishesConst ProdObj={item} key={item.name} />
+          ))}
         </div>
+      </div>
     </section>
   )
 }
