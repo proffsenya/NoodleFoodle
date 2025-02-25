@@ -93,8 +93,8 @@ function RightPanel({ onDrop }) {
 function renderIngredientCategory(title, ingredients, onDrop) {
   return (
     <div className="ingredients-category">
-      <h3 className="text-lg font-semibold mb-2">{title}</h3>
-      <div className="flex md:flex-col gap-2 overflow-x-auto md:overflow-visible pb-2">
+      <h3 className="mb-2 text-lg font-semibold">{title}</h3>
+      <div className="flex gap-2 pb-2 overflow-x-auto md:flex-col md:overflow-visible">
         {ingredients.map((ingredient) => (
           <div
             key={ingredient.name}
@@ -131,15 +131,15 @@ function CenterBowl({
 
   return (
     <div className="bowl-container" onDrop={handleDropInBowl} onDragOver={(e) => e.preventDefault()}>
-      <h2 className="text-2xl font-bold text-center mb-4">Создайте свой собственный рамен</h2>
-      <p className="mb-4 text-gray-600 text-center">Возьмите и перетащите ингредиенты (Максимально 700г)</p>
-      {typeError && <p className="text-red-600 text-center mb-4">{typeError}</p>}
+      <h2 className="mb-4 text-2xl font-bold text-center">Создайте свой собственный рамен</h2>
+      <p className="mb-4 text-center text-gray-600">Возьмите и перетащите ингредиенты (Максимально 700г)</p>
+      {typeError && <p className="mb-4 text-center text-red-600">{typeError}</p>}
 
       <div className="wooden-bowl w-full max-w-[400px] mx-auto">
         <div className="bowl-content">
           <div className="selected-ingredients">
             {selectedIngredients.length === 0 ? (
-              <p className="text-gray-500 text-center">Перетащите ингредиенты сюда</p>
+              <p className="text-center text-gray-500">Перетащите ингредиенты сюда</p>
             ) : (
               selectedIngredients.map((ingredient, index) => (
                 <div key={index} className="ingredient-badge">
@@ -160,18 +160,18 @@ function CenterBowl({
         </div>
       </div>
 
-      <div className="price-summary mt-8">
-        <h3 className="text-xl font-semibold mb-4">Ваш рамен</h3>
-        <div className="total-price flex justify-between mb-2">
+      <div className="mt-8 price-summary">
+        <h3 className="mb-4 text-xl font-semibold">Ваш рамен</h3>
+        <div className="flex justify-between mb-2 total-price">
           <span>Общий вес:</span>
           <span>{currentWeight}г</span>
         </div>
-        <div className="total-price flex justify-between mb-4">
+        <div className="flex justify-between mb-4 total-price">
           <span>Итого:</span>
           <span className="font-bold">{totalPrice.toFixed(2)}₽</span>
         </div>
         <button 
-          className="btn-primary w-full py-3"
+          className="w-full py-3 btn-primary"
           onClick={onClear}
         >
           Убрать всё
