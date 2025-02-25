@@ -17,20 +17,18 @@ export default function Menu() {
 
 function Layout() {
     return (
-        <section id="menu" className="px-4 py-20 bg-gray-50">
-                <div className="container mx-auto">
-                  <h2 className="mt-10 text-3xl font-bold text-center mb-11">
-                    Меню
-                  </h2>
-                  <div className="grid mx-auto md:gap-10 justify-evenly md:grid-cols-16">
-                  {dishes.map((item) => (
-                      <MenuConst MenuObj = {item} key = {item.name} />
-                    ))}
-                    </div>
-                </div>
-            </section>
+      <section className="px-4 py-20 bg-gray-50">
+        <div className="container mx-auto">
+          <h2 className="mt-10 text-3xl font-bold text-center mb-11">Меню</h2>
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
+            {dishes.map((item) => (
+              <MenuConst MenuObj={item} key={item.name} />
+            ))}
+          </div>
+        </div>
+      </section>
     )
-}
+  }
 
 function MenuConst({MenuObj}){
 
@@ -51,6 +49,3 @@ function MenuConst({MenuObj}){
         </div>
     )
 }
-
-
-
