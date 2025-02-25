@@ -5,6 +5,7 @@ import FeatherIcon from 'feather-icons-react'
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
+  
   return (
     <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 md:px-40 py-4 mx-auto bg-white shadow-sm">
       <div className="flex items-center">
