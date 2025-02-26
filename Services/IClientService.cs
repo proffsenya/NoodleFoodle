@@ -6,6 +6,8 @@ namespace NoodleFoodle.Services
     {
         Task<Client> ValidateClientAsync(string email, string password);
         Task<IEnumerable<Client>> GetAllClientsAsync();
-        Task<Client> CreateClientAsyncc(Client client);
+        Task<Client> CreateClientAsync(Client client);
+
+        Task<Client> GetClientByIdAsync(int id);
     }
 }

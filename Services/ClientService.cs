@@ -20,11 +20,16 @@ namespace NoodleFoodle.Services
             return await _context.Client.ToListAsync();
         }
 
-        public async Task<Client> CreateClientAsyncc(Client client)
+        public async Task<Client> CreateClientAsync(Client client)
         {
             _context.Client.Add(client);
             await _context.SaveChangesAsync();
             return client;
+        }
+
+        public async Task<Client> GetClientByIdAsync(int id)
+        {
+            return await _context.Client.FindAsync(id);
         }
     }
 }
