@@ -1,28 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿//using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using NoodleFoodle;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using NoodleFoodle.Models;
+using NoodleFoodle.Services;
 
+
+[Route("api/[controller]")]
+[ApiController]
 namespace NoodleFoodle.Controllers
 {
-    public class ClientsController : Controller
+    public class ClientsController : ControllerBase
     {
         private readonly Test1Context _context;
+        private readonly IClientService _clientService;
 
-        public ClientsController(Test1Context context)
+        public ClientsController(IClientService clientService)
         {
-            _context = context;
+            _clientService = clientService;
         }
 
-        // GET: Clients
-        public async Task<IActionResult> Index()
+        //// GET: Clients
+        //[HttpGet]
+        //public async Task<IActionResult> Index()
+        //{
+        //    //return View(await _context.Client.ToListAsync());
+        //}
+
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Client>>> GetAllClients()
         {
-            return View(await _context.Client.ToListAsync());
+            //var clients = await _clientService
         }
 
         // GET: Clients/Details/5

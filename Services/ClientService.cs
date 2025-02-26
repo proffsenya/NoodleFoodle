@@ -1,4 +1,5 @@
-﻿using NoodleFoodle.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using NoodleFoodle.Models;
 
 namespace NoodleFoodle.Services
 {
@@ -12,6 +13,18 @@ namespace NoodleFoodle.Services
         public Task<Client> ValidateClientAsync(string email, string password)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<Client>> GetAllClientsAsync()
+        {
+            return await _context.Client.ToListAsync();
+        }
+
+        public async Task<Client> CreateClientAsyncc(Client client)
+        {
+            _context.Client.Add(client);
+            await _context.SaveChangesAsync();
+            return client;
         }
     }
 }

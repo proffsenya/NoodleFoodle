@@ -9,26 +9,26 @@ namespace NoodleFoodle.Services
     public class JWTService : IJWTService
     {
         private readonly IConfiguration _configuration;
-        private readonly IClientService _clientService; // Сервис для работы с пользователями
+        private readonly IClientService _clientService; 
 
         public JWTService(IConfiguration configuration, IClientService clientService)
         {
             _configuration = configuration;
-            _clientService = clientService;  // Инициализируем сервис работы с пользователями
+            _clientService = clientService;  
         }
 
         public async Task<string> Authenticate(LoginModel loginModel)
         {
-            // Проверяем пользователя по email и паролю
+            
             var user = await _clientService.ValidateClientAsync(loginModel.Email, loginModel.Password);
 
             if (user == null)
             {
-                // Если пользователь не найден, возвращаем null
+                
                 return null;
             }
 
-            // Если пользователь найден, генерируем для него JWT-токен
+            
             return GenerateToken(user);
         }
 
