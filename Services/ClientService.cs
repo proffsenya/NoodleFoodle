@@ -31,5 +31,18 @@ namespace NoodleFoodle.Services
         {
             return await _context.Client.FindAsync(id);
         }
+
+        public async Task DeleteClientAsync(int id)
+        {
+            var client = await _context.Client.FindAsync(id);
+            if (client == null)
+            {
+                throw new KeyNotFoundException("Клиент не найден");
+
+            }
+            _context.Client.Remove(client);
+            await _context.SaveChangesAsync();
+
+        }
     }
 }

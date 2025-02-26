@@ -9,5 +9,6 @@ namespace NoodleFoodle.Services
         Task<Client> CreateClientAsync(Client client);
 
         Task<Client> GetClientByIdAsync(int id);
+        Task DeleteClientAsync(int id);
     }
 }

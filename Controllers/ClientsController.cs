@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using NoodleFoodle.Models;
 using NoodleFoodle.Services;
 
+
 namespace NoodleFoodle.Controllers
 {
     public class ClientsController : ControllerBase
@@ -16,14 +17,6 @@ namespace NoodleFoodle.Controllers
         {
             _clientService = clientService;
         }
-
-        //// GET: Clients
-        //[HttpGet]
-        //public async Task<IActionResult> Index()
-        //{
-        //    //return View(await _context.Client.ToListAsync());
-        //}
-
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Client>>> GetAllClients()
@@ -52,8 +45,9 @@ namespace NoodleFoodle.Controllers
         //    return View(client);
         //}
 
+
         // GET: api/Comics/{id}
-        [HttpGet]
+        [HttpGet("{id}")]
         public async Task<ActionResult<Client>> GetClientById(int id)
         {
             var client = await _clientService.GetClientByIdAsync(id);
@@ -64,11 +58,50 @@ namespace NoodleFoodle.Controllers
             return Ok(client);
         }
 
-        // POST: Clients/Create
+        
+        /// <summary>
+        /// Creates a client
+        /// </summary>
+        /// <param name="client"></param>
+        /// <returns>A newly created client</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /Clients
+        ///     {
+        ///        {
+        ///             "id": 0,
+        ///             "name": "string",
+        ///             "email": "string",
+        ///             "phone_number": "string",
+        ///             "address": "string",
+        ///             "password": "string"                    
+        ///     }
+        ///
+        /// </remarks>
+        /// <response code="201">Returns the newly created client</response>
+        /// <response code="400">If the client is null</response>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Client>> PostClient(Client client) {
             var createdClient = await _clientService.CreateClientAsync(client);
             return CreatedAtAction(nameof(GetClientById), new { id = createdClient.Id}, createdClient);
+        }
+
+        /// <summary>
+        /// Deletes a specific TodoItem.
+        /// </summary>
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteClient(int id)
+        {
+            try { 
+                await _clientService.DeleteClientAsync(id);
+                return NotFound();
+            }
+            catch (KeyNotFoundException ex){
+                return NotFound(new {message = ex.Message});
+            }
         }
             
         
