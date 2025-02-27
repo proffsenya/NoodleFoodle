@@ -24,6 +24,13 @@ public partial class Dish
     [Column("kcal")]
     public int Kcal { get; set; }
 
+    [Column("order_id", TypeName = "int(11)")]
+    public int? OrderId { get; set; }
+
+    [ForeignKey("OrderId")]
+    [InverseProperty("Dishes")]
+    public virtual Order? Order { get; set; }
+
     [InverseProperty("Dish")]
-    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+    public virtual ICollection<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
 }

@@ -33,11 +33,10 @@ public partial class Order
     [Column("amount_dishes", TypeName = "int(11)")]
     public int AmountDishes { get; set; }
 
-    [ForeignKey("DishId")]
-    [InverseProperty("Orders")]
-    public virtual Dish? Dish { get; set; }
-
     [ForeignKey("UserId")]
     [InverseProperty("Orders")]
     public virtual Client? Client { get; set; }
+
+    [InverseProperty("Order")]
+    public virtual ICollection<Dish> Dishes { get; set; } = new List<Dish>();
 }
