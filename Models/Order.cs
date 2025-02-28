@@ -21,7 +21,7 @@ public partial class Order
     public DateTime OrderDate { get; set; } = DateTime.UtcNow;
 
     [Column("sum", TypeName = "decimal(10,2)")]
-    public decimal Sum { get; set; }
+    public decimal TotalSum { get; set; }
 
     [Column("order_status")]
     [StringLength(50)]
