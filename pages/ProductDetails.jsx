@@ -31,11 +31,48 @@ export default function ProductDetails() {
             </div>
           </div>
         </section>
-        {/* <IngredientsLayout MenuObj={product}/> */}
+        <IngredientsLayout MenuObj={product}/>
         
         <Footer />
         </>
     )
 }
+
+function IngredientsLayout({ MenuObj }) {
+  return (
+    <section className="px-4 py-10 pb-20 bg-gray-50">
+      <div className="container mx-auto">
+        <h2 className="mt-10 text-3xl font-bold text-center mb-11">Ингредиенты</h2>
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
+          {MenuObj.ingredients.map((ingredient) => (
+            <IngredientsConst Ingredient={ingredient} key={ingredient} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function IngredientsConst({Ingredient}){
+
+  const ingredient = ingredientsData.find((item) => item.name === Ingredient);
+  if (!ingredient) {
+    return <div>Ингредиент не найден</div>;
+  }
+
+  return(
+      <div className="container flex items-center justify-center h-full overflow-hidden bg-white rounded-lg shadow-md">
+          <div className="flex flex-col justify-center flex-grow p-4 text-center">
+              <div className="flex flex-row items-center justify-between">
+              <img src = {ingredient.image} alt={Ingredient} width="50" height="50" className="rounded-lg" ></img>
+                  <span className="text-xl">{Ingredient}</span>
+                  <span className="text-gray-600 text-l">{ingredient.weight}г</span>
+
+              </div>
+          </div>
+      </div>
+  )
+}
+
 
 
