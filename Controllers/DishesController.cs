@@ -1,58 +1,60 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using NoodleFoodle.Services;
 using NoodleFoodle.Models;
 
-namespace NoodleFoodle.Controllers;
-
-[Route("api/[controller]")]
 [ApiController]
+[Route("api/[controller]")]
 public class DishesController : ControllerBase
 {
-    private readonly AppDbContext _context;
+    private readonly DishService _dishService;
 
-    public DishesController(AppDbContext context)
+    public DishesController(DishService dishService)
     {
-        _context = context;
+        _dishService = dishService;
     }
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Dish>>> GetDishes()
     {
-        return await _context.Dishes.Include(d => d.Ingredients).ToListAsync();
+        return Ok(await _dishService.GetDishesAsync());
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<Dish>> GetDish(int id)
     {
-        var dish = await _context.Dishes.Include(d => d.Ingredients).FirstOrDefaultAsync(d => d.Id == id);
-        if (dish == null) return NotFound();
-        return dish;
+        var dish = await _dishService.GetDishByIdAsync(id);
+        if (dish == null)
+            return NotFound();
+        return Ok(dish);
     }
 
     [HttpPost]
-    public async Task<ActionResult<Dish>> CreateDish(Dish dish)
+    public async Task<ActionResult> CreateDish(Dish dish)
     {
-        _context.Dishes.Add(dish);
-        await _context.SaveChangesAsync();
+        await _dishService.CreateDishAsync(dish);
         return CreatedAtAction(nameof(GetDish), new { id = dish.Id }, dish);
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateDish(int id, Dish dish)
+    public async Task<ActionResult> UpdateDish(int id, Dish dish)
     {
-        if (id != dish.Id) return BadRequest();
-        _context.Entry(dish).State = EntityState.Modified;
-        await _context.SaveChangesAsync();
+        if (id != dish.Id)
+            return BadRequest();
+
+        var updatedDish = await _dishService.UpdateDishAsync(id, dish);
+        if (updatedDish == null)
+            return NotFound();
+
         return NoContent();
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteDish(int id)
+    public async Task<ActionResult> DeleteDish(int id)
     {
-        var dish = await _context.Dishes.FindAsync(id);
-        if (dish == null) return NotFound();
-        _context.Dishes.Remove(dish);
-        await _context.SaveChangesAsync();
+        var deleted = await _dishService.DeleteDishAsync(id);
+        if (!deleted)
+            return NotFound();
+
         return NoContent();
     }
 }

@@ -1,58 +1,60 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using NoodleFoodle.Services;
 using NoodleFoodle.Models;
 
-namespace NoodleFoodle.Controllers;
-
-[Route("api/[controller]")]
 [ApiController]
+[Route("api/[controller]")]
 public class ClientsController : ControllerBase
 {
-    private readonly AppDbContext _context;
+    private readonly ClientService _clientService;
 
-    public ClientsController(AppDbContext context)
+    public ClientsController(ClientService clientService)
     {
-        _context = context;
+        _clientService = clientService;
     }
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Client>>> GetClients()
     {
-        return await _context.Clients.ToListAsync();
+        return Ok(await _clientService.GetClientsAsync());
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<Client>> GetClient(int id)
     {
-        var client = await _context.Clients.FindAsync(id);
-        if (client == null) return NotFound();
-        return client;
+        var client = await _clientService.GetClientByIdAsync(id);
+        if (client == null)
+            return NotFound();
+        return Ok(client);
     }
 
     [HttpPost]
-    public async Task<ActionResult<Client>> CreateClient(Client client)
+    public async Task<ActionResult> CreateClient(Client client)
     {
-        _context.Clients.Add(client);
-        await _context.SaveChangesAsync();
+        await _clientService.CreateClientAsync(client);
         return CreatedAtAction(nameof(GetClient), new { id = client.Id }, client);
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateClient(int id, Client client)
+    public async Task<ActionResult> UpdateClient(int id, Client client)
     {
-        if (id != client.Id) return BadRequest();
-        _context.Entry(client).State = EntityState.Modified;
-        await _context.SaveChangesAsync();
+        if (id != client.Id)
+            return BadRequest();
+
+        var updatedClient = await _clientService.UpdateClientAsync(id, client);
+        if (updatedClient == null)
+            return NotFound();
+
         return NoContent();
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteClient(int id)
+    public async Task<ActionResult> DeleteClient(int id)
     {
-        var client = await _context.Clients.FindAsync(id);
-        if (client == null) return NotFound();
-        _context.Clients.Remove(client);
-        await _context.SaveChangesAsync();
+        var deleted = await _clientService.DeleteClientAsync(id);
+        if (!deleted)
+            return NotFound();
+
         return NoContent();
     }
 }

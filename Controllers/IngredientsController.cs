@@ -1,58 +1,60 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using NoodleFoodle.Services;
 using NoodleFoodle.Models;
 
-namespace NoodleFoodle.Controllers;
-
-[Route("api/[controller]")]
 [ApiController]
+[Route("api/[controller]")]
 public class IngredientsController : ControllerBase
 {
-    private readonly AppDbContext _context;
+    private readonly IngredientService _ingredientService;
 
-    public IngredientsController(AppDbContext context)
+    public IngredientsController(IngredientService ingredientService)
     {
-        _context = context;
+        _ingredientService = ingredientService;
     }
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Ingredient>>> GetIngredients()
     {
-        return await _context.Ingredients.ToListAsync();
+        return Ok(await _ingredientService.GetIngredientsAsync());
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<Ingredient>> GetIngredient(int id)
     {
-        var ingredient = await _context.Ingredients.FindAsync(id);
-        if (ingredient == null) return NotFound();
-        return ingredient;
+        var ingredient = await _ingredientService.GetIngredientByIdAsync(id);
+        if (ingredient == null)
+            return NotFound();
+        return Ok(ingredient);
     }
 
     [HttpPost]
-    public async Task<ActionResult<Ingredient>> CreateIngredient(Ingredient ingredient)
+    public async Task<ActionResult> CreateIngredient(Ingredient ingredient)
     {
-        _context.Ingredients.Add(ingredient);
-        await _context.SaveChangesAsync();
+        await _ingredientService.CreateIngredientAsync(ingredient);
         return CreatedAtAction(nameof(GetIngredient), new { id = ingredient.Id }, ingredient);
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateIngredient(int id, Ingredient ingredient)
+    public async Task<ActionResult> UpdateIngredient(int id, Ingredient ingredient)
     {
-        if (id != ingredient.Id) return BadRequest();
-        _context.Entry(ingredient).State = EntityState.Modified;
-        await _context.SaveChangesAsync();
+        if (id != ingredient.Id)
+            return BadRequest();
+
+        var updatedIngredient = await _ingredientService.UpdateIngredientAsync(id, ingredient);
+        if (updatedIngredient == null)
+            return NotFound();
+
         return NoContent();
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteIngredient(int id)
+    public async Task<ActionResult> DeleteIngredient(int id)
     {
-        var ingredient = await _context.Ingredients.FindAsync(id);
-        if (ingredient == null) return NotFound();
-        _context.Ingredients.Remove(ingredient);
-        await _context.SaveChangesAsync();
+        var deleted = await _ingredientService.DeleteIngredientAsync(id);
+        if (!deleted)
+            return NotFound();
+
         return NoContent();
     }
 }

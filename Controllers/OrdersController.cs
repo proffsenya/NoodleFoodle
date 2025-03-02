@@ -1,58 +1,60 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using NoodleFoodle.Services;
 using NoodleFoodle.Models;
 
-namespace NoodleFoodle.Controllers;
-
-[Route("api/[controller]")]
 [ApiController]
+[Route("api/[controller]")]
 public class OrdersController : ControllerBase
 {
-    private readonly AppDbContext _context;
+    private readonly OrderService _orderService;
 
-    public OrdersController(AppDbContext context)
+    public OrdersController(OrderService orderService)
     {
-        _context = context;
+        _orderService = orderService;
     }
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
     {
-        return await _context.Orders.Include(o => o.Dishes).ToListAsync();
+        return Ok(await _orderService.GetOrdersAsync());
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<Order>> GetOrder(int id)
     {
-        var order = await _context.Orders.Include(o => o.Dishes).FirstOrDefaultAsync(o => o.Id == id);
-        if (order == null) return NotFound();
-        return order;
+        var order = await _orderService.GetOrderByIdAsync(id);
+        if (order == null)
+            return NotFound();
+        return Ok(order);
     }
 
     [HttpPost]
-    public async Task<ActionResult<Order>> CreateOrder(Order order)
+    public async Task<ActionResult> CreateOrder(Order order)
     {
-        _context.Orders.Add(order);
-        await _context.SaveChangesAsync();
+        await _orderService.CreateOrderAsync(order);
         return CreatedAtAction(nameof(GetOrder), new { id = order.Id }, order);
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateOrder(int id, Order order)
+    public async Task<ActionResult> UpdateOrder(int id, Order order)
     {
-        if (id != order.Id) return BadRequest();
-        _context.Entry(order).State = EntityState.Modified;
-        await _context.SaveChangesAsync();
+        if (id != order.Id)
+            return BadRequest();
+
+        var updatedOrder = await _orderService.UpdateOrderAsync(id, order);
+        if (updatedOrder == null)
+            return NotFound();
+
         return NoContent();
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteOrder(int id)
+    public async Task<ActionResult> DeleteOrder(int id)
     {
-        var order = await _context.Orders.FindAsync(id);
-        if (order == null) return NotFound();
-        _context.Orders.Remove(order);
-        await _context.SaveChangesAsync();
+        var deleted = await _orderService.DeleteOrderAsync(id);
+        if (!deleted)
+            return NotFound();
+
         return NoContent();
     }
 }
