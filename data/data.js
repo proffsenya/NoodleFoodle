@@ -114,7 +114,6 @@ export const populardishes = [
 
 export const ingredientsData = [
   { name: "Лапша рамен", type: "noodles", price: 60, weight: 150, image: "../img/cheese.jpg" },
-  { name: "Лапша рамен", type: "noodles", price: 60, weight: 150, image: "../img/cheese.jpg" },
   { name: "Рис", type: "noodles", price: 50, weight: 120, image: "../img/cheese.jpg" },
   { name: "Говяжий бульон фо-бо", type: "broth", price: 90, weight: 300, image: "../img/cheese.jpg" },
   { name: "Бульон том ям", type: "broth", price: 100, weight: 300, image: "../img/cheese.jpg" },

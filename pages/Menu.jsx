@@ -22,7 +22,7 @@ function Layout() {
           <h2 className="mt-10 text-3xl font-bold text-center mb-11">Меню</h2>
           <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
             {dishes.map((item) => (
-              <MenuConst MenuObj={item} key={item.name} />
+              <MenuConst MenuObj={item} key={item.id} />
             ))}
           </div>
         </div>
