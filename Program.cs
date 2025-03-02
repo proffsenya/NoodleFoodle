@@ -5,8 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Добавляем контекст базы данных
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
-        new MySqlServerVersion(new Version(8, 0, 33))));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Добавляем сервисы в контейнер
 builder.Services.AddControllers();
