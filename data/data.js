@@ -55,7 +55,7 @@ export const dishes =
       "../img/laksa.jpg",
     description: "Острый Суп с кокосовым молоком и сливками с добавлением карри",
     weight: "500g",
-    ingredients: ["Кокосовое молоко", "Сливки", "Лапша", "Карри", "Бульон том ям", "Креветки", "Зелень", "Проростки бобов"]
+    ingredients: ["Кокосовое молоко", "Сливки", "Лапша рамен", "Карри", "Бульон том ям", "Креветки", "Лук зеленый"]
   },
   {
     id: 5,
@@ -65,7 +65,7 @@ export const dishes =
       "../img/royal.jpg",
     description: "это роскошный тайский суп с королевскими морепродуктами, включая креветки, лосось и мидии, приготовленный на основе креветочного бульона и ароматных специй, таких как имбирь, красный лук и перец чилиx",
     weight: "500g",
-    ingredients: ["Креветки", "Грибы вешенки", "Кальмар", "Мидии голубые", "Рис", "Лайм", "Кинза", "Чили перец"]
+    ingredients: ["Креветки", "Вешенки", "Кальмары", "Мидии голубые", "Рис", "Лайм", "Кинза", "Чили перец"]
   },
   {
     id: 6,
@@ -75,7 +75,7 @@ export const dishes =
       "../img/classic.jpg",
     description: "Это самый популярный вариант среди туристов. Острота чили смягчается сладковато-сливочным кокосом, позволяя другим вкусам лучше раскрыться.",
     weight: "450g",
-    ingredients: ["Тайский бульон", "Вешенки", "Креветки", "Кальмар", "Лайм", "Кинза", "Чили", "Рис", "Кунжут", "Мидии"]
+    ingredients: ["Тайский бульон", "Вешенки", "Креветки", "Кальмары", "Лайм", "Кинза", "Чили перец", "Рис", "Кунжут", "Мидии голубые"]
   }
 ]
 
@@ -108,7 +108,7 @@ export const populardishes = [
       "../img/laksa.jpg",
     description: "Острый Суп с кокосовым молоком и сливками с добавлением карри",
     weight: "500g",
-    ingredients: ["Кокосовое молоко", "Сливки", "Лапша", "Карри", "Бульон том ям", "Креветки", "Зелень", "Проростки бобов"]
+    ingredients: ["Кокосовое молоко", "Сливки", "Лапша рамен", "Карри", "Бульон том ям", "Креветки", "Зелень", "Проростки бобов"]
   },
 ]
 
@@ -124,6 +124,7 @@ export const ingredientsData = [
   { name: "Говядина", type: "broth", price: 150, weight: 100, image: "../img/cheese.jpg" },
   { name: "Креветки", type: "broth", price: 180, weight: 80, image: "../img/cheese.jpg" },
   { name: "Кальмары", type: "broth", price: 140, weight: 80, image: "../img/cheese.jpg" },
+  { name: "Мидии голубые", type: "broth", price: 140, weight: 80, image: "../img/cheese.jpg" },
   { name: "Тофу", type: "broth", price: 70, weight: 100, image: "../img/cheese.jpg" },
   { name: "Яйцо маринованное", type: "topping", price: 40, weight: 50, image: "../img/cheese.jpg" },
   { name: "Ростки сои", type: "topping", price: 25, weight: 50, image: "../img/cheese.jpg" },
@@ -135,6 +136,7 @@ export const ingredientsData = [
   { name: "Шампиньоны", type: "topping", price: 50, weight: 50, image: "../img/cheese.jpg" },
   { name: "Кимчи", type: "topping", price: 60, weight: 50, image: "../img/cheese.jpg" },
   { name: "Кукуруза", type: "topping", price: 40, weight: 50, image: "../img/cheese.jpg" },
+  { name: "Сыр", type: "topping", price: 40, weight: 50, image: "../img/cheese.jpg" },
   { name: "Шиитаке", type: "topping", price: 60, weight: 50, image: "../img/cheese.jpg" },
   { name: "Вешенки", type: "topping", price: 55, weight: 50, image: "../img/cheese.jpg" },
   { name: "Кокосовое молоко", type: "extra", price: 80, weight: 100, image: "../img/cheese.jpg" },

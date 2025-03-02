@@ -39,9 +39,10 @@ function HeroSection(){
             Попробуйте настоящую азиатскую лапшу, которую доставят прямо к вам на дом.
             </p>
             <div className="relative flex items-center justify-center w-full max-w-md">    
+              <Link to={"/customproduct"}>
               <button className="px-4 py-2 text-black bg-white rounded-md">
                 Конструктор блюда
-              </button>
+              </button></Link>
             </div>
           </div>
         </div>
@@ -82,7 +83,7 @@ function FeaturesSection() {
   return (
     <section className="px-4 py-16 text-center">
       <h2 className="mb-12 text-3xl font-bold">Почему выбирают NoodleFoodle?</h2>
-      <div className="container grid grid-cols-1 mx-auto gap-10 md:grid-cols-3">
+      <div className="container grid grid-cols-1 gap-10 mx-auto md:grid-cols-3">
         {whychoose.map((item) => (
           <WhyChoose ProdObj={item} key={item.name}/>
         ))}

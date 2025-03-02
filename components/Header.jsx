@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import FeatherIcon from 'feather-icons-react';
 
 export default function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
@@ -28,35 +30,53 @@ export default function Header() {
       <div className="flex items-center">
         <span className="text-xl font-bold">NoodleFoodle</span>
       </div>
-      <nav className="items-center hidden space-x-6 md:flex">
-        <NavLink
-          className="text-gray-700 hover:text-black"
-          to="/"
-          style={({ isActive }) => ({ fontWeight: isActive ? 'bold' : '' })}
-        >
-          Главная
-        </NavLink>
-        <NavLink
-          className="text-gray-700 hover:text-black"
-          to="/menu"
-          style={({ isActive }) => ({ fontWeight: isActive ? 'bold' : '' })}
-        >
-          Меню
-        </NavLink>
-        <NavLink
-          className="text-gray-700 hover:text-black"
-          to="/contact"
-          style={({ isActive }) => ({ fontWeight: isActive ? 'bold' : '' })}
-        >
-          О нас
-        </NavLink>
-        <NavLink
-          className="text-gray-700 hover:text-black"
-          to="/shoppingcart"
-          style={({ isActive }) => ({ fontWeight: isActive ? 'bold' : '' })}
-        >
-          Корзина
-        </NavLink>
+
+      {/* Burger button */}
+      <button
+        className="p-2 md:hidden"
+        onClick={() => setIsMenuOpen(!isMenuOpen)}
+      >
+        <FeatherIcon icon={isMenuOpen ? "x" : "menu"} />
+      </button>
+
+      
+      {/* Navigation */}
+      <nav className={`absolute md:relative top-full left-0 right-0 md:flex md:items-center md:space-x-6 
+        ${isMenuOpen ? 'block bg-white shadow-lg md:shadow-none' : 'hidden'} 
+        transition-all duration-300 ease-in-out`}>
+        <div className="flex flex-col p-4 space-y-4 md:flex-row md:p-0 md:space-y-0">
+          <NavLink
+            className="px-4 py-2 text-gray-700 hover:text-black"
+            to={"/"}
+            style={({ isActive }) => ({ fontWeight: isActive ? "bold" : "" })}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Главная
+          </NavLink>
+          <NavLink
+            className="px-4 py-2 text-gray-700 hover:text-black"
+            to={"/menu"}
+            style={({ isActive }) => ({ fontWeight: isActive ? "bold" : "" })}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Меню
+          </NavLink>
+          <NavLink
+            className="px-4 py-2 text-gray-700 hover:text-black"
+            to={"/contact"}
+            style={({ isActive }) => ({ fontWeight: isActive ? "bold" : "" })}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            О нас
+          </NavLink>
+          <NavLink
+            className="px-4 py-2 text-gray-700 hover:text-black"
+            to={"/shoppingcart"}
+            style={({ isActive }) => ({ fontWeight: isActive ? "bold" : "" })}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Корзина
+          </NavLink>
         {isAuthenticated ? (
           <div className="relative flex items-center space-x-4">
             <button onClick={handleLogout} className="text-gray-700 hover:text-black">
@@ -71,7 +91,7 @@ export default function Header() {
                 />
               </button>
               {isDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg">
+                <div className="absolute right-0 w-48 mt-2 bg-white border rounded shadow-lg">
                   <NavLink
                     to="/profile"
                     className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
@@ -104,6 +124,7 @@ export default function Header() {
             Войти
           </NavLink>
         )}
+        </div>
       </nav>
     </header>
   );
