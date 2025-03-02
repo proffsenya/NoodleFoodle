@@ -33,9 +33,9 @@ export const dishes =
     price: "670₽",
     image:
       "../img/vietnam.jpg",
-    description: "Насыщенный куриный бульон с добавлением вьетнамского соуса на основе соевого соуса. Рамен вьетнамский - это рамен, ставший популярным благодаря легкому и яркому сочетанию топпингов",
+    description: "Насыщенный куриный бульон с добавлением вьетнамского соуса на основе соевого соуса.",
     weight: "600g",
-    ingredients: ["лапша рамен", "яйцо маринованное", "водоросли нори", "лук зеленый", "ростки сои", "шпинат", "красный лук", "кинза", "говяжий бульон фо-бо", "шиитаке"]
+    ingredients: ["Лапша рамен", "Яйцо маринованное", "Водоросли нори", "Лук зеленый", "Ростки сои", "Шпинат", "Красный лук", "Кинза", "Говяжий бульон фо-бо", "Шиитаке"]
   },
   {
     id: 3,
@@ -45,7 +45,7 @@ export const dishes =
       "../img/cheese.jpg",
     description: "Один из видов японских раменов, ставший популярным благодаря сырному вкусу в сочетании классического куриного бульона с добавлением японского соуса сёю",
     weight: "490g",
-    ingredients: ["лапша рамен", "яйцо маринованное", "лук зеленый", "водоросли нори", "сыр", "ростки сои", "шпинат", "кукуруза", "шиитаке"]
+    ingredients: ["Лапша рамен", "Яйцо маринованное", "Лук зеленый", "Водоросли нори", "Сыр", "Ростки сои", "Шпинат", "Кукуруза", "Шиитаке"]
   },
   {
     id: 4,
@@ -55,7 +55,7 @@ export const dishes =
       "../img/laksa.jpg",
     description: "Острый Суп с кокосовым молоком и сливками с добавлением карри",
     weight: "500g",
-    ingredients: ["кокосовое молоко", "сливки", "лапша", "карри", "бульон том ям", "креветки", "зелень", "проростки бобов"]
+    ingredients: ["Кокосовое молоко", "Сливки", "Лапша", "Карри", "Бульон том ям", "Креветки", "Зелень", "Проростки бобов"]
   },
   {
     id: 5,
@@ -65,7 +65,7 @@ export const dishes =
       "../img/royal.jpg",
     description: "это роскошный тайский суп с королевскими морепродуктами, включая креветки, лосось и мидии, приготовленный на основе креветочного бульона и ароматных специй, таких как имбирь, красный лук и перец чилиx",
     weight: "500g",
-    ingredients: ["Креветки", "грибы вешенки", "кальмар", "мидии голубые", "рис", "лайм", "кинза", "чили перец"]
+    ingredients: ["Креветки", "Грибы вешенки", "Кальмар", "Мидии голубые", "Рис", "Лайм", "Кинза", "Чили перец"]
   },
   {
     id: 6,
@@ -75,7 +75,7 @@ export const dishes =
       "../img/classic.jpg",
     description: "Это самый популярный вариант среди туристов. Острота чили смягчается сладковато-сливочным кокосом, позволяя другим вкусам лучше раскрыться.",
     weight: "450g",
-    ingredients: ["Тайский бульон", "вешенки", "креветки", "кальмар", "лайм", "кинза", "чили", "рис", "кунжут", "мидии"]
+    ingredients: ["Тайский бульон", "Вешенки", "Креветки", "Кальмар", "Лайм", "Кинза", "Чили", "Рис", "Кунжут", "Мидии"]
   }
 ]
 
@@ -88,7 +88,7 @@ export const populardishes = [
       "../img/vietnam.jpg",
     description: "Насыщенный куриный бульон с добавлением вьетнамского соуса на основе соевого соуса. Рамен вьетнамский - это рамен, ставший популярным благодаря легкому и яркому сочетанию топпингов",
     weight: "600g",
-    ingredients: ["лапша рамен", "яйцо маринованное", "водоросли нори", "лук зеленый", "ростки сои", "шпинат", "красный лук", "кинза", "говяжий бульон фо-бо", "шиитаке"]
+    ingredients: ["Лапша рамен", "Яйцо маринованное", "Водоросли нори", "Лук зеленый", "Ростки сои", "Шпинат", "Красный лук", "Кинза", "Говяжий бульон фо-бо", "Шиитаке"]
   },
   {
     id: 3,
@@ -98,7 +98,7 @@ export const populardishes = [
       "../img/cheese.jpg",
     description: "Один из видов японских раменов, ставший популярным благодаря сырному вкусу в сочетании классического куриного бульона с добавлением японского соуса сёю",
     weight: "490g",
-    ingredients: ["лапша рамен", "яйцо маринованное", "лук зеленый", "водоросли нори", "сыр", "ростки сои", "шпинат", "кукуруза", "шиитаке"]
+    ingredients: ["Лапша рамен", "Яйцо маринованное", "Лук зеленый", "Водоросли нори", "Сыр", "Ростки сои", "Шпинат", "Кукуруза", "Шиитаке"]
   },
   {
     id: 4,
@@ -108,35 +108,43 @@ export const populardishes = [
       "../img/laksa.jpg",
     description: "Острый Суп с кокосовым молоком и сливками с добавлением карри",
     weight: "500g",
-    ingredients: ["кокосовое молоко", "сливки", "лапша", "карри", "бульон том ям", "креветки", "зелень", "проростки бобов"]
+    ingredients: ["Кокосовое молоко", "Сливки", "Лапша", "Карри", "Бульон том ям", "Креветки", "Зелень", "Проростки бобов"]
   },
 ]
 
 export const ingredientsData = [
-  { name: "Thick Noodles", type: "noodles", price: 3.99, weight: 200 },
-  { name: "Thin Wheat Noodles", type: "noodles", price: 3.99, weight: 200 },
-  { name: "Rice Noodles", type: "noodles", price: 3.99, weight: 200 },
-  { name: "Tonkotsu", type: "broth", price: 4.99, weight: 300 },
-  { name: "Miso", type: "broth", price: 4.99, weight: 300 },
-  { name: "Shoyu", type: "broth", price: 4.99, weight: 300 },
-  { name: "Chashu Pork", type: "topping", price: 3.99, weight: 50 },
-  { name: "Soft-Boiled Egg", type: "topping", price: 1.99, weight: 30 },
-  { name: "Green Onions", type: "topping", price: 0.99, weight: 20 },
-  { name: "Bamboo Shoots", type: "topping", price: 1.99, weight: 40 },
-  { name: "Nori", type: "topping", price: 0.99, weight: 10 },
-  { name: "Spicy Sauce", type: "extra", price: 0.99, weight: 20 },
-  { name: "Garlic Oil", type: "extra", price: 0.99, weight: 20 },
-  { name: "Thick Noodles", type: "noodles", price: 3.99, weight: 200 },
-  { name: "Thin Wheat Noodles", type: "noodles", price: 3.99, weight: 200 },
-  { name: "Rice Noodles", type: "noodles", price: 3.99, weight: 200 },
-  { name: "Tonkotsu", type: "broth", price: 4.99, weight: 300 },
-  { name: "Miso", type: "broth", price: 4.99, weight: 300 },
-  { name: "Shoyu", type: "broth", price: 4.99, weight: 300 },
-  { name: "Chashu Pork", type: "topping", price: 3.99, weight: 50 },
-  { name: "Soft-Boiled Egg", type: "topping", price: 1.99, weight: 30 },
-  { name: "Green Onions", type: "topping", price: 0.99, weight: 20 },
-  { name: "Bamboo Shoots", type: "topping", price: 1.99, weight: 40 },
-  { name: "Nori", type: "topping", price: 0.99, weight: 10 },
-  { name: "Spicy Sauce", type: "extra", price: 0.99, weight: 20 },
-  { name: "Garlic Oil", type: "extra", price: 0.99, weight: 20 }
+  { name: "Лапша рамен", type: "noodles", price: 60, weight: 150, image: "../img/cheese.jpg" },
+  { name: "Лапша рамен", type: "noodles", price: 60, weight: 150, image: "../img/cheese.jpg" },
+  { name: "Рис", type: "noodles", price: 50, weight: 120, image: "../img/cheese.jpg" },
+  { name: "Говяжий бульон фо-бо", type: "broth", price: 90, weight: 300, image: "../img/cheese.jpg" },
+  { name: "Бульон том ям", type: "broth", price: 100, weight: 300, image: "../img/cheese.jpg" },
+  { name: "Тайский бульон", type: "broth", price: 110, weight: 300, image: "../img/cheese.jpg" },
+  { name: "Свинина", type: "broth", price: 120, weight: 100, image: "../img/cheese.jpg" },
+  { name: "Курица", type: "broth", price: 90, weight: 100, image: "../img/cheese.jpg" },
+  { name: "Говядина", type: "broth", price: 150, weight: 100, image: "../img/cheese.jpg" },
+  { name: "Креветки", type: "broth", price: 180, weight: 80, image: "../img/cheese.jpg" },
+  { name: "Кальмары", type: "broth", price: 140, weight: 80, image: "../img/cheese.jpg" },
+  { name: "Тофу", type: "broth", price: 70, weight: 100, image: "../img/cheese.jpg" },
+  { name: "Яйцо маринованное", type: "topping", price: 40, weight: 50, image: "../img/cheese.jpg" },
+  { name: "Ростки сои", type: "topping", price: 25, weight: 50, image: "../img/cheese.jpg" },
+  { name: "Шпинат", type: "topping", price: 30, weight: 50, image: "../img/cheese.jpg" },
+  { name: "Красный лук", type: "topping", price: 35, weight: 40, image: "../img/cheese.jpg" },
+  { name: "Кинза", type: "topping", price: 20, weight: 15, image: "../img/cheese.jpg" },
+  { name: "Лук зеленый", type: "topping", price: 20, weight: 30, image: "../img/cheese.jpg" },
+  { name: "Капуста", type: "topping", price: 30, weight: 50, image: "../img/cheese.jpg" },
+  { name: "Шампиньоны", type: "topping", price: 50, weight: 50, image: "../img/cheese.jpg" },
+  { name: "Кимчи", type: "topping", price: 60, weight: 50, image: "../img/cheese.jpg" },
+  { name: "Кукуруза", type: "topping", price: 40, weight: 50, image: "../img/cheese.jpg" },
+  { name: "Шиитаке", type: "topping", price: 60, weight: 50, image: "../img/cheese.jpg" },
+  { name: "Вешенки", type: "topping", price: 55, weight: 50, image: "../img/cheese.jpg" },
+  { name: "Кокосовое молоко", type: "extra", price: 80, weight: 100, image: "../img/cheese.jpg" },
+  { name: "Сливки", type: "extra", price: 50, weight: 50, image: "../img/cheese.jpg" },
+  { name: "Карри", type: "extra", price: 30, weight: 20, image: "../img/cheese.jpg" },
+  { name: "Лайм", type: "extra", price: 25, weight: 30, image: "../img/cheese.jpg" },
+  { name: "Чили перец", type: "extra", price: 20, weight: 10, image: "../img/cheese.jpg" },
+  { name: "Водоросли нори", type: "extra", price: 50, weight: 10, image: "../img/cheese.jpg" },
+  { name: "Кунжут", type: "extra", price: 15, weight: 5, image: "../img/cheese.jpg" },
+  { name: "Маринованный имбирь", type: "extra", price: 30, weight: 20, image: "../img/cheese.jpg" },
+  { name: "Чили масло", type: "extra", price: 25, weight: 10, image: "../img/cheese.jpg" },
+  { name: "Соус тэрияки", type: "extra", price: 35, weight: 15, image: "../img/cheese.jpg" },
 ];
