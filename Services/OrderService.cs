@@ -39,7 +39,7 @@ namespace NoodleFoodle.Services
             existingOrder.OrderDate = order.OrderDate;
             existingOrder.TotalSum = order.TotalSum;
             existingOrder.OrderStatus = order.OrderStatus;
-            existingOrder.DishId = order.DishId;
+            existingOrder.Dishes = order.Dishes;
             existingOrder.AmountDishes = order.AmountDishes;
 
             await _context.SaveChangesAsync();

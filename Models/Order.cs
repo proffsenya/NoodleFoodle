@@ -27,9 +27,6 @@ public partial class Order
     [StringLength(50)]
     public string OrderStatus { get; set; } = "Pending";
 
-    [Column("dish_id", TypeName = "int(11)")]
-    public int DishId { get; set; }
-
     [Column("amount_dishes", TypeName = "int(11)")]
     public int AmountDishes { get; set; }
 
