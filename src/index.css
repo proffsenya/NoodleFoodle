@@ -314,7 +314,7 @@
   font-size: 0.875rem;
   color: #64748b;
 }
- 
+
 @media (max-width: 768px) {
   .ramen-builder-container {
     grid-template-columns: 1fr;
@@ -328,10 +328,6 @@
     margin-bottom: 1rem;
   }
 
-  .wooden-bowl {
-    width: 100%;
-    height: 300px;
-  }
 
   .price-summary {
     max-width: 100%;
@@ -353,3 +349,69 @@
     width: 100%;
   }
 }
+
+@layer components {
+  .dark {
+    --bg-color: #1a1a1a;
+    --text-primary: #ffffff;
+    --text-secondary: #d1d5db;
+    --accent-primary: #4f46e5;
+    --accent-secondary: #6366f1;
+    --card-bg: #262626;
+    --input-bg: #374151;
+  }
+
+  .dark .header,
+  .dark .footer {
+    @apply bg-gray-900 shadow-lg shadow-gray-800/20;
+  }
+
+  .dark .ingredients-panel,
+  .dark .bowl-container {
+    @apply bg-gray-800 border border-gray-700;
+  }
+
+  .dark .ingredient-item {
+    @apply bg-gray-700 hover:bg-gray-600 text-gray-200;
+  }
+
+  .dark .wooden-bowl {
+    @apply bg-amber-900 border-2 border-amber-800;
+  }
+
+  .dark .weight-indicator {
+    @apply bg-gray-900 text-gray-100;
+  }
+
+  .dark .price-summary {
+    @apply bg-gray-800 text-gray-200;
+  }
+
+  .dark .btn-primary {
+    @apply bg-indigo-600 hover:bg-indigo-700 text-white;
+  }
+
+  .dark input,
+  .dark textarea {
+    @apply bg-gray-700 border-gray-600 text-white placeholder-gray-400;
+  }
+
+  .dark .ingredient-badge {
+    @apply bg-gray-600 text-gray-100;
+  }
+}
+
+.dark {
+  --bg-color: #1f2937;
+  --text-color: #ffffff;
+  --bg-secondary: #374151;
+  --text-secondary: #ffffff;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+
+
