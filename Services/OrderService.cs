@@ -7,9 +7,9 @@ namespace NoodleFoodle.Services
 {
     public class OrderService : IOrderService
     {
-        private readonly AppDbContext _context;
+        private readonly Test1Context _context;
 
-        public OrderService(AppDbContext context)
+        public OrderService(Test1Context context)
         {
             _context = context;
         }

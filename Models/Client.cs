@@ -21,5 +21,8 @@ namespace NoodleFoodle.Models {
         public string Address { get; } = string.Empty;
         [Column("password")]
         public string Password { get; } = string.Empty;
+
+        [InverseProperty("Client")]
+        public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
     }
 }

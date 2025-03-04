@@ -7,9 +7,9 @@ namespace NoodleFoodle.Services
 {
     public class DishService : IDishService
     {
-        private readonly AppDbContext _context;
+        private readonly Test1Context _context;
 
-        public DishService(AppDbContext context)
+        public DishService(Test1Context context)
         {
             _context = context;
         }

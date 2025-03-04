@@ -1,8 +1,12 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using NoodleFoodle;
+using NoodleFoodle.Services;
+using System.Reflection;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Добавляем контекст базы данных
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IJWTService, JWTService>();
