@@ -7,10 +7,12 @@ import Home from "../pages/Home";
 import Menu from "../pages/Menu";
 import NotFound from "../pages/NotFound";
 import ProductDetails from "../pages/ProductDetails";
-import ShoppingCart from "../pages/ShoppingCart";
+import ShoppingCart from "../pages/ShoppingCart"; 
 import Login from "../pages/Login";
 import Profile from "../pages/Profile";
 import Register from "../pages/Register";
+import History from "../pages/History"; 
+import Checkout from "../pages/Checkout"; 
 
 import Header from "../components/Header";
 import "../src/index.css";
@@ -69,7 +71,17 @@ export default function App() {
       element: (
         <>
           <Header isLoggedIn={isLoggedIn} />
-          <ShoppingCart />
+          <ShoppingCart /> {}
+          <ScrollToTop />
+        </>
+      ),
+    },
+    {
+      path: "/checkout",
+      element: (
+        <>
+          <Header isLoggedIn={isLoggedIn} />
+          <Checkout /> {}
           <ScrollToTop />
         </>
       ),
@@ -90,6 +102,16 @@ export default function App() {
         <>
           <Header isLoggedIn={isLoggedIn} />
           <Profile />
+          <ScrollToTop />
+        </>
+      ),
+    },
+    {
+      path: "/history",
+      element: (
+        <>
+          <Header isLoggedIn={isLoggedIn} />
+          <History />
           <ScrollToTop />
         </>
       ),
