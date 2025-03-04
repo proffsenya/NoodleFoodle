@@ -1,17 +1,12 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
-using NoodleFoodle;
-using NoodleFoodle.Services;
-using System.Reflection;
-
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Добавляем контекст базы данных
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IJWTService, JWTService>();
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<Test1Context>(options =>
@@ -45,7 +40,7 @@ builder.Services.AddSwaggerGen(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Настройка HTTP-конвейера
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
