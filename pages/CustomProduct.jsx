@@ -45,7 +45,7 @@ export default function CustomProduct() {
   };
 
   return (
-    <section className="ramen-builder">
+    <section className="ramen-builder dark:bg-gray-900 dark:text-white">
       <Header />
       <div className="ramen-builder-container flex flex-col md:grid md:grid-cols-[1fr_2fr_1fr] gap-4 p-4">
         <LeftPanel onDrop={handleDrop} />
@@ -71,7 +71,7 @@ function LeftPanel({ onDrop }) {
   const broths = ingredientsData.filter((item) => item.type === "broth");
 
   return (
-    <div className="ingredients-panel md:sticky md:top-24 h-fit">
+    <div className="ingredients-panel md:sticky md:top-24 h-fit dark:bg-gray-800 dark:text-white">
       {renderIngredientCategory("Лапша", noodles, onDrop)}
       {renderIngredientCategory("Бульон", broths, onDrop)}
     </div>
@@ -83,7 +83,7 @@ function RightPanel({ onDrop }) {
   const extras = ingredientsData.filter((item) => item.type === "extra");
 
   return (
-    <div className="ingredients-panel md:sticky md:top-24 h-fit">
+    <div className="ingredients-panel md:sticky md:top-24 h-fit dark:bg-gray-800 dark:text-white">
       {renderIngredientCategory("Начинки", toppings, onDrop)}
       {renderIngredientCategory("Дополнительно", extras, onDrop)}
     </div>
@@ -92,18 +92,18 @@ function RightPanel({ onDrop }) {
 
 function renderIngredientCategory(title, ingredients, onDrop) {
   return (
-    <div className="ingredients-category">
-      <h3 className="mb-2 text-lg font-semibold">{title}</h3>
+    <div className="ingredients-category dark:bg-gray-700">
+      <h3 className="mb-2 text-lg font-semibold dark:text-white">{title}</h3>
       <div className="flex gap-2 pb-2 overflow-x-auto md:flex-col md:overflow-visible">
         {ingredients.map((ingredient) => (
           <div
             key={ingredient.name}
-            className="ingredient-item min-w-[200px] md:min-w-0"
+            className="ingredient-item min-w-[200px] md:min-w-0 dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-gray-200"
             draggable
             onDragStart={(e) => e.dataTransfer.setData("ingredient", JSON.stringify(ingredient))}
           >
             <span>{ingredient.name}</span>
-            <div className="ingredient-weight">{ingredient.weight}г</div>
+            <div className="ingredient-weight dark:text-gray-400">{ingredient.weight}г</div>
           </div>
         ))}
       </div>
@@ -130,23 +130,23 @@ function CenterBowl({
   };
 
   return (
-    <div className="bowl-container" onDrop={handleDropInBowl} onDragOver={(e) => e.preventDefault()}>
-      <h2 className="mb-4 text-2xl font-bold text-center">Создайте свой собственный рамен</h2>
-      <p className="mb-4 text-center text-gray-600">Возьмите и перетащите ингредиенты (Максимально 700г)</p>
-      {typeError && <p className="mb-4 text-center text-red-600">{typeError}</p>}
+    <div className="bowl-container dark:bg-gray-800" onDrop={handleDropInBowl} onDragOver={(e) => e.preventDefault()}>
+      <h2 className="mb-4 text-2xl font-bold text-center dark:text-white">Создайте свой собственный рамен</h2>
+      <p className="mb-4 text-center text-gray-600 dark:text-gray-400">Возьмите и перетащите ингредиенты (Максимально 700г)</p>
+      {typeError && <p className="mb-4 text-center text-red-600 dark:text-red-400">{typeError}</p>}
 
-      <div className="wooden-bowl w-full max-w-[400px] mx-auto">
-        <div className="bowl-content">
+      <div className="wooden-bowl w-full max-w-[400px] mx-auto dark:bg-gray-700">
+        <div className="bowl-content dark:bg-gray-600">
           <div className="selected-ingredients">
             {selectedIngredients.length === 0 ? (
-              <p className="text-center text-gray-500">Перетащите ингредиенты сюда</p>
+              <p className="text-center text-gray-500 dark:text-gray-300">Перетащите ингредиенты сюда</p>
             ) : (
               selectedIngredients.map((ingredient, index) => (
-                <div key={index} className="ingredient-badge">
-                  <span>{ingredient.name}</span>
-                  <button 
+                <div key={index} className="ingredient-badge dark:bg-gray-500">
+                  <span className="dark:text-white">{ingredient.name}</span>
+                  <button
                     onClick={() => onRemove(index)}
-                    className="ml-2 text-red-500 hover:text-red-700"
+                    className="ml-2 text-red-500 hover:text-red-700 dark:text-red-300"
                   >
                     ⛌
                   </button>
@@ -154,14 +154,14 @@ function CenterBowl({
               ))
             )}
           </div>
-          <div className="weight-indicator">
+          <div className="weight-indicator dark:bg-gray-800 dark:text-white">
             {currentWeight}г / {MAX_WEIGHT}г
           </div>
         </div>
       </div>
 
-      <div className="mt-8 price-summary">
-        <h3 className="mb-4 text-xl font-semibold">Ваш рамен</h3>
+      <div className="mt-8 price-summary dark:text-gray-200">
+        <h3 className="mb-4 text-xl font-semibold dark:text-white">Ваш рамен</h3>
         <div className="flex justify-between mb-2 total-price">
           <span>Общий вес:</span>
           <span>{currentWeight}г</span>
@@ -170,8 +170,8 @@ function CenterBowl({
           <span>Итого:</span>
           <span className="font-bold">{totalPrice.toFixed(2)}₽</span>
         </div>
-        <button 
-          className="w-full py-3 btn-primary"
+        <button
+          className="w-full py-3 btn-primary dark:bg-red-600 dark:hover:bg-red-700"
           onClick={onClear}
         >
           Убрать всё
