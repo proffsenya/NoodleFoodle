@@ -13,9 +13,11 @@ import Profile from "../pages/Profile";
 import Register from "../pages/Register";
 import History from "../pages/History"; 
 import Checkout from "../pages/Checkout"; 
+import Recipe from "../pages/Recipe"; 
 
 import Header from "../components/Header";
 import "../src/index.css";
+import { ThemeProvider } from "./context/ThemeContext";
 
 const ScrollToTop = () => {
   window.scrollTo(0, 0);
@@ -117,6 +119,16 @@ export default function App() {
       ),
     },
     {
+      path: "/recipe",
+      element: (
+        <>
+          <Header isLoggedIn={isLoggedIn} />
+          <Recipe />
+          <ScrollToTop />
+        </>
+      ),
+    },
+    {
       path: "/login",
       element: (
         <>
@@ -148,5 +160,10 @@ export default function App() {
     },
   ]);
 
-  return <RouterProvider router={router} />;
+  return (
+    <ThemeProvider>
+      <RouterProvider router={router} />;
+    </ThemeProvider>
+    
+  )
 }
