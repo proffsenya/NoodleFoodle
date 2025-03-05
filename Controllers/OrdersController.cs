@@ -57,4 +57,36 @@ public class OrdersController : ControllerBase
 
         return NoContent();
     }
+
+    // Методы для работы с корзиной внутри заказа
+
+    [HttpPost("{orderId}/add-dish/{dishId}")]
+    public async Task<ActionResult> AddDishToOrder(int orderId, int dishId)
+    {
+        var success = await _orderService.AddDishToOrder(orderId, dishId);
+        if (!success) return NotFound();
+        return NoContent();
+    }
+
+    [HttpDelete("{orderId}/remove-dish/{dishId}")]
+    public async Task<ActionResult> RemoveDishFromOrder(int orderId, int dishId)
+    {
+        var success = await _orderService.RemoveDishFromOrder(orderId, dishId);
+        if (!success) return NotFound();
+        return NoContent();
+    }
+
+    [HttpGet("{orderId}/contents")]
+    public async Task<ActionResult<IEnumerable<Dish>>> GetOrderContents(int orderId)
+    {
+        return Ok(await _orderService.GetOrderContents(orderId));
+    }
+
+    [HttpDelete("{orderId}/clear")]
+    public async Task<ActionResult> ClearOrder(int orderId)
+    {
+        var success = await _orderService.ClearOrder(orderId);
+        if (!success) return NotFound();
+        return NoContent();
+    }
 }

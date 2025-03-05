@@ -55,5 +55,44 @@ namespace NoodleFoodle.Services
             await _context.SaveChangesAsync();
             return true;
         }
+
+
+        public async Task<bool> AddDishToOrder(int orderId, int dishId)
+        {
+            var order = await _context.Orders.Include(o => o.Dishes).FirstOrDefaultAsync(o => o.Id == orderId);
+            var dish = await _context.Dishes.FindAsync(dishId);
+
+            if (order == null || dish == null) return false;
+
+            order.Dishes.Add(dish);
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> RemoveDishFromOrder(int orderId, int dishId)
+        {
+            var order = await _context.Orders.Include(o => o.Dishes).FirstOrDefaultAsync(o => o.Id == orderId);
+            if (order == null) return false;
+
+            var dish = order.Dishes.FirstOrDefault(d => d.Id == dishId);
+            if (dish == null) return false;
+
+            order.Dishes.Remove(dish);
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<IEnumerable<Dish>> GetOrderContents(int orderId)
+        {
+            var order = await _context.Orders.Include(o => o.Dishes).FirstOrDefaultAsync(o => o.Id == orderId);
+            return order?.Dishes ?? new List<Dish>();
+        }
+        public async Task<bool> ClearOrder(int orderId)
+        {
+            var order = await _context.Orders.Include(o => o.Dishes).FirstOrDefaultAsync(o => o.Id == orderId);
+            if (order == null) return false;
+
+            _context.Orders.Remove(order); // Удаляем сам заказ
+            return await _context.SaveChangesAsync() > 0;
+        }
+
     }
 }
