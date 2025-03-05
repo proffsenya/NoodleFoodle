@@ -6,9 +6,9 @@ import "../src/index.css";
 
 export default function Register() {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 flex flex-col transition-colors duration-300">
+    <div className="flex flex-col min-h-screen transition-colors duration-300 bg-white dark:bg-gray-900">
       <Header />
-      <div className="flex-grow flex items-center my-20 pt-10 justify-center">
+      <div className="flex items-center justify-center flex-grow pt-10 my-20">
         <RegisterSection />
       </div>
       <Footer />
@@ -61,7 +61,7 @@ function RegisterSection() {
   };
 
   return (
-    <section id="register" className="w-full max-w-md p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg dark:shadow-gray-900/30 transition-colors duration-300">
+    <section id="register" className="w-full max-w-md p-6 transition-colors duration-300 bg-white rounded-lg shadow-lg dark:bg-gray-800 dark:shadow-gray-900/30">
       <h1 className="mb-4 text-4xl font-bold text-center text-gray-800 dark:text-white">
         Регистрация
       </h1>
@@ -115,7 +115,7 @@ function RegisterSection() {
             required
           />
           {errors.cardNumber && (
-            <p className="text-red-500 dark:text-red-400 text-sm mt-1">{errors.cardNumber}</p>
+            <p className="mt-1 text-sm text-red-500 dark:text-red-400">{errors.cardNumber}</p>
           )}
         </div>
         <div>
@@ -151,7 +151,7 @@ function RegisterSection() {
             required
           />
           {errors.email && (
-            <p className="text-red-500 dark:text-red-400 text-sm mt-1">{errors.email}</p>
+            <p className="mt-1 text-sm text-red-500 dark:text-red-400">{errors.email}</p>
           )}
         </div>
         <div>
@@ -171,7 +171,7 @@ function RegisterSection() {
         </div>
         <button
           type="submit"
-          className="w-full px-6 py-3 text-white bg-black rounded-md hover:bg-gray-800 dark:bg-indigo-600 dark:hover:bg-indigo-700 transition-colors duration-300"
+          className="w-full px-6 py-3 text-white transition-colors duration-300 bg-black rounded-md hover:bg-gray-800 dark:bg-indigo-600 dark:hover:bg-indigo-700"
         >
           Зарегистрироваться
         </button>

@@ -66,17 +66,17 @@ export default function ShoppingCart() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col">
+    <div className="flex flex-col min-h-screen bg-gray-100">
       <Header />
-      <div className="flex-grow flex flex-col items-center p-8 space-y-12" style={{ paddingLeft: "30px", paddingRight: "30px", paddingBottom: "90px" }}>
-        <h1 className="text-4xl font-bold text-gray-900 mt-16 mb-8">Корзина</h1>
+      <div className="flex flex-col items-center flex-grow p-8 space-y-12" style={{ paddingLeft: "30px", paddingRight: "30px", paddingBottom: "90px" }}>
+        <h1 className="mt-16 mb-8 text-4xl font-bold text-gray-900">Корзина</h1>
 
         {cartItems.length === 0 ? (
-          <div className="flex flex-col items-center bg-white p-8 rounded-lg shadow-md w-full max-w-2xl">
+          <div className="flex flex-col items-center w-full max-w-2xl p-8 bg-white rounded-lg shadow-md">
             <p className="text-2xl text-gray-700">Ваша корзина пуста.</p>
             <Link
               to="/menu"
-              className="mt-6 px-6 py-3 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 transition-colors text-lg"
+              className="px-6 py-3 mt-6 text-lg text-white transition-colors bg-blue-600 rounded-lg shadow-lg hover:bg-blue-700"
             >
               Перейти к меню
             </Link>
@@ -85,7 +85,7 @@ export default function ShoppingCart() {
           <div className="w-full max-w-2xl bg-white rounded-lg shadow-md">
             {cartItems.map(item => (
               <div key={item.id} className="flex items-center p-4 border-b border-gray-200">
-                <img src={item.image} alt={item.name} className="w-24 h-24 object-cover rounded-lg" />
+                <img src={item.image} alt={item.name} className="object-cover w-24 h-24 rounded-lg" />
                 <div className="flex-grow ml-4">
                   <h3 className="text-xl font-bold text-gray-900">{item.name}</h3>
                   <p className="text-lg text-gray-700">Цена: {item.price} ₽</p>
@@ -93,14 +93,14 @@ export default function ShoppingCart() {
                 <div className="flex items-center space-x-2">
                   <button
                     onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
-                    className="bg-gray-200 rounded-full p-2 hover:bg-gray-300"
+                    className="p-2 bg-gray-200 rounded-full hover:bg-gray-300"
                   >
                     <FaMinus />
                   </button>
                   <span className="text-xl">{item.quantity}</span>
                   <button
                     onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-                    className="bg-gray-200 rounded-full p-2 hover:bg-gray-300"
+                    className="p-2 bg-gray-200 rounded-full hover:bg-gray-300"
                   >
                     <FaPlus />
                   </button>
@@ -117,25 +117,25 @@ export default function ShoppingCart() {
             ))}
 
             <div className="p-4">
-              <div className="flex flex-col-reverse md:flex-row justify-between items-center mt-8">
+              <div className="flex flex-col-reverse items-center justify-between mt-8 md:flex-row">
                 <div className="flex flex-col mt-4 md:mt-0">
                   <input
                     type="text"
                     value={discountCode}
                     onChange={(e) => setDiscountCode(e.target.value)}
                     placeholder="Введите код скидки"
-                    className="border border-gray-300 rounded-lg px-4 py-2 w-64"
+                    className="w-64 px-4 py-2 border border-gray-300 rounded-lg"
                   />
                   <button
                     onClick={applyDiscount}
-                    className="px-6 py-2 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 transition-colors mt-2"
+                    className="px-6 py-2 mt-2 text-white transition-colors bg-blue-600 rounded-lg shadow-lg hover:bg-blue-700"
                   >
                     Применить промокод
                   </button>
                 </div>
                 <Link
                   to="/checkout"
-                  className="px-6 py-3 bg-green-600 text-white rounded-lg shadow-lg hover:bg-green-700 transition-colors text-lg w-full md:w-auto md:ml-4"
+                  className="w-full px-6 py-3 text-lg text-white transition-colors bg-green-600 rounded-lg shadow-lg hover:bg-green-700 md:w-auto md:ml-4"
                 >
                   Оформить заказ
                 </Link>
