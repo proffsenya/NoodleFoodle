@@ -24,6 +24,9 @@ public partial class Ingredient
     [Column("dish_id", TypeName = "int(11)")]
     public int? DishId { get; set; }
 
+    [Column("kcal")]
+    public int Kcal { get; set; }
+
     [ForeignKey("DishId")]
     [InverseProperty("Ingredients")]
     public virtual Dish? Dish { get; set; }

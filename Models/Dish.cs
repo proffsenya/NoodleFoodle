@@ -27,6 +27,16 @@ public partial class Dish
     [Column("order_id", TypeName = "int(11)")]
     public int? OrderId { get; set; }
 
+    [Column("type")]
+    [StringLength(50)]
+    public string Type { get; set; } = "standard"; // standard / custom
+
+    [Column("client_id", TypeName = "int(11)")]
+    public int? ClientId { get; set; }
+
+    [ForeignKey("ClientId")]
+    public virtual Client? Client { get; set; }
+
     [ForeignKey("OrderId")]
     [InverseProperty("Dishes")]
     public virtual Order? Order { get; set; }
