@@ -1,27 +1,37 @@
 import React, { useState } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import { Link } from "react-router-dom";
+import { useInView } from "react-intersection-observer";
+import FeatherIcon from 'feather-icons-react';
 
 export default function Profile() {
   const [username, setUsername] = useState("Пользователь");
   const [avatar, setAvatar] = useState(null);
+  const [address, setAddress] = useState("Улица Примера, 123, Город, Страна");
+  const [birthday, setBirthday] = useState("");
+  const [phoneName, setPhoneName] = useState("");
   const [isEditing, setIsEditing] = useState(false);
-  const [activeTab, setActiveTab] = useState("favorites");
+  const [activeAccordion, setActiveAccordion] = useState(null);
+
+  const { ref: profileRef, inView: profileInView } = useInView({ triggerOnce: true, threshold: 0.5 });
+  const { ref: infoRef, inView: infoInView } = useInView({ triggerOnce: true, threshold: 0.5 });
+  const { ref: historyLinkRef, inView: historyLinkInView } = useInView({ triggerOnce: true, threshold: 0.5 });
+  const { ref: giftsRef, inView: giftsInView } = useInView({ triggerOnce: true, threshold: 0.5 });
+  const { ref: promoCodesRef, inView: promoCodesInView } = useInView({ triggerOnce: true, threshold: 0.5 });
 
   const userInfo = {
     email: "user@example.com",
     registrationDate: "2023-01-01",
     loyaltyPoints: 150,
-    orderHistory: [
-      { id: 1, date: "2023-02-01", total: "$50", items: ["Салат Цезарь", "Стейк"] },
-      { id: 2, date: "2023-03-15", total: "$75", items: ["Паста Карбонара", "Тирамису"] },
+    personalizedGifts: [
+      "Скидка 10% на следующий заказ",
+      "Бесплатная доставка",
+      "Подарок на день рождения",
+      "Эксклюзивный рецепт",
+      "Приглашение на мастер-класс",
     ],
-    savedRecipes: [
-      { id: 1, name: "Салат Цезарь", ingredients: ["Курица", "Салат", "Сухарики", "Соус"] },
-      { id: 2, name: "Паста Карбонара", ingredients: ["Паста", "Бекон", "Сыр", "Яйцо"] },
-    ],
-    personalizedGifts: ["Скидка 10% на следующий заказ"],
-    promoCodes: ["WELCOME10", "SUMMER20", "HOLIDAY15"],
+    promoCodes: ["WELCOME10", "SUMMER20", "HOLIDAY15", "FRIENDS50", "NEWYEAR30"],
   };
 
   const handleAvatarChange = (event) => {
@@ -49,165 +59,229 @@ export default function Profile() {
     alert("Скопировано в буфер обмена: " + text);
   };
 
+  const toggleAccordion = (index) => {
+    setActiveAccordion((prevIndex) => (prevIndex === index ? null : index));
+  };
+
   return (
-    <div className="min-h-screen bg-white flex flex-col text-black">
+    <div className="min-h-[150vh] flex flex-col text-black bg-white">
       <Header />
-      <div className="flex-grow flex justify-center items-start p-10">
-        <div className="w-full max-w-6xl flex flex-col space-y-10 bg-white rounded-xl shadow-lg p-8">
-          <div className="p-6 bg-white rounded-lg shadow-md space-y-6 fade-in">
-            <div className="flex justify-center">
-              {avatar ? (
-                <img
-                  src={avatar}
-                  alt="Аватар"
-                  className="w-48 h-48 rounded-full object-cover border-4 border-gray-900 hover:scale-105 transition-transform"
-                />
-              ) : (
-                <div className="w-48 h-48 rounded-full bg-gray-300 flex items-center justify-center text-gray-900 text-6xl border-4 border-gray-900 hover:scale-105 transition-transform">
-                  👤
-                </div>
-              )}
-            </div>
-            {isEditing && (
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleAvatarChange}
-                className="mb-4"
-              />
-            )}
-            <div className="w-full text-center">
+      <div className="relative z-10 flex flex-col items-center flex-grow p-10 space-y-20">
+        <div className="grid w-full grid-cols-1 gap-24 mt-24 md:grid-cols-2">
+          <div
+            ref={profileRef}
+            className={`transform transition-all duration-1000 ease-in-out ${profileInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"}`}
+          >
+            <div className="bg-white/90 backdrop-blur-md rounded-xl shadow-xl p-8 h-[500px] transform transition-transform">
+              <h2 className="mb-6 text-3xl font-bold text-gray-900">Профиль</h2>
+              <div className="flex justify-center">
+                {avatar ? (
+                  <img
+                    src={avatar}
+                    alt="Аватар"
+                    className="object-cover w-48 h-48 border-4 border-gray-900 rounded-full"
+                  />
+                ) : (
+                  <div className="flex items-center justify-center w-48 h-48 text-6xl text-gray-900 bg-gray-300 border-4 border-gray-900 rounded-full">
+                    👤
+                  </div>
+                )}
+              </div>
               {isEditing ? (
                 <input
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  className="w-full px-4 py-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-900 transition-colors text-xl"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleAvatarChange}
+                  className="mb-6"
                 />
-              ) : (
-                <p className="text-2xl text-gray-900 fade-in">{username}</p>
-              )}
+              ) : null}
+              <div className="w-full mt-6 text-center">
+                {isEditing ? (
+                  <input
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    className="w-full px-4 py-3 text-xl transition-colors border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-900"
+                  />
+                ) : (
+                  <p className="text-3xl text-gray-900 fade-in">{username}</p>
+                )}
+              </div>
+              <div className="flex justify-center mt-6 space-x-4">
+                {isEditing ? (
+                  <button
+                    onClick={handleSave}
+                    className="px-6 py-3 text-xl text-white transition-colors bg-blue-900 rounded-lg shadow-lg hover:bg-blue-800"
+                  >
+                    Сохранить
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => setIsEditing(true)}
+                    className="px-6 py-3 text-xl text-white transition-colors bg-gray-900 rounded-lg shadow-lg hover:bg-gray-800"
+                  >
+                    Редактировать
+                  </button>
+                )}
+                <button
+                  onClick={handleLogout}
+                  className="px-6 py-3 text-xl text-white transition-colors bg-red-600 rounded-lg shadow-lg hover:bg-red-700"
+                >
+                  Выйти
+                </button>
+              </div>
             </div>
-            <div className="flex justify-center space-x-4">
-              {isEditing ? (
-                <button
-                  onClick={handleSave}
-                  className="w-full px-6 py-3 bg-blue-900 text-white rounded-lg shadow-sm hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-900 transition-colors text-xl"
-                >
-                  Сохранить
-                </button>
-              ) : (
-                <button
-                  onClick={() => setIsEditing(true)}
-                  className="w-full px-6 py-3 bg-gray-900 text-white rounded-lg shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900 transition-colors text-xl"
-                >
-                  Редактировать
-                </button>
-              )}
-              <button
-                onClick={handleLogout}
-                className="w-full px-6 py-3 bg-red-600 text-white rounded-lg shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-600 transition-colors text-xl"
+          </div>
+
+          <div
+            ref={infoRef}
+            className={`transform transition-all duration-1000 ease-in-out ${infoInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"}`}
+          >
+            <div className="bg-white/90 backdrop-blur-md rounded-xl shadow-xl p-8 h-[500px] transform transition-transform">
+              <h2 className="mb-6 text-3xl font-bold text-gray-900">Основная информация</h2>
+              <p className="text-lg text-gray-700">
+                <strong>Email:</strong> {userInfo.email}
+              </p>
+              <p className="mt-6 text-lg text-gray-700">
+                <strong>Дата регистрации:</strong> {userInfo.registrationDate}
+              </p>
+              <div className="mt-6 text-lg text-gray-700">
+                <strong>Баллы лояльности:</strong> {userInfo.loyaltyPoints}
+                <div className="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+                  <div
+                    className="bg-blue-600 h-2.5 rounded-full transition-all duration-500"
+                    style={{ width: `${(userInfo.loyaltyPoints / 1000) * 100}%` }}
+                  ></div>
+                </div>
+              </div>
+              <div className="mt-6 text-lg text-gray-700">
+                <strong>Адрес:</strong>
+                {isEditing ? (
+                  <input
+                    type="text"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    className="w-full px-4 py-3 text-xl transition-colors border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-900"
+                  />
+                ) : (
+                  <p className="text-xl text-gray-900 fade-in">{address}</p>
+                )}
+              </div>
+              <div className="mt-6 text-lg text-gray-700">
+                <strong>День рождения:</strong>
+                {isEditing ? (
+                  <input
+                    type="date"
+                    value={birthday}
+                    onChange={(e) => setBirthday(e.target.value)}
+                    className="w-full px-4 py-3 text-xl transition-colors border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-900"
+                  />
+                ) : (
+                  <p className="text-xl text-gray-900 fade-in">{birthday || "Не указано"}</p>
+                )}
+              </div>
+              <div className="mt-6 text-lg text-gray-700">
+                <strong>Номер телефона</strong>
+                {isEditing ? (
+                  <input
+                    type="text"
+                    value={phoneName}
+                    onChange={(e) => setPhoneName(e.target.value)}
+                    className="w-full px-4 py-3 text-xl transition-colors border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-900"
+                  />
+                ) : (
+                  <p className="text-xl text-gray-900 fade-in">{phoneName || "Не указано"}</p>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          ref={historyLinkRef}
+          className={`transform transition-all flex grid grid w-full grid-cols-1 gap-24 mt-1 md:grid-cols-2 duration-1000 ease-in-out ${historyLinkInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"}`}
+        >
+          <Link
+            to="/history"
+            className="flex items-center justify-between px-10 py-8 space-x-4 text-2xl font-bold text-gray-900 transition-all duration-300 shadow-lg rounded-xl hover:shadow-xl hover:scale-105"
+          >
+            <div className="flex items-center space-x-4">
+              <FeatherIcon icon="shopping-bag" className="w-[32px] h-[32px]" />
+              <span>Перейти к истории заказов</span>
+            </div>
+            <FeatherIcon icon="arrow-right" className="w-[18px] h-[18px]" />
+          </Link>
+          <Link
+            to="/recipe"
+            className="flex items-center justify-between px-10 py-8 space-x-4 text-2xl font-bold text-gray-900 transition-all duration-300 shadow-lg rounded-xl hover:shadow-xl hover:scale-105"
+          >
+            <div className="flex items-center space-x-4">
+              <FeatherIcon icon="book" className="w-[32px] h-[32px]" />
+              <span>Перейти к сохраненным рецептам</span>
+            </div>
+            <FeatherIcon icon="arrow-right" className="w-[18px] h-[18px]" />
+          </Link>
+        </div>
+
+        <div className="grid w-full grid-cols-1 gap-24 md:grid-cols-2">
+          <div
+            ref={giftsRef}
+            className={`transform transition-all duration-1000 ease-in-out ${giftsInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"}`}
+          >
+            <div className="p-8 transition-transform transform shadow-xl bg-white/90 backdrop-blur-md rounded-xl">
+              <div
+                className="flex items-center justify-between cursor-pointer"
+                onClick={() => toggleAccordion(1)}
               >
-                Выйти
-              </button>
-            </div>
-          </div>
-
-          <div className="flex justify-center space-x-8 mb-6">
-            <button
-              onClick={() => setActiveTab("favorites")}
-              className={`relative flex flex-col items-center p-4 rounded-lg shadow-lg transition-transform ${activeTab === "favorites" ? "scale-105" : "hover:scale-105"}`}
-              style={{ width: "150px", height: "150px" }}
-            >
-              <img
-                src="/img/y2.png"
-                alt="Favorites"
-                className="absolute inset-0 w-full h-full object-cover rounded-lg"
-              />
-            </button>
-            <button
-              onClick={() => setActiveTab("orderHistory")}
-              className={`relative flex flex-col items-center p-4 rounded-lg shadow-lg transition-transform ${activeTab === "orderHistory" ? "scale-105" : "hover:scale-105"}`}
-              style={{ width: "150px", height: "150px" }}
-            >
-              <img
-                src="/img/y3.png"
-                alt="Order History"
-                className="absolute inset-0 w-full h-full object-cover rounded-lg"
-              />
-            </button>
-            <button
-              onClick={() => setActiveTab("personalizedGifts")}
-              className={`relative flex flex-col items-center p-4 rounded-lg shadow-lg transition-transform ${activeTab === "personalizedGifts" ? "scale-105" : "hover:scale-105"}`}
-              style={{ width: "150px", height: "150px" }}
-            >
-              <img
-                src="/img/y1.png"
-                alt="Gifts"
-                className="absolute inset-0 w-full h-full object-cover rounded-lg"
-              />
-            </button>
-          </div>
-
-          <div className="p-6 bg-white rounded-lg shadow-md space-y-4 fade-in">
-            {activeTab === "favorites" && (
-              <div>
-                <ul className="list-disc list-inside space-y-3">
-                  {userInfo.savedRecipes.map((recipe) => (
-                    <li key={recipe.id} className="text-gray-900 text-lg">
-                      <strong>{recipe.name}</strong>
-                      <ul className="list-circle list-inside pl-6 space-y-2">
-                        {recipe.ingredients.map((ingredient, index) => (
-                          <li key={index} className="text-gray-800">{ingredient}</li>
-                        ))}
-                      </ul>
-                    </li>
-                  ))}
-                </ul>
+                <div className="flex items-center space-x-4">
+                <FeatherIcon icon = "gift" className="w-[32px] h-[32px]"/>
+                  <h3 className="text-2xl font-bold text-gray-900">Подарки</h3>
+                </div>
+                <span className="text-2xl text-gray-900">{activeAccordion === 1 ? <FeatherIcon icon = "minus" className="w-[18px] h-[18px]"/> : <FeatherIcon icon = "plus" className="w-[18px] h-[18px]"/>}</span>
               </div>
-            )}
-            {activeTab === "orderHistory" && (
-              <div>
-                <ul className="list-disc list-inside space-y-3">
-                  {userInfo.orderHistory.map((order) => (
-                    <li key={order.id} className="text-gray-900 text-lg">
-                      <strong>{order.date}</strong> - {order.total}
-                      <ul className="list-circle list-inside pl-6 space-y-2">
-                        {order.items.map((item, index) => (
-                          <li key={index} className="text-gray-800">{item}</li>
-                        ))}
-                      </ul>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            {activeTab === "personalizedGifts" && (
-              <div>
-                <h3 className="text-2xl font-semibold text-gray-900 mb-2">Персонализированные подарки</h3>
-                <ul className="list-disc list-inside space-y-3">
+              {activeAccordion === 1 && (
+                <ul className="mt-6 space-y-4 list-disc list-inside">
                   {userInfo.personalizedGifts.map((gift, index) => (
-                    <li key={index} className="text-gray-900 text-lg">
+                    <li key={index} className="text-lg text-gray-900">
                       {gift}
                     </li>
                   ))}
                 </ul>
-                <h3 className="text-2xl font-semibold text-gray-900 mb-2 mt-6">Доступные промокоды</h3>
-                <ul className="list-disc list-inside space-y-3">
+              )}
+            </div>
+          </div>
+
+          <div
+            ref={promoCodesRef}
+            className={`transform transition-all duration-1000 ease-in-out ${promoCodesInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"}`}
+          >
+            <div className="p-8 transition-transform transform shadow-xl bg-white/90 backdrop-blur-md rounded-xl">
+              <div
+                className="flex items-center justify-between cursor-pointer"
+                onClick={() => toggleAccordion(2)}
+              >
+                <div className="flex items-center space-x-4">
+                <FeatherIcon icon = "tag" className="w-[32px] h-[32px]"/>
+                  <h3 className="text-2xl font-bold text-gray-900">Промокоды</h3>
+                </div>
+                <span className="text-2xl text-gray-900">{activeAccordion === 2 ? <FeatherIcon icon = "minus" className="w-[18px] h-[18px]"/> : <FeatherIcon icon = "plus" className="w-[18px] h-[18px]"/>}</span>
+              </div>
+              {activeAccordion === 2 && (
+                <ul className="mt-6 space-y-4 list-disc list-inside">
                   {userInfo.promoCodes.map((code, index) => (
-                    <li key={index} className="text-gray-900 text-lg flex justify-between items-center">
+                    <li key={index} className="flex items-center justify-between text-lg text-gray-900">
                       {code}
                       <button
                         onClick={() => copyToClipboard(code)}
-                        className="text-blue-500 hover:underline focus:outline-none transition-colors"
+                        className="text-blue-500 transition-colors hover:underline focus:outline-none"
                       >
                         Копировать
                       </button>
                     </li>
                   ))}
                 </ul>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
       </div>
