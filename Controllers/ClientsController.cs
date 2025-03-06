@@ -13,6 +13,7 @@ public class ClientsController : ControllerBase
 {
     //private readonly Test1Context _context;
     private readonly IClientService _clientService;
+    private readonly IJWTService _jwtService;
 
     public ClientsController(IClientService clientService)
     {
@@ -101,6 +102,34 @@ public class ClientsController : ControllerBase
         var createdClient = await _clientService.CreateClientAsync(client);
         return CreatedAtAction(nameof(GetClientById), new { id = createdClient.Id }, createdClient);
     }
+
+    [HttpPost("register")]
+    public async Task<IActionResult> Register(ClientDTO clientDto)
+    {
+        // Проверяем, существует ли клиент с таким email
+        var existingClient = await _clientService.GetClientByEmailAsync(clientDto.Email);
+        if (existingClient != null)
+        {
+            return BadRequest(new { message = "Пользователь с таким email уже существует." });
+        }
+
+        // Создаём нового клиента
+        var client = new Client
+        {
+            Name = clientDto.Name,
+            Email = clientDto.Email,
+            Password = BCrypt.Net.BCrypt.HashPassword(clientDto.Password), // Хешируем пароль
+            Address = clientDto.Address
+        };
+
+        var createdClient = await _clientService.CreateClientAsync(client);
+
+        // Генерируем JWT-токен
+        var token = _jwtService.GenerateToken(createdClient);
+
+        return Ok(new { token });
+    }
+
 
 
     /// <summary>
