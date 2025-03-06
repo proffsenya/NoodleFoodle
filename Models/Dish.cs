@@ -41,6 +41,5 @@ public partial class Dish
     [InverseProperty("Dishes")]
     public virtual Order? Order { get; set; }
 
-    [InverseProperty("Dish")]
     public virtual ICollection<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
 }

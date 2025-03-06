@@ -34,9 +34,20 @@ public partial class Test1Context : DbContext
         // Связь многие ко многим: Блюда <-> Ингредиенты
         modelBuilder.Entity<Dish>()
             .HasMany(d => d.Ingredients)
-            .WithOne(i => i.Dish)
-            .HasForeignKey(i => i.DishId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .WithMany(i => i.Dishes)
+            .UsingEntity<Dictionary<string, object>>(
+                "dish_ingredients",
+                j => j
+                    .HasOne<Ingredient>()
+                    .WithMany()
+                    .HasForeignKey("ingredient_id")
+                    .HasPrincipalKey(i => i.Id),
+                j => j
+                    .HasOne<Dish>()
+                    .WithMany()
+                    .HasForeignKey("dish_id")
+                    .HasPrincipalKey(d => d.Id)
+            );
 
         // Связь многие ко многим: Заказы <-> Блюда
         modelBuilder.Entity<Order>()
