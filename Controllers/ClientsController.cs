@@ -1,25 +1,30 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using NoodleFoodle.Models;
 using NoodleFoodle.Services;
 using Microsoft.AspNetCore.Mvc.Routing;
 using NoodleFoodle.Models.DTO;
+using NoodleFoodle;
+using Microsoft.EntityFrameworkCore;
 
 [Route("api/[controller]")]
 [ApiController]
 public class ClientsController : ControllerBase
 {
-    //private readonly Test1Context _context;
+    private readonly Test1Context _context;
     private readonly IClientService _clientService;
     private readonly IJWTService _jwtService;
 
-    public ClientsController(IClientService clientService)
+    public ClientsController(IClientService clientService, IJWTService jwtService, Test1Context context)
     {
         _clientService = clientService;
+        _context = context;
+        _jwtService = jwtService;
     }
 
+    /// <summary>
+    /// Get all clients
+    /// </summary>
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Client>>> GetAllClients()
     {
@@ -29,36 +34,9 @@ public class ClientsController : ControllerBase
 
     }
 
-    //// GET: Clients/Details/5
-    //public async Task<IActionResult> Details(int? id)
-    //{
-    //    if (id == null)
-    //    {
-    //        return NotFound();
-    //    }
-
-    //    var client = await _context.Client
-    //        .FirstOrDefaultAsync(m => m.Id == id);
-    //    if (client == null)
-    //    {
-    //        return NotFound();
-    //    }
-
-    //    return View(client);
-    //}
-
-
-    // GET: api/Clients/{id}
-    //[HttpGet("{id}")]
-    //public async Task<ActionResult<Client>> GetClientById(int id)
-    //{
-    //    var client = await _clientService.GetClientByIdAsync(id);
-    //    if (client == null)
-    //    {
-    //        return NotFound();
-    //    }
-    //    return Ok(client);
-    //}
+    /// <summary>
+    /// Get Client By Id
+    /// </summary>
     [HttpGet("{id}")]
     public async Task<ActionResult<ClientDTO>> GetClientById(int id)
     {
@@ -79,15 +57,9 @@ public class ClientsController : ControllerBase
         return Ok(clientDto);
     }
 
-
-    //[HttpPost]
-    //[ProducesResponseType(StatusCodes.Status201Created)]
-    //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-    //public async Task<ActionResult<Client>> PostClient(Client client) {
-    //    var createdClient = await _clientService.CreateClientAsync(client);
-    //    return CreatedAtAction(nameof(GetClientById), new { id = createdClient.Id}, createdClient);
-    //}
-
+    /// <summary>
+    /// Create Client
+    /// </summary>
     [HttpPost]
     public async Task<ActionResult<Client>> PostClient(ClientDTO clientDto)
     {
@@ -141,7 +113,7 @@ public class ClientsController : ControllerBase
 
 
     /// <summary>
-    /// Deletes a specific TodoItem.
+    /// Delete Client
     /// </summary>
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteClient(int id)
@@ -154,94 +126,5 @@ public class ClientsController : ControllerBase
             return NotFound(new {message = ex.Message});
         }
     }
-        
-    
-    //// GET: Clients/Edit/5
-    //public async Task<IActionResult> Edit(int? id)
-    //{
-    //    if (id == null)
-    //    {
-    //        return NotFound();
-    //    }
 
-    //    var client = await _context.Client.FindAsync(id);
-    //    if (client == null)
-    //    {
-    //        return NotFound();
-    //    }
-    //    return View(client);
-    //}
-
-    //// POST: Clients/Edit/5
-    //// To protect from overposting attacks, enable the specific properties you want to bind to.
-    //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-    //[HttpPost]
-    //[ValidateAntiForgeryToken]
-    //public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email")] Client client)
-    //{
-    //    if (id != client.Id)
-    //    {
-    //        return NotFound();
-    //    }
-
-    //    if (ModelState.IsValid)
-    //    {
-    //        try
-    //        {
-    //            _context.Update(client);
-    //            await _context.SaveChangesAsync();
-    //        }
-    //        catch (DbUpdateConcurrencyException)
-    //        {
-    //            if (!ClientExists(client.Id))
-    //            {
-    //                return NotFound();
-    //            }
-    //            else
-    //            {
-    //                throw;
-    //            }
-    //        }
-    //        return RedirectToAction(nameof(Index));
-    //    }
-    //    return View(client);
-    //}
-
-    //// GET: Clients/Delete/5
-    //public async Task<IActionResult> Delete(int? id)
-    //{
-    //    if (id == null)
-    //    {
-    //        return NotFound();
-    //    }
-
-    //    var client = await _context.Client
-    //        .FirstOrDefaultAsync(m => m.Id == id);
-    //    if (client == null)
-    //    {
-    //        return NotFound();
-    //    }
-
-    //    return View(client);
-    //}
-
-    //// POST: Clients/Delete/5
-    //[HttpPost, ActionName("Delete")]
-    //[ValidateAntiForgeryToken]
-    //public async Task<IActionResult> DeleteConfirmed(int id)
-    //{
-    //    var client = await _context.Client.FindAsync(id);
-    //    if (client != null)
-    //    {
-    //        _context.Client.Remove(client);
-    //    }
-
-    //    await _context.SaveChangesAsync();
-    //    return RedirectToAction(nameof(Index));
-    //}
-
-    //private bool ClientExists(int id)
-    //{
-    //    return _context.Client.Any(e => e.Id == id);
-    //}
 }
