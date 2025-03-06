@@ -276,7 +276,7 @@ function HistoryLinks() {
         className="flex items-center justify-between px-10 py-8 space-x-4 text-2xl font-bold text-gray-900 transition-all duration-300 shadow-lg rounded-xl hover:shadow-xl hover:scale-105"
       >
         <div className="flex items-center space-x-4">
-          <FeatherIcon icon="shopping-bag" className="w-[32px] h-[32px]" />
+          <FeatherIcon icon="shopping-bag" className="text-green-500 w-[32px] h-[32px]" />
           <span>Перейти к истории заказов</span>
         </div>
         <FeatherIcon icon="arrow-right" className="w-[18px] h-[18px]" />
@@ -286,7 +286,7 @@ function HistoryLinks() {
         className="flex items-center justify-between px-10 py-8 space-x-4 text-2xl font-bold text-gray-900 transition-all duration-300 shadow-lg rounded-xl hover:shadow-xl hover:scale-105"
       >
         <div className="flex items-center space-x-4">
-          <FeatherIcon icon="book" className="w-[32px] h-[32px]" />
+          <FeatherIcon icon="book" className="text-yellow-700 w-[32px] h-[32px]" />
           <span>Перейти к сохраненным рецептам</span>
         </div>
         <FeatherIcon icon="arrow-right" className="w-[18px] h-[18px]" />
@@ -303,7 +303,7 @@ function GiftsSection({ userInfo, openAccordions, toggleAccordion }) {
         onClick={() => toggleAccordion(1)}
       >
         <div className="flex items-center space-x-4">
-          <FeatherIcon icon="gift" className="w-[32px] h-[32px]" />
+          <FeatherIcon icon="gift" className="text-purple-600 w-[32px] h-[32px]" />
           <h3 className="text-2xl font-bold text-gray-900">Подарки</h3>
         </div>
         <span className="text-2xl text-gray-900">{openAccordions.includes(1) ? <FeatherIcon icon="minus" className="w-[18px] h-[18px]" /> : <FeatherIcon icon="plus" className="w-[18px] h-[18px]" />}</span>
@@ -329,7 +329,7 @@ function PromoCodesSection({ userInfo, openAccordions, toggleAccordion, copyToCl
         onClick={() => toggleAccordion(2)}
       >
         <div className="flex items-center space-x-4">
-          <FeatherIcon icon="tag" className="w-[32px] h-[32px]" />
+          <FeatherIcon icon="tag" className="text-blue-600 w-[32px] h-[32px]" />
           <h3 className="text-2xl font-bold text-gray-900">Промокоды</h3>
         </div>
         <span className="text-2xl text-gray-900">{openAccordions.includes(2) ? <FeatherIcon icon="minus" className="w-[18px] h-[18px]" /> : <FeatherIcon icon="plus" className="w-[18px] h-[18px]" />}</span>

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { FaTrashAlt, FaPlus, FaMinus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import FeatherIcon from 'feather-icons-react';
 
-export default function ShoppingCart() {
+export default function Checkout() {
   const [cartItems, setCartItems] = useState([
     {
       id: 1,
@@ -34,14 +34,17 @@ export default function ShoppingCart() {
       quantity: 1,
       image: "/img/royal.jpg",
     },
-    
   ]);
 
   const [discountCode, setDiscountCode] = useState("");
+  const [discount, setDiscount] = useState(0);
+  const [selectedTip, setSelectedTip] = useState(null);
+  const [packagingType, setPackagingType] = useState("standard");
+  const [deliveryTime, setDeliveryTime] = useState("");
 
   const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-  const discount = 0; // Логика для скидки
-  const finalPrice = totalPrice - discount;
+  const tips = selectedTip ? (totalPrice * selectedTip) / 100 : 0;
+  const finalPrice = totalPrice - discount + tips;
 
   const handleQuantityChange = (id, quantity) => {
     if (quantity < 1) return;
@@ -57,92 +60,185 @@ export default function ShoppingCart() {
   };
 
   const applyDiscount = () => {
-    if (discountCode === "SUMMER2025") {
+    if (discountCode === "WELCOME10") {
+      setDiscount(totalPrice * 0.1);
       alert("Скидка 10% применена!");
-      // Здесь можно обновить состояние для применения скидки
+    } else if (discountCode === "SUMMER20") {
+      setDiscount(totalPrice * 0.2);
+      alert("Скидка 20% применена!");
     } else {
       alert("Неверный код скидки.");
     }
   };
 
+  const handleTipSelection = (tip) => {
+    setSelectedTip(tip);
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
       <Header />
-      <div className="flex flex-col items-center flex-grow p-8 space-y-12" style={{ paddingLeft: "30px", paddingRight: "30px", paddingBottom: "90px" }}>
-        <h1 className="mt-16 mb-8 text-4xl font-bold text-gray-900">Корзина</h1>
-
-        {cartItems.length === 0 ? (
-          <div className="flex flex-col items-center w-full max-w-2xl p-8 bg-white rounded-lg shadow-md">
-            <p className="text-2xl text-gray-700">Ваша корзина пуста.</p>
-            <Link
-              to="/menu"
-              className="px-6 py-3 mt-6 text-lg text-white transition-colors bg-blue-600 rounded-lg shadow-lg hover:bg-blue-700"
-            >
-              Перейти к меню
-            </Link>
-          </div>
-        ) : (
-          <div className="w-full max-w-2xl bg-white rounded-lg shadow-md">
+      <div className="flex flex-col items-center flex-grow p-12 space-y-12" style={{ paddingLeft: "40px", paddingRight: "40px" }}>
+        <h1 className="mt-16 mb-8 text-4xl font-bold text-gray-900">Оформление заказа</h1>
+        
+        {/* Основной контейнер с двумя колонками */}
+        <div className="flex flex-col w-full max-w-6xl gap-8 md:flex-row">
+          {/* Левая колонка: Корзина */}
+          <div className="w-full p-6 bg-white rounded-lg shadow-lg md:w-1/2">
+            <h2 className="mb-6 text-2xl font-bold text-gray-900">Ваш заказ</h2>
+            
+            {/* Список товаров */}
             {cartItems.map(item => (
-              <div key={item.id} className="flex items-center p-4 border-b border-gray-200">
-                <img src={item.image} alt={item.name} className="object-cover w-24 h-24 rounded-lg" />
-                <div className="flex-grow ml-4">
-                  <h3 className="text-xl font-bold text-gray-900">{item.name}</h3>
-                  <p className="text-lg text-gray-700">Цена: {item.price} ₽</p>
+              <div key={item.id} className="flex items-center justify-between p-4 border-b border-gray-200">
+                <div className="flex items-center">
+                  <img src={item.image} alt={item.name} className="object-cover w-16 h-16 rounded-lg" />
+                  <div className="ml-4">
+                    <h3 className="text-lg font-bold text-gray-900">{item.name}</h3>
+                    <p className="text-gray-700">{item.price} ₽ x {item.quantity}</p>
+                  </div>
                 </div>
                 <div className="flex items-center space-x-2">
                   <button
                     onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
                     className="p-2 bg-gray-200 rounded-full hover:bg-gray-300"
                   >
-                    <FaMinus />
+                    <FeatherIcon icon = "minus" className="w-[16px] h-[16px]"/>
                   </button>
                   <span className="text-xl">{item.quantity}</span>
                   <button
                     onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
                     className="p-2 bg-gray-200 rounded-full hover:bg-gray-300"
                   >
-                    <FaPlus />
+                    <FeatherIcon icon = "plus" className="w-[16px] h-[16px]"/>
                   </button>
                 </div>
-                <div className="ml-4">
-                  <button
-                    onClick={() => removeItem(item.id)}
-                    className="text-red-600 hover:text-red-700"
-                  >
-                    <FaTrashAlt />
-                  </button>
-                </div>
+                <button
+                  onClick={() => removeItem(item.id)}
+                  className="text-red-600 hover:text-red-700"
+                >
+                  <FeatherIcon icon= "trash-2" className="w-[18px] h-[18px]"/>
+                </button>
               </div>
             ))}
 
-            <div className="p-4">
-              <div className="flex flex-col-reverse items-center justify-between mt-8 md:flex-row">
-                <div className="flex flex-col mt-4 md:mt-0">
-                  <input
-                    type="text"
-                    value={discountCode}
-                    onChange={(e) => setDiscountCode(e.target.value)}
-                    placeholder="Введите код скидки"
-                    className="w-64 px-4 py-2 border border-gray-300 rounded-lg"
-                  />
-                  <button
-                    onClick={applyDiscount}
-                    className="px-6 py-2 mt-2 text-white transition-colors bg-blue-600 rounded-lg shadow-lg hover:bg-blue-700"
-                  >
-                    Применить промокод
-                  </button>
-                </div>
-                <Link
-                  to="/checkout"
-                  className="w-full px-6 py-3 text-lg text-white transition-colors bg-green-600 rounded-lg shadow-lg hover:bg-green-700 md:w-auto md:ml-4"
+            {/* Промокод */}
+            <div className="mt-6">
+              <label className="block text-sm font-medium text-gray-700">Промокод</label>
+              <div className="flex mt-2 space-x-4">
+                <input
+                  type="text"
+                  value={discountCode}
+                  onChange={(e) => setDiscountCode(e.target.value)}
+                  placeholder="Введите промокод"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                />
+                <button
+                  onClick={applyDiscount}
+                  className="px-6 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700"
                 >
-                  Оформить заказ
-                </Link>
+                  Применить
+                </button>
               </div>
             </div>
+
+            {/* Чаевые */}
+            <div className="mt-6">
+              <label className="block text-sm font-medium text-gray-700">Добавить чаевые</label>
+              <div className="flex mt-2 space-x-4">
+                {[10, 15, 20].map(tip => (
+                  <button
+                    key={tip}
+                    onClick={() => handleTipSelection(tip)}
+                    className={`px-4 py-2 rounded-lg ${
+                      selectedTip === tip
+                        ? "bg-blue-600 text-white"
+                        : "bg-gray-200 hover:bg-gray-300"
+                    }`}
+                  >
+                    {tip}%
+                  </button>
+                ))}
+                <button
+                  onClick={() => handleTipSelection(null)}
+                  className={`px-4 py-2 rounded-lg ${
+                    selectedTip === null
+                      ? "bg-blue-600 text-white"
+                      : "bg-gray-200 hover:bg-gray-300"
+                  }`}
+                >
+                  Нет
+                </button>
+              </div>
+            </div>
+
+            {/* Тип упаковки */}
+            <div className="mt-6">
+              <label className="block text-sm font-medium text-gray-700">Тип упаковки</label>
+              <div className="flex mt-2 space-x-4">
+                <button
+                  onClick={() => setPackagingType("standard")}
+                  className={`px-4 py-2 rounded-lg ${
+                    packagingType === "standard"
+                      ? "bg-blue-600 text-white"
+                      : "bg-gray-200 hover:bg-gray-300"
+                  }`}
+                >
+                  Стандартная
+                </button>
+                <button
+                  onClick={() => setPackagingType("eco")}
+                  className={`px-4 py-2 rounded-lg ${
+                    packagingType === "eco"
+                      ? "bg-blue-600 text-white"
+                      : "bg-gray-200 hover:bg-gray-300"
+                  }`}
+                >
+                  Эко-упаковка
+                </button>
+              </div>
+            </div>
+
+            {/* Время доставки */}
+            <div className="mt-6">
+              <label className="block text-sm font-medium text-gray-700">Время доставки</label>
+              <select
+                value={deliveryTime}
+                onChange={(e) => setDeliveryTime(e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+              >
+                <option value="">Выберите время</option>
+                <option value="12:00">12:00</option>
+                <option value="13:00">13:00</option>
+                <option value="14:00">14:00</option>
+                <option value="15:00">15:00</option>
+              </select>
+            </div>
           </div>
-        )}
+
+          {/* Правая колонка: Итоговая сумма и оформление */}
+          <div className="w-full p-6 bg-white rounded-lg shadow-lg md:w-1/2">
+            <h2 className="mb-6 text-2xl font-bold text-gray-900">Итоговая сумма</h2>
+            <div className="space-y-4">
+              <div className="flex justify-between">
+                <span className="text-gray-700">Скидка</span>
+                <span className="text-gray-900">-{discount} ₽</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-700">Чаевые</span>
+                <span className="text-gray-900">{tips} ₽</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-700">Итого</span>
+                <span className="font-bold text-gray-900">{finalPrice} ₽</span>
+              </div>
+            </div>
+            <button
+              className="w-full px-6 py-3 mt-6 text-white bg-green-600 rounded-lg shadow-lg hover:bg-green-700"
+            >
+              Подтвердить заказ
+            </button>
+          </div>
+        </div>
       </div>
       <Footer />
     </div>
