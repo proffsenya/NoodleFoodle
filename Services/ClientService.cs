@@ -32,6 +32,11 @@ namespace NoodleFoodle.Services
             return await _context.Client.FindAsync(id);
         }
 
+        public async Task<Client> GetClientByEmailAsync(string email)
+        {
+            return await _context.Clients.FirstOrDefaultAsync(c => c.Email == email);
+        }
+
         public async Task DeleteClientAsync(int id)
         {
             var client = await _context.Client.FindAsync(id);

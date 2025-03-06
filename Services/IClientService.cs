@@ -9,6 +9,7 @@ namespace NoodleFoodle.Services
         Task<Client> CreateClientAsync(Client client);
 
         Task<Client> GetClientByIdAsync(int id);
+        public Task<Client> GetClientByEmailAsync(string email);
         Task DeleteClientAsync(int id);
     }
 }
