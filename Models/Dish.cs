@@ -21,6 +21,10 @@ public partial class Dish
     [Column("weight")]
     public double Weight { get; set; }
 
+    [Column("type")]
+    [StringLength(50)]
+    public string Type { get; set; } = "standard"; // standard / custom
+
     [Column("kcal")]
     public int Kcal { get; set; }
 

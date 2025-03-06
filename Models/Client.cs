@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -10,6 +11,7 @@ namespace NoodleFoodle.Models {
     public class Client
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("id", TypeName = "int")]
         public int Id { get; set; }
         [Column("name")]
@@ -18,11 +20,12 @@ namespace NoodleFoodle.Models {
         public string Email { get; set; } = string.Empty;
 
         [Column("address")]
-        public string Address { get; } = string.Empty;
+        public string Address { get; set; } = string.Empty;
         [Column("password")]
-        public string Password { get; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
 
         [InverseProperty("Client")]
+        [JsonIgnore]
         public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
     }
 }

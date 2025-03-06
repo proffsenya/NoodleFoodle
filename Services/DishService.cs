@@ -54,5 +54,35 @@ namespace NoodleFoodle.Services
             await _context.SaveChangesAsync();
             return true;
         }
+        public async Task<Dish?> CreateCustomDishAsync(string name, int clientId, List<int> ingredientIds)
+        {
+            var ingredients = await _context.Ingredients
+                .Where(i => ingredientIds.Contains(i.Id))
+                .ToListAsync();
+
+            if (ingredients.Count != ingredientIds.Count)
+            {
+                return null; // Один или несколько ингредиентов не найдены
+            }
+
+            var totalWeight = ingredients.Sum(i => i.Weight);
+            var totalKcal = ingredients.Sum(i => i.Kcal);
+            var totalPrice = ingredients.Sum(i => i.Price);
+
+            var customDish = new Dish
+            {
+                Title = name,
+                Price = totalPrice,
+                Weight = totalWeight,
+                Kcal = totalKcal,
+                Type = "custom",
+                ClientId = clientId
+            };
+
+            _context.Dishes.Add(customDish);
+            await _context.SaveChangesAsync();
+
+            return customDish;
+        }
     }
 }

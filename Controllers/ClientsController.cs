@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using NoodleFoodle.Models;
 using NoodleFoodle.Services;
 using Microsoft.AspNetCore.Mvc.Routing;
+using NoodleFoodle.Models.DTO;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -47,47 +48,60 @@ public class ClientsController : ControllerBase
 
 
     // GET: api/Clients/{id}
+    //[HttpGet("{id}")]
+    //public async Task<ActionResult<Client>> GetClientById(int id)
+    //{
+    //    var client = await _clientService.GetClientByIdAsync(id);
+    //    if (client == null)
+    //    {
+    //        return NotFound();
+    //    }
+    //    return Ok(client);
+    //}
     [HttpGet("{id}")]
-    public async Task<ActionResult<Client>> GetClientById(int id)
+    public async Task<ActionResult<ClientDTO>> GetClientById(int id)
     {
         var client = await _clientService.GetClientByIdAsync(id);
         if (client == null)
         {
             return NotFound();
         }
-        return Ok(client);
+
+        var clientDto = new ClientDTO
+        {
+            Name = client.Name,
+            Email = client.Email,
+            Password = client.Password,
+            Address = client.Address
+        };
+
+        return Ok(clientDto);
     }
 
-    
-    /// <summary>
-    /// Creates a client
-    /// </summary>
-    /// <param name="client"></param>
-    /// <returns>A newly created client</returns>
-    /// <remarks>
-    /// Sample request:
-    ///
-    ///     POST /Clients
-    ///     {
-    ///        {
-    ///             "id": 0,
-    ///             "name": "string",
-    ///             "email": "string",
-    ///             "phone_number": "string",
-    ///             "address": "string",
-    ///             "password": "string"                    
-    ///     }
-    ///
-    /// </remarks>
-    /// <response code="201">Returns the newly created client</response>
-    /// <response code="400">If the client is null</response>
+
+    //[HttpPost]
+    //[ProducesResponseType(StatusCodes.Status201Created)]
+    //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+    //public async Task<ActionResult<Client>> PostClient(Client client) {
+    //    var createdClient = await _clientService.CreateClientAsync(client);
+    //    return CreatedAtAction(nameof(GetClientById), new { id = createdClient.Id}, createdClient);
+    //}
+
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<Client>> PostClient(Client client) {
+    public async Task<ActionResult<Client>> PostClient(ClientDTO clientDto)
+    {
+        var client = new Client
+        {
+            Name = clientDto.Name,
+            Email = clientDto.Email,
+            Password = clientDto.Password,
+            Address = clientDto.Address
+        };
+
         var createdClient = await _clientService.CreateClientAsync(client);
-        return CreatedAtAction(nameof(GetClientById), new { id = createdClient.Id}, createdClient);
+        return CreatedAtAction(nameof(GetClientById), new { id = createdClient.Id }, createdClient);
     }
+
 
     /// <summary>
     /// Deletes a specific TodoItem.
