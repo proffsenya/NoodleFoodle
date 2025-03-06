@@ -106,30 +106,38 @@ public class ClientsController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> Register(ClientDTO clientDto)
     {
-        // Проверяем, существует ли клиент с таким email
         var existingClient = await _clientService.GetClientByEmailAsync(clientDto.Email);
         if (existingClient != null)
         {
             return BadRequest(new { message = "Пользователь с таким email уже существует." });
         }
-
-        // Создаём нового клиента
+ 
         var client = new Client
         {
             Name = clientDto.Name,
             Email = clientDto.Email,
-            Password = BCrypt.Net.BCrypt.HashPassword(clientDto.Password), // Хешируем пароль
+            Password = BCrypt.Net.BCrypt.HashPassword(clientDto.Password), 
             Address = clientDto.Address
         };
 
         var createdClient = await _clientService.CreateClientAsync(client);
-
-        // Генерируем JWT-токен
         var token = _jwtService.GenerateToken(createdClient);
 
         return Ok(new { token });
     }
 
+    [HttpPost("login")]
+    public async Task<IActionResult> Login(LoginModel loginModel)
+    {
+        var client = await _clientService.GetClientByEmailAsync(loginModel.Email);
+        if (client == null || !BCrypt.Net.BCrypt.Verify(loginModel.Password, client.Password))
+        {
+            return Unauthorized(new { message = "Неверный email или пароль." });
+        }
+
+        var token = _jwtService.GenerateToken(client);
+        return Ok(new { token });
+    }
 
 
     /// <summary>
