@@ -9,11 +9,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.6.1",
+    "axios": "^1.8.2",
     "feather-icons-react": "^0.7.1",
+    "json-server": "^1.0.0-beta.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.5.0",
     "react-intersection-observer": "^9.15.1",
+    "react-redux": "^9.2.0",
     "react-router-dom": "^7.1.5"
   },
   "devDependencies": {

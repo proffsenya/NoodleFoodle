@@ -5,17 +5,17 @@ import Footer from "../components/Footer";
 
 export default function Checkout() {
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col">
+    <div className="flex flex-col min-h-screen bg-gray-100">
       <Header />
-      <div className="flex-grow flex flex-col items-center p-12 space-y-12" style={{ paddingLeft: "40px", paddingRight: "40px" }}>
-        <h1 className="text-4xl font-bold text-gray-900 mb-8 mt-16">Оформление заказа</h1>
-        <form className="w-full max-w-3xl bg-white shadow-lg rounded-lg p-8">
+      <div className="flex flex-col items-center flex-grow p-12 space-y-12" style={{ paddingLeft: "40px", paddingRight: "40px" }}>
+        <h1 className="mt-16 mb-8 text-4xl font-bold text-gray-900">Оформление заказа</h1>
+        <form className="w-full max-w-3xl p-8 bg-white rounded-lg shadow-lg">
           <div className="mb-6">
-            <label className="block text-gray-700 text-lg font-bold mb-2" htmlFor="name">
+            <label className="block mb-2 text-lg font-bold text-gray-700" htmlFor="name">
               Имя
             </label>
             <input
-              className="border border-gray-300 rounded-lg px-4 py-3 w-full"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg"
               id="name"
               type="text"
               placeholder="Введите ваше имя"
@@ -23,11 +23,11 @@ export default function Checkout() {
             />
           </div>
           <div className="mb-6">
-            <label className="block text-gray-700 text-lg font-bold mb-2" htmlFor="address">
+            <label className="block mb-2 text-lg font-bold text-gray-700" htmlFor="address">
               Адрес
             </label>
             <input
-              className="border border-gray-300 rounded-lg px-4 py-3 w-full"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg"
               id="address"
               type="text"
               placeholder="Введите ваш адрес"
@@ -35,11 +35,11 @@ export default function Checkout() {
             />
           </div>
           <div className="mb-6">
-            <label className="block text-gray-700 text-lg font-bold mb-2" htmlFor="phone">
+            <label className="block mb-2 text-lg font-bold text-gray-700" htmlFor="phone">
               Телефон
             </label>
             <input
-              className="border border-gray-300 rounded-lg px-4 py-3 w-full"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg"
               id="phone"
               type="tel"
               placeholder="Введите ваш телефон"
@@ -47,11 +47,11 @@ export default function Checkout() {
             />
           </div>
           <div className="mb-6">
-            <label className="block text-gray-700 text-lg font-bold mb-2" htmlFor="email">
+            <label className="block mb-2 text-lg font-bold text-gray-700" htmlFor="email">
               Email
             </label>
             <input
-              className="border border-gray-300 rounded-lg px-4 py-3 w-full"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg"
               id="email"
               type="email"
               placeholder="Введите ваш email"
@@ -60,7 +60,7 @@ export default function Checkout() {
           </div>
           <button
             type="submit"
-            className="px-6 py-3 bg-green-600 text-white rounded-lg shadow-lg hover:bg-green-700 transition-colors w-full"
+            className="w-full px-6 py-3 text-white transition-colors bg-green-600 rounded-lg shadow-lg hover:bg-green-700"
           >
             Подтвердить заказ
           </button>

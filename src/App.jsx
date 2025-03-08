@@ -1,5 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { useState } from "react";
+import { Provider } from "react-redux";
+import { store } from "./app/store"; // Импортируем store
 
 import Contact from "../pages/Contact";
 import CustomProduct from "../pages/CustomProduct";
@@ -7,13 +9,13 @@ import Home from "../pages/Home";
 import Menu from "../pages/Menu";
 import NotFound from "../pages/NotFound";
 import ProductDetails from "../pages/ProductDetails";
-import ShoppingCart from "../pages/ShoppingCart"; 
+import ShoppingCart from "../pages/ShoppingCart";
 import Login from "../pages/Login";
 import Profile from "../pages/Profile";
 import Register from "../pages/Register";
-import History from "../pages/History"; 
-import Checkout from "../pages/Checkout"; 
-import Recipe from "../pages/Recipe"; 
+import History from "../pages/History";
+import Checkout from "../pages/Checkout";
+import Recipe from "../pages/Recipe";
 
 import Header from "../components/Header";
 import "../src/index.css";
@@ -73,7 +75,7 @@ export default function App() {
       element: (
         <>
           <Header isLoggedIn={isLoggedIn} />
-          <ShoppingCart /> {}
+          <ShoppingCart />
           <ScrollToTop />
         </>
       ),
@@ -83,7 +85,7 @@ export default function App() {
       element: (
         <>
           <Header isLoggedIn={isLoggedIn} />
-          <Checkout /> {}
+          <Checkout />
           <ScrollToTop />
         </>
       ),
@@ -161,9 +163,10 @@ export default function App() {
   ]);
 
   return (
-    <ThemeProvider>
-      <RouterProvider router={router} />;
-    </ThemeProvider>
-    
-  )
+    <Provider store={store}> {/* Обертываем приложение в Provider */}
+      <ThemeProvider>
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </Provider>
+  );
 }

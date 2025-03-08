@@ -34,7 +34,7 @@ export default function Header() {
         <span className="text-xl font-bold">NoodleFoodle</span>
         <button
           onClick={toggleTheme}
-          className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+          className="p-2 transition-colors rounded-full hover:bg-gray-200 dark:hover:bg-gray-700"
         >
           <FeatherIcon 
             icon={isDark ? "sun" : "moon"} 
@@ -46,7 +46,7 @@ export default function Header() {
       {/* Правый блок: навигация и элементы управления */}
       <div className="flex items-center gap-4">
         {/* Навигация для десктопа */}
-        <nav className="hidden md:flex items-center space-x-6">
+        <nav className="items-center hidden space-x-6 md:flex">
           <NavLink
             className="px-4 py-2 text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white"
             to="/"
@@ -90,7 +90,7 @@ export default function Header() {
                   />
                 </button>
                 {isDropdownOpen && (
-                  <div className="absolute right-0 w-48 mt-2 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded shadow-lg">
+                  <div className="absolute right-0 w-48 mt-2 bg-white border rounded shadow-lg dark:bg-gray-800 dark:border-gray-700">
                     <NavLink
                       to="/profile"
                       className="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
@@ -98,19 +98,6 @@ export default function Header() {
                     >
                       Профиль
                     </NavLink>
-                    <NavLink
-                      to="/settings"
-                      className="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
-                      onClick={() => setIsDropdownOpen(false)}
-                    >
-                      Настройки
-                    </NavLink>
-                    <button
-                      onClick={handleLogout}
-                      className="block w-full px-4 py-2 text-left text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
-                    >
-                      Выйти
-                    </button>
                   </div>
                 )}
               </div>
@@ -136,7 +123,7 @@ export default function Header() {
 
       {/* Мобильное меню */}
       {isMenuOpen && (
-        <div className="absolute top-full left-0 right-0 md:hidden bg-white dark:bg-gray-900 shadow-lg">
+        <div className="absolute left-0 right-0 bg-white shadow-lg top-full md:hidden dark:bg-gray-900">
           <nav className="flex flex-col p-4 space-y-4">
             <NavLink
               className="px-4 py-2 text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white"
