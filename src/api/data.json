@@ -1,4 +1,34 @@
 {
   "clients": [
+    {
+      "id": "0aaf",
+      "fullName": "fdgew",
+      "address": "dsfsddsfv",
+      "email": "1.nsk@mail.ru",
+      "password": "12345"
+    }
+  ],
+  "cart": [
+    {
+      "id": 2,
+      "name": "Вьетнамский рамен",
+      "price": "670₽",
+      "quantity": 1,
+      "image": "../img/vietnam.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Сырный рамен",
+      "price": "670₽",
+      "quantity": 1,
+      "image": "../img/cheese.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Вьетнамский рамен",
+      "price": "670₽",
+      "quantity": 1,
+      "image": "../img/vietnam.jpg"
+    }
   ]
 }

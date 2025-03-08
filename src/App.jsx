@@ -101,7 +101,7 @@ export default function App() {
       ),
     },
     {
-      path: "/profile",
+      path: "/clients/:id",
       element: (
         <>
           <Header isLoggedIn={isLoggedIn} />

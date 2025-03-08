@@ -1,14 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3001/clients';
-
-// Асинхронные действия
+// Асинхронное действие для регистрации клиента
 export const registerClient = createAsyncThunk(
   'client/register',
   async (clientData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(API_URL, clientData);
+      const response = await axios.post('http://localhost:3001/clients', clientData);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -16,19 +14,22 @@ export const registerClient = createAsyncThunk(
   }
 );
 
+// Асинхронное действие для входа клиента
 export const loginClient = createAsyncThunk(
-  'client/login',
-  async (credentials, { rejectWithValue }) => {
+  'clients/login',
+  async (loginData, { rejectWithValue }) => {
     try {
-      const response = await axios.get(API_URL);
-      const client = response.data.find(
-        (c) => c.email === credentials.email && c.password === credentials.password
-      );
-      if (client) {
-        localStorage.setItem('isAuthenticated', 'true');
-        return client;
+      const response = await axios.get('http://localhost:3001/clients', {
+        params: {
+          email: loginData.email,
+          password: loginData.password,
+        },
+      });
+
+      if (response.data.length > 0) {
+        return response.data[0]; // Возвращаем первого найденного пользователя
       } else {
-        return rejectWithValue('Invalid email or password');
+        return rejectWithValue('Пользователь не найден');
       }
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -36,35 +37,36 @@ export const loginClient = createAsyncThunk(
   }
 );
 
+// Асинхронное действие для получения профиля клиента
 export const fetchProfile = createAsyncThunk(
-  'client/fetchProfile',
-  async (id, { rejectWithValue }) => {
-    try {
-      const response = await axios.get(`${API_URL}/${id}`);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
+    'client/fetchProfile',
+    async (clientId, { rejectWithValue }) => {
+      try {
+        const response = await axios.get(`http://localhost:3001/clients/${clientId}`);
+        return response.data; // Возвращаем данные профиля
+      } catch (error) {
+        return rejectWithValue(error.response.data);
+      }
     }
-  }
-);
+  );
 
+// Асинхронное действие для обновления профиля клиента
 export const updateProfile = createAsyncThunk(
-  'client/updateProfile',
-  async ({ id, profileData }, { rejectWithValue }) => {
-    try {
-      const response = await axios.put(`${API_URL}/${id}`, profileData);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
+    'client/updateProfile',
+    async ({ id, profileData }, { rejectWithValue }) => {
+      try {
+        const response = await axios.put(`http://localhost:3001/clients/${id}`, profileData);
+        return response.data;
+      } catch (error) {
+        return rejectWithValue(error.response.data);
+      }
     }
-  }
-);
+  );
 
 const clientSlice = createSlice({
   name: 'client',
   initialState: {
     client: null,
-    isAuthenticated: false,
     isLoading: false,
     isError: false,
     isSuccess: false,
@@ -79,8 +81,6 @@ const clientSlice = createSlice({
     },
     logout: (state) => {
       state.client = null;
-      state.isAuthenticated = false;
-      localStorage.removeItem('isAuthenticated');
     },
   },
   extraReducers: (builder) => {
@@ -92,7 +92,6 @@ const clientSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.client = action.payload;
-        state.isAuthenticated = true;
       })
       .addCase(registerClient.rejected, (state, action) => {
         state.isLoading = false;
@@ -106,7 +105,6 @@ const clientSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.client = action.payload;
-        state.isAuthenticated = true;
       })
       .addCase(loginClient.rejected, (state, action) => {
         state.isLoading = false;
@@ -142,4 +140,4 @@ const clientSlice = createSlice({
 });
 
 export const { reset, logout } = clientSlice.actions;
-export default clientSlice.reducer; // Экспорт по умолчанию
+export default clientSlice.reducer;

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchProfile, updateProfile, logout } from '../src/features/client/clientSlice';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom'; // Добавлен useParams для получения id из URL
 import FeatherIcon from 'feather-icons-react';
 
 export default function Profile() {
@@ -17,7 +17,16 @@ export default function Profile() {
 
   const dispatch = useDispatch();
   const { client } = useSelector((state) => state.client);
+  const { id } = useParams(); // Получаем id из URL
 
+  // Загружаем данные профиля при монтировании компонента
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchProfile(id));
+    }
+  }, [dispatch, id]);
+
+  // Обновляем локальное состояние при изменении данных клиента
   useEffect(() => {
     if (client) {
       setUsername(client.fullName || 'Пользователь');
@@ -26,12 +35,6 @@ export default function Profile() {
       setPhone(client.phone || '');
     }
   }, [client]);
-
-  useEffect(() => {
-    if (client?.id) {
-      dispatch(fetchProfile(client.id));
-    }
-  }, [dispatch, client?.id]);
 
   const handleAvatarChange = (event) => {
     const file = event.target.files[0];
@@ -73,7 +76,7 @@ export default function Profile() {
   };
 
   const userInfo = {
-    email: client?.email || 'user@example.com', // Убедитесь, что client содержит email
+    email: client?.email || 'user@example.com',
     loyaltyPoints: client?.loyaltyPoints || 150,
     personalizedGifts: [
       'Скидка 10% на следующий заказ',
@@ -156,7 +159,7 @@ export default function Profile() {
             <div className="overflow-y-auto bg-white/90 backdrop-blur-md rounded-xl shadow-xl p-8 h-[500px] transform transition-transform">
               <h2 className="mb-6 text-3xl font-bold text-gray-900">Основная информация</h2>
               <p className="text-lg text-gray-700">
-                <strong>Email:</strong> {client?.email || 'user@example.com'} {/* Исправлено */}
+                <strong>Email:</strong> {client?.email || 'user@example.com'}
               </p>
               <div className="mt-6 text-lg text-gray-700">
                 <strong>Баллы лояльности:</strong> {userInfo.loyaltyPoints}

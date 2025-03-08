@@ -17,7 +17,7 @@ export default function Register() {
   const { fullName, address, email, password } = formData;
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isLoading, isError, isSuccess, message } = useSelector((state) => state.client);
+  const { isLoading, isError, isSuccess, message, client } = useSelector((state) => state.client);
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -25,6 +25,7 @@ export default function Register() {
       [e.target.name]: e.target.value,
     }));
   };
+
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -42,12 +43,12 @@ export default function Register() {
       alert(message);
     }
 
-    if (isSuccess) {
-      navigate('/profile');
+    if (isSuccess && client?.id) {
+      navigate(`/clients/${client.id}`);
     }
 
     dispatch(reset());
-  }, [isError, isSuccess, message, navigate, dispatch]);
+  }, [isError, isSuccess, message, navigate, dispatch, client]);
 
   return (
     <div className="flex flex-col min-h-screen transition-colors duration-300 bg-white dark:bg-gray-900">
