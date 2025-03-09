@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 
 export default function Menu() {
     return (
-        <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
+        <div className="min-h-screen transition-colors duration-300 bg-white dark:bg-gray-900">
             <Header />
             <Layout />
             <Footer />
@@ -30,7 +30,7 @@ function Layout() {
 
 function MenuConst({MenuObj}){
     return(
-        <div className="flex flex-col h-full overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-700 transition-colors duration-300">
+        <div className="flex flex-col h-full overflow-hidden transition-colors duration-300 bg-white rounded-lg shadow-md dark:bg-gray-700">
             <img 
                 src={MenuObj.image} 
                 alt={MenuObj.name} 

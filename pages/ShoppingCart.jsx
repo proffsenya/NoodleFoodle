@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart, removeFromCart, updateCartItemQuantity, applyDiscount, setTip, setPackagingType, setDeliveryTime } from '../src/features/cart/cartSlice';
+import { fetchCart, addToCart, removeFromCart, updateCartItemQuantity, applyDiscount, setTip, setPackagingType, setDeliveryTime } from '../src/features/cart/cartSlice';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import FeatherIcon from 'feather-icons-react';
@@ -11,30 +11,34 @@ const CartItem = ({ item, handleQuantityChange, removeItem }) => (
       <img src={item.image} alt={item.name} className="object-cover w-16 h-16 rounded-lg" />
       <div className="ml-4">
         <h3 className="text-lg font-bold text-gray-900">{item.name}</h3>
-        <p className="text-gray-700">{item.price} ₽ x {item.quantity}</p>
+        <p className="text-gray-700">{item.price} x {item.quantity}</p>
       </div>
     </div>
-    <div className="flex items-center space-x-2">
+    <div className="flex items-center space-x-4">
+      {/* Кнопки изменения количества */}
+      <div className="flex items-center space-x-2">
+        <button
+          onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
+          className="p-2 bg-gray-200 rounded-full hover:bg-gray-300"
+        >
+          <FeatherIcon icon="minus" className="w-[16px] h-[16px]" />
+        </button>
+        <span className="text-xl">{item.quantity}</span>
+        <button
+          onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
+          className="p-2 bg-gray-200 rounded-full hover:bg-gray-300"
+        >
+          <FeatherIcon icon="plus" className="w-[16px] h-[16px]" />
+        </button>
+      </div>
+      {/* Кнопка удаления товара */}
       <button
-        onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
-        className="p-2 bg-gray-200 rounded-full hover:bg-gray-300"
+        onClick={() => removeItem(item.id)}
+        className="text-red-600 hover:text-red-700"
       >
-        <FeatherIcon icon="minus" className="w-[16px] h-[16px]" />
-      </button>
-      <span className="text-xl">{item.quantity}</span>
-      <button
-        onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-        className="p-2 bg-gray-200 rounded-full hover:bg-gray-300"
-      >
-        <FeatherIcon icon="plus" className="w-[16px] h-[16px]" />
+        <FeatherIcon icon="trash-2" className="w-[18px] h-[18px]" />
       </button>
     </div>
-    <button
-      onClick={() => removeItem(item.id)}
-      className="text-red-600 hover:text-red-700"
-    >
-      <FeatherIcon icon="trash-2" className="w-[18px] h-[18px]" />
-    </button>
   </div>
 );
 
@@ -225,12 +229,17 @@ export default function ShoppingCart() {
   const { client } = useSelector((state) => state.client); // Данные пользователя из профиля
   const [discountCode, setDiscountCode] = useState('');
 
+  // Загружаем корзину при монтировании компонента
+  useEffect(() => {
+    dispatch(fetchCart());
+  }, [dispatch]);
+
   const totalPrice = items.reduce((total, item) => total + parseFloat(item.price) * item.quantity, 0);
   const finalPrice = totalPrice - discount + (totalPrice * (tip / 100));
 
   const handleQuantityChange = (id, quantity) => {
-    if (quantity < 1) return; // Не позволяем количеству быть меньше 1
-    dispatch(updateCartItemQuantity({ id, quantity })); // Вызываем действие
+    if (quantity < 1) return;
+    dispatch(updateCartItemQuantity({ id, quantity }));
   };
 
   const removeItem = (id) => {
@@ -266,8 +275,6 @@ export default function ShoppingCart() {
       <Header />
       <div className="flex flex-col items-center flex-grow p-12 space-y-12">
         <h1 className="mt-16 mb-8 text-4xl font-bold text-gray-900">Корзина</h1>
-
-        {/* Если корзина пуста, показываем сообщение */}
         {items.length === 0 ? (
           <div className="w-full max-w-6xl p-6 text-center bg-white rounded-lg shadow-lg">
             <h2 className="text-xl font-semibold text-gray-700">Ваша корзина пуста</h2>
@@ -307,13 +314,11 @@ export default function ShoppingCart() {
             {/* Правый столбец: Данные покупателя и итоговая стоимость */}
             <div className="p-6 bg-white rounded-lg shadow-lg">
               <DeliveryInfoForm client={client} />
-              <div className="mt-6">
-                <OrderSummary
-                  discount={discount}
-                  tips={totalPrice * (tip / 100)}
-                  finalPrice={finalPrice}
-                />
-              </div>
+              <OrderSummary
+                discount={discount}
+                tips={totalPrice * (tip / 100)}
+                finalPrice={finalPrice}
+              />
             </div>
           </div>
         )}
