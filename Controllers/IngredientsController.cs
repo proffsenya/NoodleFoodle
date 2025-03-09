@@ -10,10 +10,9 @@ public class IngredientsController : ControllerBase
 {
     private readonly IngredientService _ingredientService;
 
-    public IngredientsController(IngredientService ingredientService, Test1Context context)
+    public IngredientsController(IngredientService ingredientService)
     {
-        _ingredientService = ingredientService;
-        _context = context;
+        _ingredientService = ingredientService;       
     }
 
     [HttpGet]
