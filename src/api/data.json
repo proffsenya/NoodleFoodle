@@ -1,11 +1,11 @@
 {
   "clients": [
     {
-      "id": "b509",
       "fullName": "test",
       "address": "test",
-      "email": "test@mail.ru",
-      "password": "test"
+      "birthdate": "",
+      "phone": "",
+      "id": "b509"
     },
     {
       "id": "bec3",

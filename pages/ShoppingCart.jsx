@@ -266,47 +266,57 @@ export default function ShoppingCart() {
       <Header />
       <div className="flex flex-col items-center flex-grow p-12 space-y-12">
         <h1 className="mt-16 mb-8 text-4xl font-bold text-gray-900">Корзина</h1>
-        <div className="grid w-full max-w-6xl grid-cols-1 gap-8 md:grid-cols-2">
-          {/* Левый столбец: Корзина и дополнительные опции */}
-          <div className="p-6 bg-white rounded-lg shadow-lg">
-            <h2 className="mb-6 text-2xl font-bold text-gray-900">Ваш заказ</h2>
-            {items.map((item) => (
-              <CartItem
-                key={item.id}
-                item={item}
-                handleQuantityChange={handleQuantityChange}
-                removeItem={removeItem}
-              />
-            ))}
-            <PromoCodeSection
-              discountCode={discountCode}
-              setDiscountCode={setDiscountCode}
-              applyDiscount={handleApplyDiscount}
-            />
-            <TipSection
-              selectedTip={tip}
-              handleTipSelection={handleTipSelection}
-            />
-            <PackagingSection
-              packagingType={packagingType}
-              setPackagingType={handlePackagingType}
-            />
-            <DeliveryTimeSection
-              deliveryTime={deliveryTime}
-              setDeliveryTime={handleDeliveryTime}
-            />
-          </div>
 
-          {/* Правый столбец: Данные покупателя и итоговая стоимость */}
-          <div className="p-6 bg-white rounded-lg shadow-lg">
-            <DeliveryInfoForm client={client} />
-            <OrderSummary
-              discount={discount}
-              tips={totalPrice * (tip / 100)}
-              finalPrice={finalPrice}
-            />
+        {/* Если корзина пуста, показываем сообщение */}
+        {items.length === 0 ? (
+          <div className="w-full max-w-6xl p-6 text-center bg-white rounded-lg shadow-lg">
+            <h2 className="text-xl font-semibold text-gray-700">Ваша корзина пуста</h2>
           </div>
-        </div>
+        ) : (
+          <div className="grid w-full max-w-6xl grid-cols-1 gap-8 md:grid-cols-2">
+            {/* Левый столбец: Корзина и дополнительные опции */}
+            <div className="p-6 bg-white rounded-lg shadow-lg">
+              <h2 className="mb-6 text-2xl font-bold text-gray-900">Ваш заказ</h2>
+              {items.map((item) => (
+                <CartItem
+                  key={item.id}
+                  item={item}
+                  handleQuantityChange={handleQuantityChange}
+                  removeItem={removeItem}
+                />
+              ))}
+              <PromoCodeSection
+                discountCode={discountCode}
+                setDiscountCode={setDiscountCode}
+                applyDiscount={handleApplyDiscount}
+              />
+              <TipSection
+                selectedTip={tip}
+                handleTipSelection={handleTipSelection}
+              />
+              <PackagingSection
+                packagingType={packagingType}
+                setPackagingType={handlePackagingType}
+              />
+              <DeliveryTimeSection
+                deliveryTime={deliveryTime}
+                setDeliveryTime={handleDeliveryTime}
+              />
+            </div>
+
+            {/* Правый столбец: Данные покупателя и итоговая стоимость */}
+            <div className="p-6 bg-white rounded-lg shadow-lg">
+              <DeliveryInfoForm client={client} />
+              <div className="mt-6">
+                <OrderSummary
+                  discount={discount}
+                  tips={totalPrice * (tip / 100)}
+                  finalPrice={finalPrice}
+                />
+              </div>
+            </div>
+          </div>
+        )}
       </div>
       <Footer />
     </div>
