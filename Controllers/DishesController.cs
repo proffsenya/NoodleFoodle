@@ -21,8 +21,7 @@ public class DishesController : ControllerBase
     public async Task<ActionResult<IEnumerable<DishDTO>>> GetDishes()
     {
         var dishes = await _dishService.GetDishesAsync();
-
-        var dishDTOs = dishes.Select(dish => new DishDTO
+        var dishDtos = dishes.Select(dish => new DishDTO
         {
             Id = dish.Id,
             Name = dish.Title,
@@ -40,7 +39,7 @@ public class DishesController : ControllerBase
             }).ToList() 
         }).ToList();
 
-        return Ok(dishDTOs);
+        return Ok(dishDtos);
     }
 
     [HttpGet("{id}")]
@@ -85,7 +84,14 @@ public class DishesController : ControllerBase
             Weight = dishDto.Weight,
             Kcal = dishDto.Kcal,
             Type = dishDto.Type,
-            Ingredients = ingredients.ToList()
+            Ingredients = ingredients.Select(i => new Ingredient
+            {
+                Id = i.Id,
+                Name = i.Name,
+                Price = i.Price,
+                Weight = i.Weight,
+                Kcal = i.Kcal
+            }).ToList() 
         };
 
         await _dishService.CreateDishAsync(dish);
@@ -105,7 +111,14 @@ public class DishesController : ControllerBase
             Weight = dishDto.Weight,
             Kcal = dishDto.Kcal,
             Type = dishDto.Type,
-            Ingredients = ingredients.ToList()
+            Ingredients = ingredients.Select(i => new Ingredient
+            {
+                Id = i.Id,
+                Name = i.Name,
+                Price = i.Price,
+                Weight = i.Weight,
+                Kcal = i.Kcal
+            }).ToList() 
         };
 
         var updatedDish = await _dishService.UpdateDishAsync(id, dish);

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NoodleFoodle.Models;
+using NoodleFoodle.Models.DTO;
 using NoodleFoodle.Services.Interfaces;
 using System;
 
@@ -16,7 +17,15 @@ namespace NoodleFoodle.Services
 
         public async Task<IEnumerable<Ingredient>> GetIngredientsAsync()
         {
-            return await _context.Ingredients.ToListAsync();
+            return await _context.Ingredients
+                .Select(i => new IngredientDTO
+                {
+                    Id = i.Id,
+                    Name = i.Name,
+                    Price = i.Price,
+                    Weight = i.Weight,
+                    Kcal = i.Kcal
+                }).ToListAsync();
         }
 
         public async Task<Ingredient?> GetIngredientByIdAsync(int id)
