@@ -21,6 +21,8 @@ public partial class Ingredient
     [Column("weight")]
     public double Weight { get; set; }
 
-    [InverseProperty("Ingredients")]
+    [Column("kcal")]
+    public int Kcal { get; set; }
+
     public virtual ICollection<Dish> Dishes { get; set; } = new List<Dish>();
 }

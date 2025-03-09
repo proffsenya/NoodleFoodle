@@ -76,7 +76,7 @@ namespace NoodleFoodle.Services
                 Weight = totalWeight,
                 Kcal = totalKcal,
                 Type = "custom",
-                ClientId = clientId
+                //ClientId = clientId
             };
 
             _context.Dishes.Add(customDish);

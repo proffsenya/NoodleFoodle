@@ -29,12 +29,41 @@ public partial class Test1Context : DbContext
 
         modelBuilder.ApplyConfiguration(new ClientCOnfiguration());
 
-        //base.OnModelCreating(modelBuilder);
+        base.OnModelCreating(modelBuilder);
 
-        //// Связь многие ко многим: Блюда <-> Ингредиенты
+        modelBuilder.Entity<Dish>()
+            .HasMany(d => d.Ingredients)
+            .WithMany(i => i.Dishes)
+            .UsingEntity<Dictionary<string, object>>(
+                "dish_ingredients",
+                j => j
+                    .HasOne<Ingredient>()
+                    .WithMany()
+                    .HasForeignKey("ingredient_id")
+                    .HasPrincipalKey(i => i.Id),
+                j => j
+                    .HasOne<Dish>()
+                    .WithMany()
+                    .HasForeignKey("dish_id")
+                    .HasPrincipalKey(d => d.Id)
+            );
+
+        //modelBuilder.Entity<Order>()
+        //    .HasMany(o => o.Dishes)
+        //    .WithOne(d => d.Order)
+        //    .HasForeignKey(d => d.OrderId)
+        //    .OnDelete(DeleteBehavior.Cascade);
+
+        // Связь один ко многим: Клиенты <-> Заказы
+        modelBuilder.Entity<Client>()
+            .HasMany(c => c.Orders)
+            .WithOne(o => o.Client)
+            .HasForeignKey(o => o.ClientId)
+            .OnDelete(DeleteBehavior.Cascade);
+
         //modelBuilder.Entity<Dish>()
         //    .HasMany(d => d.Ingredients)
-        //    .WithOne(i => i.Dish)
+        //    .WithOne(i => i.Dishes)
         //    .HasForeignKey(i => i.DishId)
         //    .OnDelete(DeleteBehavior.Cascade);
 
@@ -53,6 +82,7 @@ public partial class Test1Context : DbContext
         //    .OnDelete(DeleteBehavior.Cascade);
 
         OnModelCreatingPartial(modelBuilder);
+
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace NoodleFoodle.Models;
 
 [Table("dishes")]
+[Index("ClientId", Name = "client_id")]
 public partial class Dish
 {
     [Key]
@@ -28,7 +29,12 @@ public partial class Dish
     [Column("kcal")]
     public int Kcal { get; set; }
 
-    [InverseProperty("Dish")]
+    [ForeignKey("ClientId")]
+    public virtual Client? Client { get; set; }
+
+    [Column("client_id", TypeName = "int(11)")]
+    public int ClientId { get; set; }
+
     public virtual ICollection<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 }
