@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NoodleFoodle.Models;
+using NoodleFoodle.Models.DTO;
 using NoodleFoodle.Services.Interfaces;
 using System;
 
@@ -21,7 +22,8 @@ namespace NoodleFoodle.Services
 
         public async Task<Dish?> GetDishByIdAsync(int id)
         {
-            return await _context.Dishes.FindAsync(id);
+            return await _context.Dishes.Include(d => d.Ingredients) // Загружаем ингредиенты сразу
+        .FirstOrDefaultAsync(d => d.Id == id);
         }
 
         public async Task<Dish> CreateDishAsync(Dish dish)
@@ -54,16 +56,9 @@ namespace NoodleFoodle.Services
             await _context.SaveChangesAsync();
             return true;
         }
-        public async Task<Dish?> CreateCustomDishAsync(string name, int clientId, List<int> ingredientIds)
+        public async Task<Dish?> CreateCustomDishAsync(CustomDishDTO customDishDto)
         {
-            var ingredients = await _context.Ingredients
-                .Where(i => ingredientIds.Contains(i.Id))
-                .ToListAsync();
-
-            if (ingredients.Count != ingredientIds.Count)
-            {
-                return null; // Один или несколько ингредиентов не найдены
-            }
+            var ingredients = customDishDto.Ingredients;
 
             var totalWeight = ingredients.Sum(i => i.Weight);
             var totalKcal = ingredients.Sum(i => i.Kcal);
@@ -71,12 +66,13 @@ namespace NoodleFoodle.Services
 
             var customDish = new Dish
             {
-                Title = name,
+                Title = customDishDto.Name,
                 Price = totalPrice,
                 Weight = totalWeight,
                 Kcal = totalKcal,
                 Type = "custom",
-                //ClientId = clientId
+                ClientId = customDishDto.ClientId,
+                Ingredients = ingredients 
             };
 
             _context.Dishes.Add(customDish);
