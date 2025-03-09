@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NoodleFoodle.Services;
 using NoodleFoodle.Models;
+using Microsoft.EntityFrameworkCore;
+using NoodleFoodle;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -8,9 +10,10 @@ public class IngredientsController : ControllerBase
 {
     private readonly IngredientService _ingredientService;
 
-    public IngredientsController(IngredientService ingredientService)
+    public IngredientsController(IngredientService ingredientService, Test1Context context)
     {
         _ingredientService = ingredientService;
+        _context = context;
     }
 
     [HttpGet]
@@ -27,6 +30,8 @@ public class IngredientsController : ControllerBase
             return NotFound();
         return Ok(ingredient);
     }
+
+
 
     [HttpPost]
     public async Task<ActionResult> CreateIngredient(Ingredient ingredient)

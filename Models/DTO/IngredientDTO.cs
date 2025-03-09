@@ -1,14 +1,11 @@
 ﻿namespace NoodleFoodle.Models.DTO
 {
-    public class DishDTO
+    public class IngredientDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
         public double Weight { get; set; }
         public int Kcal { get; set; }
-        public string Type { get; set; } = "standard"; // standard / custom
-        public List<IngredientDTO> Ingredients { get; set; } = new();
-
     }
 }

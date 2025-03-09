@@ -23,7 +23,10 @@ namespace NoodleFoodle.Services
         {
             return await _context.Ingredients.FindAsync(id);
         }
-
+        public async Task<IEnumerable<Ingredient>> GetIngredientsByIdsAsync(List<int> ingredientIds)
+        {
+            return await _context.Ingredients.Where(i => ingredientIds.Contains(i.Id)).ToListAsync();
+        }
         public async Task<Ingredient> CreateIngredientAsync(Ingredient ingredient)
         {
             _context.Ingredients.Add(ingredient);

@@ -58,8 +58,9 @@ namespace NoodleFoodle.Services
         }
         public async Task<Dish?> CreateCustomDishAsync(CustomDishDTO customDishDto)
         {
-            var ingredients = customDishDto.Ingredients;
-
+            var ingredients = await _context.Ingredients
+                .Where(i => customDishDto.Ingredients.Select(dto => dto.Id).Contains(i.Id))
+                .ToListAsync();
             var totalWeight = ingredients.Sum(i => i.Weight);
             var totalKcal = ingredients.Sum(i => i.Kcal);
             var totalPrice = ingredients.Sum(i => i.Price);
@@ -72,7 +73,7 @@ namespace NoodleFoodle.Services
                 Kcal = totalKcal,
                 Type = "custom",
                 ClientId = customDishDto.ClientId,
-                Ingredients = ingredients 
+                Ingredients = ingredients
             };
 
             _context.Dishes.Add(customDish);

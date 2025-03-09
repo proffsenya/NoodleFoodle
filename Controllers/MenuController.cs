@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NoodleFoodle.Services;
 using NoodleFoodle.Models;
-using NoodleFoodle.DTO;
 using NoodleFoodle.Models.DTO;
 
 namespace NoodleFoodle.Controllers
