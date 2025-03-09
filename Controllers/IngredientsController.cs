@@ -22,15 +22,19 @@ public class IngredientsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<IngredientDTO>>> GetIngredients()
     {
-        return await _context.Ingredients
-                .Select(i => new IngredientDTO
-                {
-                    Id = i.Id,
-                    Name = i.Name,
-                    Price = i.Price,
-                    Weight = i.Weight,
-                    Kcal = i.Kcal
-                }).ToListAsync();
+        var ingredients = await _ingredientService.GetIngredientsAsync();
+
+        var ingredientDtos = ingredients.Select(i => new IngredientDTO
+        {
+            Id = i.Id,
+            Name = i.Name,
+            Price = i.Price,
+            Weight = i.Weight,
+            Kcal = i.Kcal
+        }).ToList();
+
+        return Ok(ingredientDtos);
+
     }
 
     [HttpGet("{id}")]

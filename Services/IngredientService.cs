@@ -15,7 +15,7 @@ namespace NoodleFoodle.Services
             _context = context;
         }
 
-        public async Task<IEnumerable<Ingredient>> GetIngredientsAsync()
+        public async Task<IEnumerable<IngredientDTO>> GetIngredientsAsync()
         {
             return await _context.Ingredients
                 .Select(i => new IngredientDTO
