@@ -28,6 +28,13 @@ public class OrdersController : ControllerBase
         return Ok(order);
     }
 
+    [HttpGet("/client/{clientId}")] 
+    public async Task<IActionResult> GetClientOrders(int clientId)
+    {
+        var orders = await _orderService.GetClientOrdersAsync(clientId);
+        return Ok(orders);
+    }
+
     [HttpPost]
     public async Task<ActionResult> CreateOrder(Order order)
     {
@@ -59,34 +66,72 @@ public class OrdersController : ControllerBase
     }
 
     // Методы для работы с корзиной внутри заказа
-
-    [HttpPost("{orderId}/add-dish/{dishId}")]
-    public async Task<ActionResult> AddDishToOrder(int orderId, int dishId)
+    /// <summary>
+    /// информация о черновике (корзине) клиента
+    /// </summary>
+    /// 
+    [HttpGet("draft/{clientId}")]
+    public async Task<IActionResult> GetDraftOrder(int clientId)
     {
-        var success = await _orderService.AddDishToOrder(orderId, dishId);
-        if (!success) return NotFound();
-        return NoContent();
+        var order = await _orderService.GetDraftOrderAsync(clientId);
+        if (order == null) return NotFound("Черновик заказа не найден");
+
+        return Ok(order);
     }
 
-    [HttpDelete("{orderId}/remove-dish/{dishId}")]
-    public async Task<ActionResult> RemoveDishFromOrder(int orderId, int dishId)
+    /// <summary>
+    /// добавить блюдо в корзину
+    /// </summary>
+    /// 
+    [HttpPost("{clientId}/add-dish/{dishId}")]
+    public async Task<ActionResult> AddDishToOrder(int clientId, int dishId)
     {
-        var success = await _orderService.RemoveDishFromOrder(orderId, dishId);
-        if (!success) return NotFound();
-        return NoContent();
+        var success = await _orderService.AddDishToDraftOrderAsync(clientId, dishId);
+        if (!success) return BadRequest("Ошибка при добавлении блюда");
+
+        return Ok("Блюдо добавлено в заказ");
     }
 
-    [HttpGet("{orderId}/contents")]
-    public async Task<ActionResult<IEnumerable<Dish>>> GetOrderContents(int orderId)
+    /// <summary>
+    /// удалить блюдо из корзины
+    /// </summary>
+    /// 
+    [HttpDelete("{clientId}/remove-dish/{dishId}")]
+    public async Task<ActionResult> RemoveDishFromOrder(int clientId, int dishId)
     {
-        return Ok(await _orderService.GetOrderContents(orderId));
+        var success = await _orderService.RemoveDishFromDraftOrderAsync(clientId, dishId);
+        if (!success) return BadRequest("Ошибка при удалении блюда");
+        return Ok("Блюдо удалено из заказа");
     }
 
-    [HttpDelete("{orderId}/clear")]
-    public async Task<ActionResult> ClearOrder(int orderId)
+    //[HttpGet("{orderId}/contents")]
+    //public async Task<ActionResult<IEnumerable<Dish>>> GetOrderContents(int orderId)
+    //{
+    //    return Ok(await _orderService.GetOrderContents(orderId));
+    //}
+
+    /// <summary>
+    /// очистить корзину
+    /// </summary>
+    /// 
+    [HttpDelete("{clientId}/clear")]
+    public async Task<ActionResult> ClearOrder(int clientId)
     {
-        var success = await _orderService.ClearOrder(orderId);
-        if (!success) return NotFound();
-        return NoContent();
+        var success = await _orderService.ClearOrder(clientId);
+        if (!success) return BadRequest("Ошибка при очистке заказа");
+        return Ok("Заказ очищен");
+    }
+
+    /// <summary>
+    /// оформить заказ (подтвердить корзину)
+    /// </summary>
+    /// 
+    [HttpPost("finalize/{clientId}")]
+    public async Task<IActionResult> FinalizeOrder(int clientId)
+    {
+        var (success, message) = await _orderService.FinalizeOrderAsync(clientId);
+        if (!success) return BadRequest(message);
+
+        return Ok(new { Message = message });
     }
 }

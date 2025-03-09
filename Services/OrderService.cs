@@ -23,6 +23,14 @@ namespace NoodleFoodle.Services
             return await _context.Orders.FindAsync(id);
         }
 
+        public async Task<IEnumerable<Order>> GetClientOrdersAsync(int clientId) //получить все заказы клиента
+        {
+            return await _context.Orders
+                .Where(o => o.ClientId == clientId)
+                .Include(o => o.Dishes)
+                .ToListAsync();
+        }
+
         public async Task<Order?> GetDraftOrderAsync(int clientId)
         {
             return await _context.Orders
@@ -115,7 +123,7 @@ namespace NoodleFoodle.Services
         }
 
 
-        public async Task<(bool success, string message)> FinalizeOrderAsync(int clientId, string address) //оформить заказ
+        public async Task<(bool success, string message)> FinalizeOrderAsync(int clientId) //оформить заказ
         {
             var order = await GetDraftOrderAsync(clientId);
             if (order == null || !order.Dishes.Any())
