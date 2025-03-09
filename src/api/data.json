@@ -6,6 +6,13 @@
       "address": "test",
       "email": "test@mail.ru",
       "password": "test"
+    },
+    {
+      "id": "bec3",
+      "fullName": "test",
+      "address": "test",
+      "email": "test@mail.ru",
+      "password": "test"
     }
   ],
   "cart": [
