@@ -114,20 +114,22 @@ const PackagingSection = ({ packagingType, setPackagingType }) => (
 const DeliveryTimeSection = ({ deliveryTime, setDeliveryTime }) => (
   <div className="mt-6 mb-6">
     <label className="block text-sm font-medium text-gray-700">Время доставки</label>
-    <div className="flex mt-2 space-x-4">
-      {['asap', 'later'].map(time => (
-        <button
-          key={time}
-          onClick={() => setDeliveryTime(time)}
-          className={`px-4 py-2 rounded-lg ${
-            deliveryTime === time
-              ? "bg-blue-600 text-white"
-              : "bg-gray-200 hover:bg-gray-300"
-          }`}
-        >
-          {time === 'asap' ? 'Как можно скорее' : 'Позже'}
-        </button>
-      ))}
+    <div className="mt-2 overflow-x-auto">
+      <div className="flex space-x-4">
+        {Array.from({ length: 14 }, (_, i) => 10 + i).map(hour => (
+          <button
+            key={hour}
+            onClick={() => setDeliveryTime(`${hour}:00`)}
+            className={`px-4 py-2 rounded-lg ${
+              deliveryTime === `${hour}:00`
+                ? "bg-blue-600 text-white"
+                : "bg-gray-200 hover:bg-gray-300"
+            }`}
+          >
+            {`${hour}:00`}
+          </button>
+        ))}
+      </div>
     </div>
   </div>
 );
