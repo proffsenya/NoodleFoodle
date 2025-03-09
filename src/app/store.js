@@ -1,11 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import clientReducer from '../features/client/clientSlice';
-import cartReducer from '../features/cart/cartSlice'; // Используем экспорт по умолчанию
+import cartReducer from '../features/cart/cartSlice'; // Импортируем срез корзины
+import clientReducer from '../features/client/clientSlice'; // Импортируем срез клиента
 
 export const store = configureStore({
   reducer: {
-    client: clientReducer,
     cart: cartReducer,
+    client: clientReducer,
   },
 });
-

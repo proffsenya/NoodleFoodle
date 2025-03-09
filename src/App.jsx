@@ -16,6 +16,8 @@ import Register from "../pages/Register";
 import History from "../pages/History";
 import Checkout from "../pages/Checkout";
 import Recipe from "../pages/Recipe";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 import Header from "../components/Header";
 import "../src/index.css";
@@ -28,6 +30,16 @@ const ScrollToTop = () => {
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const dispatch = useDispatch();
+
+  // Проверяем токен при загрузке приложения
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      dispatch(fetchProfile()); // Загружаем профиль пользователя
+      setIsLoggedIn(true);
+    }
+  }, [dispatch]);
 
   const router = createBrowserRouter([
     {
@@ -163,7 +175,7 @@ export default function App() {
   ]);
 
   return (
-    <Provider store={store}> {/* Обертываем приложение в Provider */}
+    <Provider store={store}>
       <ThemeProvider>
         <RouterProvider router={router} />
       </ThemeProvider>

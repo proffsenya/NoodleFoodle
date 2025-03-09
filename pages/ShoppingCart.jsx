@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart, removeFromCart, updateQuantity, applyDiscount, setTip } from '../src/features/cart/cartSlice';
+import { addToCart, removeFromCart, updateCartItemQuantity, applyDiscount, setTip, setPackagingType, setDeliveryTime } from '../src/features/cart/cartSlice';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import FeatherIcon from 'feather-icons-react';
@@ -11,7 +11,7 @@ const CartItem = ({ item, handleQuantityChange, removeItem }) => (
       <img src={item.image} alt={item.name} className="object-cover w-16 h-16 rounded-lg" />
       <div className="ml-4">
         <h3 className="text-lg font-bold text-gray-900">{item.name}</h3>
-        <p className="text-gray-700">{item.price} x {item.quantity}</p>
+        <p className="text-gray-700">{item.price} ₽ x {item.quantity}</p>
       </div>
     </div>
     <div className="flex items-center space-x-2">
@@ -90,8 +90,50 @@ const TipSection = ({ selectedTip, handleTipSelection }) => (
   </div>
 );
 
+const PackagingSection = ({ packagingType, setPackagingType }) => (
+  <div className="mt-6 mb-6">
+    <label className="block text-sm font-medium text-gray-700">Тип упаковки</label>
+    <div className="flex mt-2 space-x-4">
+      {['standard', 'eco'].map(type => (
+        <button
+          key={type}
+          onClick={() => setPackagingType(type)}
+          className={`px-4 py-2 rounded-lg ${
+            packagingType === type
+              ? "bg-blue-600 text-white"
+              : "bg-gray-200 hover:bg-gray-300"
+          }`}
+        >
+          {type === 'standard' ? 'Стандартная' : 'Эко-упаковка'}
+        </button>
+      ))}
+    </div>
+  </div>
+);
+
+const DeliveryTimeSection = ({ deliveryTime, setDeliveryTime }) => (
+  <div className="mt-6 mb-6">
+    <label className="block text-sm font-medium text-gray-700">Время доставки</label>
+    <div className="flex mt-2 space-x-4">
+      {['asap', 'later'].map(time => (
+        <button
+          key={time}
+          onClick={() => setDeliveryTime(time)}
+          className={`px-4 py-2 rounded-lg ${
+            deliveryTime === time
+              ? "bg-blue-600 text-white"
+              : "bg-gray-200 hover:bg-gray-300"
+          }`}
+        >
+          {time === 'asap' ? 'Как можно скорее' : 'Позже'}
+        </button>
+      ))}
+    </div>
+  </div>
+);
+
 const DeliveryInfoForm = ({ client }) => (
-  <div>
+  <div className="mt-6">
     <h2 className="mb-6 text-2xl font-bold text-gray-900">Данные для доставки</h2>
     <form>
       <div className="mb-6">
@@ -151,7 +193,7 @@ const DeliveryInfoForm = ({ client }) => (
 );
 
 const OrderSummary = ({ discount, tips, finalPrice }) => (
-  <div className="mt-20">
+  <div className="mt-6">
     <h2 className="mb-6 text-2xl font-bold text-gray-900">Итоговая сумма</h2>
     <div className="space-y-4">
       <div className="flex justify-between">
@@ -177,7 +219,7 @@ const OrderSummary = ({ discount, tips, finalPrice }) => (
 
 export default function ShoppingCart() {
   const dispatch = useDispatch();
-  const { items, discount, tip } = useSelector((state) => state.cart);
+  const { items, discount, tip, packagingType, deliveryTime } = useSelector((state) => state.cart);
   const { client } = useSelector((state) => state.client); // Данные пользователя из профиля
   const [discountCode, setDiscountCode] = useState('');
 
@@ -185,8 +227,8 @@ export default function ShoppingCart() {
   const finalPrice = totalPrice - discount + (totalPrice * (tip / 100));
 
   const handleQuantityChange = (id, quantity) => {
-    if (quantity < 1) return;
-    dispatch(updateQuantity({ id, quantity }));
+    if (quantity < 1) return; // Не позволяем количеству быть меньше 1
+    dispatch(updateCartItemQuantity({ id, quantity })); // Вызываем действие
   };
 
   const removeItem = (id) => {
@@ -209,36 +251,59 @@ export default function ShoppingCart() {
     dispatch(setTip(tip));
   };
 
+  const handlePackagingType = (type) => {
+    dispatch(setPackagingType(type));
+  };
+
+  const handleDeliveryTime = (time) => {
+    dispatch(setDeliveryTime(time));
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
       <Header />
       <div className="flex flex-col items-center flex-grow p-12 space-y-12">
         <h1 className="mt-16 mb-8 text-4xl font-bold text-gray-900">Корзина</h1>
-        <div className="w-full max-w-6xl p-6 bg-white rounded-lg shadow-lg">
-          <h2 className="mb-6 text-2xl font-bold text-gray-900">Ваш заказ</h2>
-          {items.map((item) => (
-            <CartItem
-              key={item.id}
-              item={item}
-              handleQuantityChange={handleQuantityChange}
-              removeItem={removeItem}
+        <div className="grid w-full max-w-6xl grid-cols-1 gap-8 md:grid-cols-2">
+          {/* Левый столбец: Корзина и дополнительные опции */}
+          <div className="p-6 bg-white rounded-lg shadow-lg">
+            <h2 className="mb-6 text-2xl font-bold text-gray-900">Ваш заказ</h2>
+            {items.map((item) => (
+              <CartItem
+                key={item.id}
+                item={item}
+                handleQuantityChange={handleQuantityChange}
+                removeItem={removeItem}
+              />
+            ))}
+            <PromoCodeSection
+              discountCode={discountCode}
+              setDiscountCode={setDiscountCode}
+              applyDiscount={handleApplyDiscount}
             />
-          ))}
-          <PromoCodeSection
-            discountCode={discountCode}
-            setDiscountCode={setDiscountCode}
-            applyDiscount={handleApplyDiscount}
-          />
-          <TipSection
-            selectedTip={tip}
-            handleTipSelection={handleTipSelection}
-          />
-          <DeliveryInfoForm client={client} /> {/* Форма для данных доставки */}
-          <OrderSummary
-            discount={discount}
-            tips={totalPrice * (tip / 100)}
-            finalPrice={finalPrice}
-          />
+            <TipSection
+              selectedTip={tip}
+              handleTipSelection={handleTipSelection}
+            />
+            <PackagingSection
+              packagingType={packagingType}
+              setPackagingType={handlePackagingType}
+            />
+            <DeliveryTimeSection
+              deliveryTime={deliveryTime}
+              setDeliveryTime={handleDeliveryTime}
+            />
+          </div>
+
+          {/* Правый столбец: Данные покупателя и итоговая стоимость */}
+          <div className="p-6 bg-white rounded-lg shadow-lg">
+            <DeliveryInfoForm client={client} />
+            <OrderSummary
+              discount={discount}
+              tips={totalPrice * (tip / 100)}
+              finalPrice={finalPrice}
+            />
+          </div>
         </div>
       </div>
       <Footer />

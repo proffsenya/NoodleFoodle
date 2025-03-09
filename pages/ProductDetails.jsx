@@ -12,7 +12,7 @@ export default function ProductDetails() {
   const dispatch = useDispatch();
 
   const handleAddToCart = () => {
-    dispatch(addToCart(product));
+    dispatch(addToCart({ ...product, quantity: 1 }));
     alert('Товар добавлен в корзину!');
   };
 
