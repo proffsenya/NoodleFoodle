@@ -3,6 +3,8 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useState } from "react";
 import { ingredientsData } from "../data/data";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../src/features/cart/cartSlice"; // Используем общий срез
 
 const MAX_WEIGHT = 700;
 
@@ -10,6 +12,8 @@ export default function CustomProduct() {
   const [selectedIngredients, setSelectedIngredients] = useState([]);
   const [weightError, setWeightError] = useState("");
   const [typeError, setTypeError] = useState("");
+  const dispatch = useDispatch();
+
   const currentWeight = selectedIngredients.reduce((sum, ing) => sum + ing.weight, 0);
   const totalPrice = selectedIngredients.reduce((sum, ing) => sum + ing.price, 0);
 
@@ -44,6 +48,30 @@ export default function CustomProduct() {
     setTypeError("");
   };
 
+  // Функция для добавления кастомного блюда в корзину
+  const handleOrder = () => {
+    if (selectedIngredients.length === 0) {
+      alert("Добавьте ингредиенты в рамен!");
+      return;
+    }
+
+    // Генерируем уникальный номер блюда
+    const customDishNumber = Date.now(); // Используем временную метку как номер блюда
+
+    const customProduct = {
+      id: `custom-${customDishNumber}`, // Уникальный ID для кастомного блюда
+      name: `Блюдо #${customDishNumber}`, // Название с номером блюда
+      description: "Состав: " + selectedIngredients.map(ing => ing.name).join(", "),
+      price: totalPrice,
+      image: "../img/custom-ramen.jpg", // Можно добавить изображение по умолчанию
+      ingredients: selectedIngredients, // Сохраняем ингредиенты для отображения в корзине
+      quantity: 1,
+    };
+
+    dispatch(addToCart(customProduct)); // Добавляем кастомное блюдо в корзину
+    alert("Кастомный рамен добавлен в корзину!");
+  };
+
   return (
     <section className="ramen-builder dark:bg-gray-900 dark:text-white">
       <Header />
@@ -58,6 +86,7 @@ export default function CustomProduct() {
           onDropInBowl={handleDrop}
           weightError={weightError}
           typeError={typeError}
+          onOrder={handleOrder} // Передаем функцию заказа
         />
         <RightPanel onDrop={handleDrop} />
       </div>
@@ -119,7 +148,8 @@ function CenterBowl({
   onClear,
   onDropInBowl,
   weightError,
-  typeError
+  typeError,
+  onOrder, // Принимаем функцию заказа
 }) {
   const handleDropInBowl = (e) => {
     e.preventDefault();
@@ -175,6 +205,13 @@ function CenterBowl({
           onClick={onClear}
         >
           Убрать всё
+        </button>
+        {/* Кнопка "Заказать" */}
+        <button
+          className="w-full py-3 mt-4 btn-primary dark:bg-green-600 dark:hover:bg-green-700"
+          onClick={onOrder}
+        >
+          Заказать
         </button>
       </div>
     </div>

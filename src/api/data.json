@@ -147,27 +147,81 @@
         "Говяжий бульон фо-бо",
         "Шиитаке"
       ],
-      "quantity": 1
+      "quantity": 2
     },
     {
-      "id": "3",
-      "name": "Сырный рамен",
-      "price": "670₽",
-      "image": "../img/cheese.jpg",
-      "description": "Один из видов японских раменов, ставший популярным благодаря сырному вкусу в сочетании классического куриного бульона с добавлением японского соуса сёю",
-      "weight": "490g",
+      "id": "custom-1741596649052",
+      "name": "Блюдо #1741596649052",
+      "description": "Состав: Рис, Бульон том ям, Шпинат, Кокосовое молоко, Чили перец, Чили перец, Чили перец, Шпинат, Шпинат",
+      "price": 380,
+      "image": "../img/custom-ramen.jpg",
       "ingredients": [
-        "Лапша рамен",
-        "Яйцо маринованное",
-        "Лук зеленый",
-        "Водоросли нори",
-        "Сыр",
-        "Ростки сои",
-        "Шпинат",
-        "Кукуруза",
-        "Шиитаке"
+        {
+          "name": "Рис",
+          "type": "noodles",
+          "price": 50,
+          "weight": 120,
+          "image": "../img/cheese.jpg"
+        },
+        {
+          "name": "Бульон том ям",
+          "type": "broth",
+          "price": 100,
+          "weight": 300,
+          "image": "../img/cheese.jpg"
+        },
+        {
+          "name": "Шпинат",
+          "type": "topping",
+          "price": 30,
+          "weight": 50,
+          "image": "../img/cheese.jpg"
+        },
+        {
+          "name": "Кокосовое молоко",
+          "type": "extra",
+          "price": 80,
+          "weight": 100,
+          "image": "../img/cheese.jpg"
+        },
+        {
+          "name": "Чили перец",
+          "type": "extra",
+          "price": 20,
+          "weight": 10,
+          "image": "../img/cheese.jpg"
+        },
+        {
+          "name": "Чили перец",
+          "type": "extra",
+          "price": 20,
+          "weight": 10,
+          "image": "../img/cheese.jpg"
+        },
+        {
+          "name": "Чили перец",
+          "type": "extra",
+          "price": 20,
+          "weight": 10,
+          "image": "../img/cheese.jpg"
+        },
+        {
+          "name": "Шпинат",
+          "type": "topping",
+          "price": 30,
+          "weight": 50,
+          "image": "../img/cheese.jpg"
+        },
+        {
+          "name": "Шпинат",
+          "type": "topping",
+          "price": 30,
+          "weight": 50,
+          "image": "../img/cheese.jpg"
+        }
       ],
       "quantity": 1
     }
-  ]
+  ],
+  "orders": []
 }

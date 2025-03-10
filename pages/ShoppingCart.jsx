@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCart, addToCart, removeFromCart, updateCartItemQuantity, applyDiscount, setTip, setPackagingType, setDeliveryTime } from '../src/features/cart/cartSlice';
+import { fetchCart, removeFromCart, updateCartItemQuantity, applyDiscount, setTip, setPackagingType, setDeliveryTime, addToCart } from '../src/features/cart/cartSlice';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import FeatherIcon from 'feather-icons-react';
@@ -11,27 +11,30 @@ const CartItem = ({ item, handleQuantityChange, removeItem }) => (
       <img src={item.image} alt={item.name} className="object-cover w-16 h-16 rounded-lg" />
       <div className="ml-4">
         <h3 className="text-lg font-bold text-gray-900">{item.name}</h3>
-        <p className="text-gray-700">{item.price} x {item.quantity}</p>
+        {item.ingredients && (
+          <p className="text-sm text-gray-500">{item.description}</p>
+        )}
+        <p className="text-gray-700">{item.price} ₽ x {item.quantity}</p>
       </div>
     </div>
     <div className="flex items-center space-x-4">
-      {/* Кнопки изменения количества */}
-      <div className="flex items-center space-x-2">
-        <button
-          onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
-          className="p-2 bg-gray-200 rounded-full hover:bg-gray-300"
-        >
-          <FeatherIcon icon="minus" className="w-[16px] h-[16px]" />
-        </button>
-        <span className="text-xl">{item.quantity}</span>
-        <button
-          onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-          className="p-2 bg-gray-200 rounded-full hover:bg-gray-300"
-        >
-          <FeatherIcon icon="plus" className="w-[16px] h-[16px]" />
-        </button>
-      </div>
-      {/* Кнопка удаления товара */}
+      {!item.id.startsWith("custom-") && (
+        <div className="flex items-center space-x-2">
+          <button
+            onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
+            className="p-2 bg-gray-200 rounded-full hover:bg-gray-300"
+          >
+            <FeatherIcon icon="minus" className="w-[16px] h-[16px]" />
+          </button>
+          <span className="text-xl">{item.quantity}</span>
+          <button
+            onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
+            className="p-2 bg-gray-200 rounded-full hover:bg-gray-300"
+          >
+            <FeatherIcon icon="plus" className="w-[16px] h-[16px]" />
+          </button>
+        </div>
+      )}
       <button
         onClick={() => removeItem(item.id)}
         className="text-red-600 hover:text-red-700"
@@ -198,7 +201,7 @@ const DeliveryInfoForm = ({ client }) => (
   </div>
 );
 
-const OrderSummary = ({ discount, tips, finalPrice }) => (
+const OrderSummary = ({ discount, tips, finalPrice, handleOrder }) => (
   <div className="mt-6">
     <h2 className="mb-6 text-2xl font-bold text-gray-900">Итоговая сумма</h2>
     <div className="space-y-4">
@@ -217,6 +220,7 @@ const OrderSummary = ({ discount, tips, finalPrice }) => (
     </div>
     <button
       className="w-full px-6 py-3 mt-6 text-white bg-green-600 rounded-lg shadow-lg hover:bg-green-700"
+      onClick={handleOrder}
     >
       Подтвердить заказ
     </button>
@@ -270,6 +274,28 @@ export default function ShoppingCart() {
     dispatch(setDeliveryTime(time));
   };
 
+  const handleOrder = () => {
+    const order = {
+      items,
+      discount,
+      tip,
+      packagingType,
+      deliveryTime,
+      client,
+      totalPrice: finalPrice,
+    };
+
+    // Отправляем заказ на сервер
+    axios.post('http://localhost:3001/orders', order)
+      .then(response => {
+        alert('Заказ успешно оформлен!');
+        dispatch(removeFromCart()); // Очищаем корзину после успешного заказа
+      })
+      .catch(error => {
+        console.error('Ошибка при оформлении заказа:', error);
+      });
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
       <Header />
@@ -318,6 +344,7 @@ export default function ShoppingCart() {
                 discount={discount}
                 tips={totalPrice * (tip / 100)}
                 finalPrice={finalPrice}
+                handleOrder={handleOrder}
               />
             </div>
           </div>
