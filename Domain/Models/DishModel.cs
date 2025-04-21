@@ -3,7 +3,7 @@ using NoodlefoodleStore.Domain.ValueObjects;
 
 namespace NoodlefoodleStore.Domain.Models
 {
-    public class Dish : Entity<DishId>
+    public class DishModel : Entity<DishId>
     {
         public string Title { get; set; } = default!;
         public string Type { get; set; } = default!;
@@ -12,12 +12,12 @@ namespace NoodlefoodleStore.Domain.Models
         public int Kcal { get; set; } = default!;
 
 
-        public static Dish Create(DishId id, string title, string type, decimal price, int weight, int kcal)
+        public static DishModel Create(DishId id, string title, string type, decimal price, int weight, int kcal)
         {
             ArgumentException.ThrowIfNullOrWhiteSpace(title);
             ArgumentException.ThrowIfNullOrWhiteSpace(type);
 
-            Dish dish = new()
+            DishModel dish = new()
             {
                 Id = id,
                 Title = title,

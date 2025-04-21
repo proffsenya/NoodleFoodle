@@ -5,11 +5,11 @@ namespace NoodlefoodleStore.Domain.Models;
 
 public partial class Ingredient
 {
-    public List<int> IngredientId { get; set; } = null!;
+    public int IngredientId { get; set; }
 
-    public string? IngredientName { get; set; }
+    public string? Name { get; set; }
 
-    public int? IngredientPrice { get; set; }
+    public int? Price { get; set; }
 
-    public int? IngredientWeight { get; set; }
+    public int? Weight { get; set; }
 }

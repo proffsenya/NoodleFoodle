@@ -5,7 +5,7 @@ namespace NoodlefoodleStore.Domain.Models;
 
 public partial class Client
 {
-    public List<int> ClientId { get; set; } = null!;
+    public int ClientId { get; set; }
 
     public string Name { get; set; } = null!;
 

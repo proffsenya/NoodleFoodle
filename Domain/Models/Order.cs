@@ -7,7 +7,7 @@ public partial class Order
 {
     public int OrderId { get; set; }
 
-    public List<int> UserId { get; set; } = null!;
+    public int UserId { get; set; }
 
     public decimal DataOrder { get; set; }
 
@@ -15,5 +15,7 @@ public partial class Order
 
     public string? OrderStatus { get; set; }
 
-    public List<int>? RamenId { get; set; }
+    public int DishId { get; set; }
+
+    public int? AmountDishes { get; set; }
 }

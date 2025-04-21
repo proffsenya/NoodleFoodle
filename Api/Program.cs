@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using NoodlefoodleStore.Infrastructure.Data.DataBaseContext;
+using NoodlefoodleStore.Infrastructure.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +22,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    await app.InitializeDatabaseAsync();
 }
 
 app.UseHttpsRedirection();

@@ -5,15 +5,15 @@ namespace NoodlefoodleStore.Domain.Models;
 
 public partial class Delivery
 {
-    public List<int> DeliveryId { get; set; } = null!;
+    public int DeliveryId { get; set; }
 
-    public List<int>? OrderId { get; set; }
+    public int OrderId { get; set; }
 
-    public List<int>? CourierId { get; set; }
+    public int CourierId { get; set; }
 
-    public string? AddressDelivery { get; set; }
+    public string? Address { get; set; }
 
-    public string? StatusDelivery { get; set; }
+    public string? Status { get; set; }
 
-    public decimal? DataDelivery { get; set; }
+    public decimal? Data { get; set; }
 }
